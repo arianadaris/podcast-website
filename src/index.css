@@ -1,13 +1,103 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@font-face {
+    font-family: "stretch";
+    src: url('./assets/fonts/StretchPro.otf');
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+    font-family: "gotham";
+    src: url('./assets/fonts/Gotham-Font/Gotham-Thin.otf');
+}
+
+@font-face {
+    font-family: "gotham-bold";
+    src: url('./assets/fonts/Gotham-Font/GothamBook.ttf');
+}
+
+@font-face {
+    font-family: "gotham-bolder";
+    src: url('./assets/fonts/Gotham-Font/GothamBold.ttf');
+}
+
+@layer base {
+    * {
+        @apply m-0 p-0 box-border text-white/90 transition-all ease-in-out font-gotham text-center lg:text-left
+    }
+
+    html {
+        @apply bg-[#141414]
+    }
+
+    section {
+        @apply px-4 lg:px-48 flex flex-col pb-16 space-y-6 lg:space-y-0 
+    }
+
+    div {
+        @apply flex flex-col w-full
+    }
+
+    h1 {
+        @apply font-stretch uppercase text-white text-3xl lg:text-7xl
+    }
+
+    h2 {
+        @apply font-gotham-bolder text-3xl lg:text-6xl text-white tracking-wide 
+    }
+
+    h3 {
+        @apply font-gotham-bolder lg:text-2xl text-white tracking-wide 
+    }
+
+    h4 {
+        @apply uppercase tracking-widest lg:text-3xl  
+    }
+
+    p {
+        @apply  lg:text-3xl leading-7 lg:leading-[3.5rem] 
+    }
+
+    button {
+        @apply mx-auto lg:mx-0 flex items-center justify-center space-x-6 w-fit px-10 py-4 rounded-full lg:text-3xl bg-white/10 text-white border-1 border-white/10 hover:bg-blue/80 
+    }
+
+    input {
+        @apply bg-white/10 w-full rounded-50 px-8 py-2 lg:text-2xl
+    }
+}
+
+@layer components {
+    .nav {
+        @apply lg:bg-white/5 px-10 lg:rounded-full
+    }
+
+    .navItem {
+        @apply border-1 border-white/5 py-4 lg:border-none lg:hover:bg-blue/80 hover:text-white lg:py-4 lg:px-6 lg:rounded-full text-xl lg:text-lg text-center font-gotham-bold
+    }
+
+    .socialIcon {
+        @apply bg-white/5 rounded-full p-2 h-[2.5rem] w-[2.5rem] lg:h-[3rem] lg:w-[3rem] hover:bg-blue
+    }
+
+    .hero-bg {
+        @apply pt-32 lg:pt-56
+    }
+}
+
+.hero-bg {
+    background: radial-gradient(82.06% 70.78% at 82.43% 22.96%, rgba(8, 134, 231, 0.30) 0%, rgba(0, 0, 0, 0.00) 100%), radial-gradient(91.61% 67.45% at 61.04% 103.32%, rgba(231, 8, 142, 0.20) 0%, rgba(0, 0, 0, 0.00) 100%), radial-gradient(67.16% 96.02% at 9.44% 14.73%, rgba(8, 134, 231, 0.45) 0%, rgba(0, 0, 0, 0.00) 100%), #02030F;
+}
+
+.update-bg {
+    background: radial-gradient(82.06% 70.78% at 82.43% 22.96%, rgba(8, 134, 231, 0.30) 0%, rgba(0, 0, 0, 0.00) 100%), radial-gradient(67.16% 96.02% at 9.44% 14.73%, rgba(8, 134, 231, 0.45) 0%, rgba(0, 0, 0, 0.00) 100%), #02030F;
+}
+
+.artist-bg {
+    background: radial-gradient(748.73% 131.32% at 34.71% 54.60%, rgba(30, 32, 75, 0.60) 0%, rgba(0, 0, 0, 0.00) 100%), #0A031E;
+}
+
+.footer-bg {
+    background: radial-gradient(101.35% 64.76% at 9.48% 65.69%, rgba(8, 134, 231, 0.05) 0%, rgba(0, 0, 0, 0.00) 100%), radial-gradient(133.02% 94.19% at 98.02% 41.58%, rgba(231, 8, 142, 0.15) 0%, rgba(0, 0, 0, 0.00) 100%), radial-gradient(144.78% 130.22% at 4.69% 43.27%, rgba(8, 134, 231, 0.15) 0%, rgba(0, 0, 0, 0.00) 100%), #02030F;
 }
