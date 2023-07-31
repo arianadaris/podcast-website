@@ -4,7 +4,7 @@ const AboutPage: React.FC = () => {
 
     return (
         <>
-            <section>
+            <section className="top-section">
                 <h1>Hello World</h1>
             </section>
         </>

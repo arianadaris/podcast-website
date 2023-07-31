@@ -7,10 +7,10 @@ import EpisodeCard from '../components/EpisodeCard';
 
 const HeroSection: React.FC = () => {
     return (
-        <section className="hero-bg lg:flex-row pb-[7rem] lg:pb-[15rem]">
+        <section className="top-section hero-bg lg:flex-row pb-[7rem] lg:pb-[15rem]">
             <div className="w-full lg:w-1/2 space-y-8 lg:space-y-20">
                 <img className="block lg:hidden h-[15rem] w-[15rem] mx-auto" src={Logo} alt="808s Logo" />
-                <h1 className="text-4xl lg:text-[7rem] lg:leading-[7rem] lg:scale-y-[115%]">808s &<br></br>Cold-Takes</h1>
+                <h1 className="text-4xl lg:text-[7rem] lg:leading-[7rem] lg:scale-y-[115%]">808s &<br></br>ColdTakes</h1>
                 <p>Hosted by Maxx, Los, and Brayden, we cover loads of music topics with an emphasis on Hip Hop. Tune in every weekend to hear our takes and discussions about the music industry!</p>
                 <button>
                     <p>Subscribe to Podcast</p>

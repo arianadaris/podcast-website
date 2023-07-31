@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
     
     return (
         <div className="lg:flex-row footer-bg lg:justify-between items-center px-4 lg:px-24 py-4 lg:py-12 space-y-4 lg:space-y-0">
-            <h1 className="hidden lg:flex text-3xl w-fit">808s & <br className="hidden lg:block"></br>Cold-Takes</h1>
+            <h1 className="hidden lg:flex text-3xl w-fit">808s & <br className="hidden lg:block"></br>ColdTakes</h1>
             <div className="flex lg:hidden flex-row justify-center items-center space-x-6">
                 <img className="h-[3rem] w-[3rem]" src={Logo} alt="808s Logo" />
                 <h1 className="text-xl text-left">808s &<br></br>Cold-Takes</h1>

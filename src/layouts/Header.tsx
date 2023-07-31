@@ -57,11 +57,15 @@ const Header: React.FC = () => {
                         {/* Close Menu Button */}
                         <Icon className="absolute top-0 right-0 p-4 h-[4rem] w-[4rem]" icon="lucide:x" onClick={toggleMenu} />
 
+                        <a href="/">
+                            <img className="h-[6rem] w-[6rem] rounded-full" src={Logo} alt="808s & Cold-Takes Logo" />
+                        </a>
+
                         {/* Nav Links */}
                         <div className="space-y-8 w-full">
                         {
                             Object.entries(locationsDict).map(([title, url]) => (
-                                <Link className={`navItem ${location.pathname === url ? "active" : ""}`} key={title} to={url}>{title}</Link>
+                                <Link className={`navItem ${location.pathname === url ? "active" : ""}`} key={title} to={url} onClick={() => setIsOpen(!isOpen)}>{title}</Link>
                             ))
                         }
                         </div>

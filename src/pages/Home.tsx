@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
                             <h4>Meet the Artist</h4>
                             <h2>S.A.M.N X</h2>
                         </div>
-                        <p>Local to Arizona, S.A.M.N X is an up-and-coming Hip Hop music group. 808s & Cold-Takes is proud to announce the S.A.M.N X documentary, in partnership with Pascal Productions.</p>
+                        <p>Local to Arizona, S.A.M.N X is an up-and-coming Hip Hop music group. 808s & ColdTakes is proud to announce the S.A.M.N X documentary, in partnership with Pascal Productions.</p>
                         <button>
                             <p>Watch Documentary</p>
                             <Icon icon="fluent:arrow-up-right-20-filled" />
@@ -44,15 +44,21 @@ const HomePage: React.FC = () => {
                     <h4>Meet the team</h4>
                     <h1 className="">The 808s Crew</h1>
                 </div>
-                <p className="lg:w-1/2 lg:mx-auto lg:text-center pb-2 lg:pb-8">Hosts Maxx, Brayden, and Los are talented individuals who make a formidable team committed to helping local artists grow in their communities.</p>
+                <p className="lg:w-1/2 lg:mx-auto lg:text-center pb-2 lg:pb-8">Hosts Maxx, Brayden, Los, Mateo and Johan are talented individuals who make a formidable team committed to helping local artists grow in their communities.</p>
                 <button>
                     <h3>About Us</h3>
                     <Icon icon="fluent:arrow-up-right-20-filled" />
                 </button>
-                <div className="lg:flex-row space-y-8 lg:space-y-0 lg:space-x-8 px-4 pt-2 lg:pt-8">
-                    <HostCard name="Maxx" />
-                    <HostCard name="Brayden" />
-                    <HostCard name="Los" />
+                <div className="px-8 lg:px-16  lg:space-y-16">
+                    <div className="space-y-8 lg:space-y-0 lg:flex-row lg:space-x-16 justify-between">
+                        <HostCard name="Maxx Lopez" />
+                        <HostCard name="Brayden Castelhano" />
+                        <HostCard name="Los [Last Name]" />
+                    </div>
+                    <div className="space-y-8 lg:space-y-0 lg:flex-row lg:space-x-16 justify-center lg:px-8">
+                        <HostCard name="Mateo Valdez" />
+                        <HostCard name="Johan Rodriguez" />
+                    </div>
                 </div>
             </section>
 
