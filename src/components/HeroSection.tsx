@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
 
-import Logo from '../assets/images/Logo_Expanded.png';
+import Logo from '../assets/images/Logo.png';
 
 import EpisodeCard from '../components/EpisodeCard';
 
@@ -18,7 +18,7 @@ const HeroSection: React.FC = () => {
                 </button>
             </div>
             <div className="w-full lg:w-1/2 space-y-16">
-                <img className="hidden lg:block lg:h-[25rem] lg:w-[25rem] mx-auto -my-10" src={Logo} alt="808s Logo" />
+                <img className="hidden lg:block lg:h-[22rem] lg:w-[22rem] mx-auto -my-0" src={Logo} alt="808s Logo" />
 
                 {/* Latest Episodes */}
                 <div className="w-3/4 mx-auto space-y-4 lg:h-[24rem] overflow-y-scroll">

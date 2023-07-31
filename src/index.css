@@ -56,7 +56,7 @@
     }
 
     p {
-        @apply font-gotham-bold lg:font-gotham lg:text-3xl leading-7 lg:leading-[3.5rem] 
+        @apply font-gotham-bold lg:font-gotham lg:text-[1.75rem] leading-7 lg:leading-[3.5rem] 
     }
 
     button {
