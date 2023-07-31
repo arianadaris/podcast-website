@@ -20,7 +20,7 @@ const HomePage: React.FC = () => {
                 <div className="-mt-16 lg:-mt-[10rem] artist-bg h-full w-full lg:flex-row relative py-12 px-8 lg:px-24 rounded-50">
                     <img className="hidden lg:block absolute bottom-0 right-0" src={ArtistBG} alt="S.A.M.N X" />
                     <div className="w-full relative">
-                        <img className="lg:h-full lg:w-3/4 mx-auto mb-8 lg:mb-0" src={Artist} alt="S.A.M.N X" />
+                        <img className="lg:h-full lg:w-3/4 mx-auto mb-8 lg:mb-0 " src={Artist} alt="S.A.M.N X" />
                     </div>
                     <div className="w-full space-y-6 lg:space-y-12 justify-center relative">
                         <div className="lg:space-y-2">

@@ -1,6 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import { Icon } from '@iconify/react';
 import Logo from '../assets/images/Logo.png';
+
+import SocialIcons from '../components/SocialIcons';
 
 const Footer: React.FC = () => {
 
@@ -14,25 +17,15 @@ const Footer: React.FC = () => {
             </div>
             {/* Expanded Desktop Navigation */}
             <div className="nav lg:flex-row lg:space-x-8 space-y-2 lg:space-y-0 lg:w-fit h-fit w-full">
-                <a className="navItem border-transparent border-b-1 border-b-white/5 rounded-none lg:rounded-full" href="/">About</a>
-                <a className="navItem border-transparent border-b-1 border-b-white/5 rounded-none lg:rounded-full" href="/">Episodes</a>
-                <a className="navItem border-transparent border-b-1 border-b-white/5 rounded-none lg:rounded-full" href="/">Artists</a>
-                <a className="navItem border-transparent border-b-1 border-b-white/5 rounded-none lg:rounded-full" href="/">Reviews</a>
-                <a className="navItem border-transparent border-b-1 border-b-white/5 rounded-none lg:rounded-full" href="/">Contact Us</a>
+                <Link className="navItem border-transparent border-b-1 border-b-white/5 rounded-none lg:rounded-full" to="/about-808s">About</Link>
+                <Link className="navItem border-transparent border-b-1 border-b-white/5 rounded-none lg:rounded-full" to="/episodes">Episodes</Link>
+                <Link className="navItem border-transparent border-b-1 border-b-white/5 rounded-none lg:rounded-full" to="/artists">Artists</Link>
+                <Link className="navItem border-transparent border-b-1 border-b-white/5 rounded-none lg:rounded-full" to="/reviews">Reviews</Link>
+                <Link className="navItem border-transparent border-b-1 border-b-white/5 rounded-none lg:rounded-full" to="/contact">Contact Us</Link>
             </div>
 
             {/* Social Icons */}
-            <div className="flex-row w-fit space-x-4 border-1 border-white/5 px-4 py-2 rounded-full">
-                <a  href="/">
-                    <Icon className="socialIcon" icon="mdi:spotify" />
-                </a>
-                <a href="/">
-                    <Icon className="socialIcon" icon="cib:apple-music" />
-                </a>
-                <a href="/">
-                    <Icon className="socialIcon" icon="entypo-social:youtube" />
-                </a>
-            </div>
+            <SocialIcons extraClasses="" />
         </div>
     );
 };
