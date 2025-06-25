@@ -11,7 +11,7 @@ module.exports = (env) => {
     mode: isDevelopment ? 'development' : 'production',
     entry: './src/index.tsx',
     output: {
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, 'build'),
       filename: isDevelopment ? '[name].js' : '[name].[contenthash].js',
       chunkFilename: isDevelopment ? '[name].chunk.js' : '[name].[contenthash].chunk.js',
       clean: true,
@@ -109,7 +109,7 @@ module.exports = (env) => {
     devtool: isDevelopment ? 'eval-source-map' : false,
     devServer: {
       static: {
-        directory: path.join(__dirname, 'dist'),
+        directory: path.join(__dirname, 'build'),
       },
       open: true,
       hot: true,
