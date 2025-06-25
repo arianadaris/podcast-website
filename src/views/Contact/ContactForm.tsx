@@ -254,7 +254,7 @@ const ContactForm = () => {
                                     helperText={touched.message && errors.message}
                                 />
                                 <PrimaryButton 
-                                    title="Submit Interview Request" 
+                                    title="Book Interview" 
                                     disabled={isSubmitting} 
                                     center={true}
                                 />

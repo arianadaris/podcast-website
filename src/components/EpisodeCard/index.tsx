@@ -33,6 +33,15 @@ const EpisodeCard = ({ episode }: EpisodeProps) => {
         window.open(audioUrl, '_blank');
     };
 
+    // Format the description to ensure it ends with proper punctuation
+    const formattedDescription = description.replace(
+        /([a-zA-Z0-9])([\s\n\r]*(?:<[^>]*>)*[\s\n\r]*)$/,
+        (match, lastChar, trailingStuff) => {
+            // If the last actual character doesn't end with punctuation, add a period
+            return lastChar.match(/[.!?]$/) ? match : `${lastChar}.${trailingStuff}`;
+        }
+    );
+
     return (
         <Card>
             <CardContent>
@@ -56,7 +65,7 @@ const EpisodeCard = ({ episode }: EpisodeProps) => {
                             <Typography 
                                 variant="body1" 
                                 color="text.primary" 
-                                dangerouslySetInnerHTML={{ __html: description }}
+                                dangerouslySetInnerHTML={{ __html: formattedDescription }}
                                 align={isMobile ? "center" : "left"}
                                 sx={{ mb: 2 }}
                             />

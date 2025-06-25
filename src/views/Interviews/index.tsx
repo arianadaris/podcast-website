@@ -164,16 +164,7 @@ const Interviews = () => {
                                             ))}
                                         </ul>
                                         <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
-                                            <PrimaryButton
-                                                title="Listen"
-                                                onClick={() => handlePlayInterview(interview.spotifyUrl)}
-                                                fullWidth
-                                                showArrow={false}
-                                            >
-                                                <PlayArrowIcon sx={{ color: 'white' }} />
-                                            </PrimaryButton>
-                                            {interview.youtubeUrl && (
-                                                <PrimaryButton
+                                        <PrimaryButton
                                                     title="Watch"
                                                     onClick={() => handleYouTube(interview.youtubeUrl!)}
                                                     fullWidth
@@ -181,7 +172,6 @@ const Interviews = () => {
                                                 >
                                                     <YouTubeIcon sx={{ color: 'white' }} />
                                                 </PrimaryButton>
-                                            )}
                                         </Stack>
                                     </Box>
                                 </Box>
