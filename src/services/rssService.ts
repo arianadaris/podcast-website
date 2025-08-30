@@ -29,6 +29,83 @@ export interface RSSFeed {
   items: RSSItem[];
 }
 
+// Cache interface for storing episodes
+interface EpisodeCache {
+  episodes: Episode[];
+  timestamp: number;
+  expiresAt: number;
+}
+
+// Cache configuration
+const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes in milliseconds
+const CACHE_KEY = 'rss_episodes_cache';
+
+// In-memory cache
+let memoryCache: EpisodeCache | null = null;
+
+// Cache management functions
+const getCachedEpisodes = (): Episode[] | null => {
+  const now = Date.now();
+  
+  // Check in-memory cache first
+  if (memoryCache && now < memoryCache.expiresAt) {
+    console.log('Using in-memory cache for episodes');
+    return memoryCache.episodes;
+  }
+  
+  // Check localStorage cache
+  try {
+    const cached = localStorage.getItem(CACHE_KEY);
+    if (cached) {
+      const cacheData: EpisodeCache = JSON.parse(cached);
+      if (now < cacheData.expiresAt) {
+        console.log('Using localStorage cache for episodes');
+        // Update memory cache
+        memoryCache = cacheData;
+        return cacheData.episodes;
+      } else {
+        // Cache expired, remove it
+        localStorage.removeItem(CACHE_KEY);
+      }
+    }
+  } catch (error) {
+    console.warn('Error reading from cache:', error);
+    localStorage.removeItem(CACHE_KEY);
+  }
+  
+  return null;
+};
+
+const setCachedEpisodes = (episodes: Episode[]): void => {
+  const now = Date.now();
+  const cacheData: EpisodeCache = {
+    episodes,
+    timestamp: now,
+    expiresAt: now + CACHE_DURATION
+  };
+  
+  // Update memory cache
+  memoryCache = cacheData;
+  
+  // Update localStorage cache
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
+    console.log('Episodes cached successfully');
+  } catch (error) {
+    console.warn('Error writing to cache:', error);
+  }
+};
+
+const clearCache = (): void => {
+  memoryCache = null;
+  try {
+    localStorage.removeItem(CACHE_KEY);
+    console.log('Cache cleared successfully');
+  } catch (error) {
+    console.warn('Error clearing cache:', error);
+  }
+};
+
 // Function to parse duration from seconds to MM:SS format
 const formatDuration = (seconds: string): string => {
   const totalSeconds = parseInt(seconds, 10);
@@ -113,9 +190,19 @@ const parseRSSXML = (xmlText: string): Episode[] => {
   return episodes;
 };
 
-// Function to fetch RSS feed
-export const fetchEpisodes = async (): Promise<Episode[]> => {
+// Function to fetch RSS feed with caching
+export const fetchEpisodes = async (forceRefresh: boolean = false): Promise<Episode[]> => {
+  // Check cache first (unless force refresh is requested)
+  if (!forceRefresh) {
+    const cachedEpisodes = getCachedEpisodes();
+    if (cachedEpisodes) {
+      return cachedEpisodes;
+    }
+  }
+  
   try {
+    console.log('Fetching fresh episodes from RSS feed...');
+    
     // Use a CORS proxy to avoid CORS issues
     const corsProxy = 'https://api.allorigins.win/raw?url=';
     const rssUrl = 'https://feeds.buzzsprout.com/1737669.rss';
@@ -138,10 +225,22 @@ export const fetchEpisodes = async (): Promise<Episode[]> => {
       }
     });
     
+    // Cache the episodes
+    setCachedEpisodes(episodes);
+    
     return episodes;
   } catch (error) {
     console.error('Error fetching RSS feed:', error);
-    // Return mock data as fallback
+    
+    // Try to return cached data as fallback
+    const cachedEpisodes = getCachedEpisodes();
+    if (cachedEpisodes) {
+      console.log('Using cached episodes as fallback');
+      return cachedEpisodes;
+    }
+    
+    // Return mock data as final fallback
+    console.log('Using mock episodes as fallback');
     return getMockEpisodes();
   }
 };
@@ -203,3 +302,42 @@ const getMockEpisodes = (): Episode[] => [
     imageUrl: '/logo.png',
   },
 ];
+
+// Cache utility functions
+export const clearEpisodeCache = (): void => {
+  clearCache();
+};
+
+export const getCacheInfo = (): { hasCache: boolean; expiresAt?: number; cacheAge?: number } => {
+  const now = Date.now();
+  
+  if (memoryCache && now < memoryCache.expiresAt) {
+    return {
+      hasCache: true,
+      expiresAt: memoryCache.expiresAt,
+      cacheAge: now - memoryCache.timestamp
+    };
+  }
+  
+  try {
+    const cached = localStorage.getItem(CACHE_KEY);
+    if (cached) {
+      const cacheData: EpisodeCache = JSON.parse(cached);
+      if (now < cacheData.expiresAt) {
+        return {
+          hasCache: true,
+          expiresAt: cacheData.expiresAt,
+          cacheAge: now - cacheData.timestamp
+        };
+      }
+    }
+  } catch (error) {
+    console.warn('Error reading cache info:', error);
+  }
+  
+  return { hasCache: false };
+};
+
+export const forceRefreshEpisodes = async (): Promise<Episode[]> => {
+  return fetchEpisodes(true);
+};

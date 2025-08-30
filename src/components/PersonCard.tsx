@@ -54,10 +54,10 @@ const PersonCard: React.FC<PersonCardProps> = ({ name, image, onClick }) => {
             sx={{
               width: { xs: 80, sm: 100, md: 120 },
               height: { xs: 80, sm: 100, md: 120 },
-              borderRadius: '50%',
               border: '2px solid black',
               marginBottom: { xs: 1, sm: 1.5, md: 2 },
               objectFit: 'cover',
+              borderRadius: 0,
             }}
           />
         ) : (
@@ -70,6 +70,7 @@ const PersonCard: React.FC<PersonCardProps> = ({ name, image, onClick }) => {
               backgroundColor: 'rgba(0,0,0,0.1)',
               fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
               color: 'black',
+              borderRadius: 0,
             }}
           >
             {name.split(' ').map(n => n[0]).join('')}

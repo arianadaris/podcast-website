@@ -2,8 +2,14 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders 808s & COLD TAKES app', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const logoElement = screen.getByAltText(/808s & COLD TAKES Logo/i);
+  expect(logoElement).toBeInTheDocument();
+});
+
+test('renders enter button', () => {
+  render(<App />);
+  const enterButton = screen.getByText(/ENTER/i);
+  expect(enterButton).toBeInTheDocument();
 });

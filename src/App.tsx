@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import { theme } from './theme/theme';
+import { usePageTitle } from './hooks/usePageTitle';
 import LandingPage from './views/LandingPage';
 import MainPage from './views/MainPage';
 import EpisodesPage from './views/EpisodesPage';
@@ -14,6 +15,14 @@ import PersonPage from './views/PersonPage';
 function App() {
   const [currentPage, setCurrentPage] = useState<'landing' | 'main' | 'episodes' | 'contact' | 'team' | 'interviews' | 'events' | 'person'>('landing');
   const [selectedPersonId, setSelectedPersonId] = useState<string>('');
+
+  // Update page title based on current page
+  usePageTitle(currentPage, selectedPersonId);
+
+  // Set initial title when app loads
+  useEffect(() => {
+    document.title = '808s & COLD TAKES - Welcome';
+  }, []);
 
   const handleEnter = () => {
     setCurrentPage('main');
