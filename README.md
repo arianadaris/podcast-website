@@ -1,46 +1,80 @@
-# Getting Started with Create React App
+# 808s-podcast
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React TypeScript project created with Create React App and TypeScript Project Manager.
 
-## Available Scripts
+## Getting Started
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) using the TypeScript template.
+
+### Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
-
-Runs the app in the development mode.\
+#### `npm start`
+Runs the app in development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+#### `npm test`
+Launches the test runner in interactive watch mode.
 
-### `npm test`
+#### `npm run build`
+Builds the app for production to the `build` folder.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### `npm run eject`
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-### `npm run build`
+## Project Structure
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- `src/` - React TypeScript source files
+- `public/` - Static assets
+- `build/` - Production build output (after running `npm run build`)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Additional Packages Installed
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The following additional packages were installed:
+- mui
+- react-icons
+- react-router-dom
+- styled-components
 
-### `npm run eject`
+## RSS Feed Integration
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The application integrates with the 808's & Cold Takes RSS feed from Buzzsprout to display episodes dynamically. 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Features:
+- **Real-time Episode Loading**: Episodes are fetched from the RSS feed at runtime
+- **Search Functionality**: Users can search through episodes by title and description
+- **Pagination**: Episodes are paginated for better performance
+- **Error Handling**: Graceful fallback to mock data if RSS feed is unavailable
+- **Loading States**: Visual feedback during data fetching
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### RSS Feed Source:
+- **URL**: https://feeds.buzzsprout.com/1737669.rss
+- **Data Extracted**: Episode title, description, publication date, duration, and audio URL
+- **CORS Handling**: Uses a CORS proxy to avoid cross-origin issues
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Implementation Details:
+- **Service**: `src/services/rssService.ts` - Handles RSS feed fetching and parsing
+- **Component**: `src/views/EpisodesPage.tsx` - Displays episodes with search and pagination
+- **Fallback**: Mock data is provided if RSS feed is unavailable
+
+
+## Next Steps
+
+1. Navigate to your project:
+   ```bash
+   cd "D:\Dev\Web Dev\808s-podcast"
+   ```
+
+2. Start the development server:
+   ```bash
+   npm start
+   ```
+
+3. Open [http://localhost:3000](http://localhost:3000) to view your app!
 
 ## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started)
+- [React documentation](https://reactjs.org/)
+- [TypeScript documentation](https://www.typescriptlang.org/)
