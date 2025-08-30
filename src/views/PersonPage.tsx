@@ -35,18 +35,18 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
         'Once interviewed a Grammy winner in a coffee shop'
       ],
       favoriteArtists: [
-        { name: 'Kendrick Lamar', image: '/images/artists/kendrick.jpg' },
-        { name: 'Daft Punk', image: '/images/artists/daftpunk.jpg' },
-        { name: 'Radiohead', image: '/images/artists/radiohead.jpg' },
-        { name: 'Flying Lotus', image: '/images/artists/flyinglotus.jpg' },
-        { name: 'J Dilla', image: '/images/artists/jdilla.jpg' }
+        { name: 'Kendrick Lamar', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
+        { name: 'Daft Punk', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
+        { name: 'Radiohead', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
+        { name: 'Flying Lotus', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
+        { name: 'J Dilla', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' }
       ],
       favoriteAlbums: [
-        { name: 'To Pimp A Butterfly', artist: 'Kendrick Lamar', image: '/images/albums/tpab.jpg' },
-        { name: 'Random Access Memories', artist: 'Daft Punk', image: '/images/albums/ram.jpg' },
-        { name: 'OK Computer', artist: 'Radiohead', image: '/images/albums/okcomputer.jpg' },
-        { name: 'Cosmogramma', artist: 'Flying Lotus', image: '/images/albums/cosmogramma.jpg' },
-        { name: 'Donuts', artist: 'J Dilla', image: '/images/albums/donuts.jpg' }
+        { name: 'To Pimp A Butterfly', artist: 'Kendrick Lamar', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
+        { name: 'Random Access Memories', artist: 'Daft Punk', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
+        { name: 'OK Computer', artist: 'Radiohead', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
+        { name: 'Cosmogramma', artist: 'Flying Lotus', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
+        { name: 'Donuts', artist: 'J Dilla', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' }
       ],
     },
     person2: {
@@ -60,18 +60,18 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
         'Discovered 3 artists who went on to win awards'
       ],
       favoriteArtists: [
-        { name: 'Björk', image: '/images/artists/bjork.jpg' },
-        { name: 'Aphex Twin', image: '/images/artists/aphextwin.jpg' },
-        { name: 'Portishead', image: '/images/artists/portishead.jpg' },
-        { name: 'Massive Attack', image: '/images/artists/massiveattack.jpg' },
-        { name: 'The xx', image: '/images/artists/thexx.jpg' }
+        { name: 'Kendrick Lamar', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
+        { name: 'Daft Punk', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
+        { name: 'Radiohead', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
+        { name: 'Flying Lotus', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
+        { name: 'J Dilla', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' }
       ],
       favoriteAlbums: [
-        { name: 'Homogenic', artist: 'Björk', image: '/images/albums/homogenic.jpg' },
-        { name: 'Selected Ambient Works 85-92', artist: 'Aphex Twin', image: '/images/albums/saw.jpg' },
-        { name: 'Dummy', artist: 'Portishead', image: '/images/albums/dummy.jpg' },
-        { name: 'Mezzanine', artist: 'Massive Attack', image: '/images/albums/mezzanine.jpg' },
-        { name: 'xx', artist: 'The xx', image: '/images/albums/xx.jpg' }
+        { name: 'To Pimp A Butterfly', artist: 'Kendrick Lamar', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
+        { name: 'Random Access Memories', artist: 'Daft Punk', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
+        { name: 'OK Computer', artist: 'Radiohead', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
+        { name: 'Cosmogramma', artist: 'Flying Lotus', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
+        { name: 'Donuts', artist: 'J Dilla', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' }
       ],
     },
     person3: {
@@ -85,18 +85,18 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
         'Can identify any song by its waveform'
       ],
       favoriteArtists: [
-        { name: 'Nine Inch Nails', image: '/images/artists/nin.jpg' },
-        { name: 'Tool', image: '/images/artists/tool.jpg' },
-        { name: 'Depeche Mode', image: '/images/artists/depechemode.jpg' },
-        { name: 'Kraftwerk', image: '/images/artists/kraftwerk.jpg' },
-        { name: 'Pink Floyd', image: '/images/artists/pinkfloyd.jpg' }
+        { name: 'Kendrick Lamar', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
+        { name: 'Daft Punk', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
+        { name: 'Radiohead', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
+        { name: 'Flying Lotus', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
+        { name: 'J Dilla', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' }
       ],
       favoriteAlbums: [
-        { name: 'The Downward Spiral', artist: 'Nine Inch Nails', image: '/images/albums/downwardspiral.jpg' },
-        { name: 'Lateralus', artist: 'Tool', image: '/images/albums/lateralus.jpg' },
-        { name: 'Violator', artist: 'Depeche Mode', image: '/images/albums/violator.jpg' },
-        { name: 'Trans-Europe Express', artist: 'Kraftwerk', image: '/images/albums/trans.jpg' },
-        { name: 'Dark Side of the Moon', artist: 'Pink Floyd', image: '/images/albums/darkside.jpg' }
+        { name: 'To Pimp A Butterfly', artist: 'Kendrick Lamar', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
+        { name: 'Random Access Memories', artist: 'Daft Punk', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
+        { name: 'OK Computer', artist: 'Radiohead', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
+        { name: 'Cosmogramma', artist: 'Flying Lotus', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
+        { name: 'Donuts', artist: 'J Dilla', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' }
       ],
     },
     person4: {
@@ -110,18 +110,18 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
         'Once got backstage at a major festival using only a smile'
       ],
       favoriteArtists: [
-        { name: 'The Weeknd', image: '/images/artists/theweeknd.jpg' },
-        { name: 'Lorde', image: '/images/artists/lorde.jpg' },
-        { name: 'Frank Ocean', image: '/images/artists/frankocean.jpg' },
-        { name: 'SZA', image: '/images/artists/sza.jpg' },
-        { name: 'Tyler, The Creator', image: '/images/artists/tyler.jpg' }
+        { name: 'Kendrick Lamar', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
+        { name: 'Daft Punk', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
+        { name: 'Radiohead', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
+        { name: 'Flying Lotus', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
+        { name: 'J Dilla', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' }
       ],
       favoriteAlbums: [
-        { name: 'After Hours', artist: 'The Weeknd', image: '/images/albums/afterhours.jpg' },
-        { name: 'Melodrama', artist: 'Lorde', image: '/images/albums/melodrama.jpg' },
-        { name: 'Blonde', artist: 'Frank Ocean', image: '/images/albums/blonde.jpg' },
-        { name: 'Ctrl', artist: 'SZA', image: '/images/albums/ctrl.jpg' },
-        { name: 'IGOR', artist: 'Tyler, The Creator', image: '/images/albums/igor.jpg' }
+        { name: 'To Pimp A Butterfly', artist: 'Kendrick Lamar', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
+        { name: 'Random Access Memories', artist: 'Daft Punk', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
+        { name: 'OK Computer', artist: 'Radiohead', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
+        { name: 'Cosmogramma', artist: 'Flying Lotus', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
+        { name: 'Donuts', artist: 'J Dilla', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' }
       ],
     },
   };
@@ -240,7 +240,11 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
          >
                        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 4 }}>
                              {/* Image with Microphone Overlay */}
-               <Box sx={{ flex: { xs: 'none', md: '0 0 200px' }, textAlign: 'center', position: 'relative' }}>
+               <Box sx={{ 
+                 flex: { xs: 'none', md: '0 0 200px' }, 
+                 textAlign: 'center', 
+                 position: 'relative' 
+               }}>
                  {!imageError ? (
                    <Box sx={{ position: 'relative' }}>
                      <Box
@@ -263,6 +267,7 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
                          color: 'black',
                          backgroundColor: 'primary.light',
                          border: '1px solid black',
+                         display: { xs: 'none', md: 'flex' },
                          '&:hover': {
                            backgroundColor: 'rgba(0,0,0,0.1)',
                          },
@@ -282,6 +287,7 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
                          backgroundColor: 'rgba(0,0,0,0.1)',
                          fontSize: '5rem',
                          color: 'black',
+                         margin: '0 auto',
                        }}
                      >
                        {person.name.split(' ').map(n => n[0]).join('')}
@@ -294,6 +300,7 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
                          color: 'black',
                          backgroundColor: 'primary.light',
                          border: '1px solid black',
+                         display: { xs: 'none', md: 'flex' },
                          '&:hover': {
                            backgroundColor: 'rgba(0,0,0,0.1)',
                          },
@@ -306,17 +313,40 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
                 </Box>
                 
                 {/* Name, Social Handle, and Bullet Points */}
-                <Box sx={{ flex: { xs: 'none', md: '1' } }}>
-                 <Typography
-                   variant="h4"
-                   sx={{
-                     color: 'black',
-                     fontWeight: 600,
-                     marginBottom: 1,
-                   }}
-                 >
-                   {person.name}
-                 </Typography>
+                <Box sx={{ 
+                  flex: { xs: 'none', md: '1' },
+                  textAlign: { xs: 'center', md: 'left' }
+                }}>
+                 <Box sx={{ 
+                   display: 'flex', 
+                   alignItems: 'center', 
+                   justifyContent: { xs: 'center', md: 'flex-start' },
+                   gap: 1,
+                   marginBottom: 1
+                 }}>
+                   <Typography
+                     variant="h4"
+                     sx={{
+                       color: 'black',
+                       fontWeight: 600,
+                     }}
+                   >
+                     {person.name}
+                   </Typography>
+                   <IconButton
+                     sx={{
+                       color: 'black',
+                       backgroundColor: 'primary.light',
+                       border: '1px solid black',
+                       display: { xs: 'flex', md: 'none' },
+                       '&:hover': {
+                         backgroundColor: 'rgba(0,0,0,0.1)',
+                       },
+                     }}
+                   >
+                     <Mic />
+                   </IconButton>
+                 </Box>
                 <Typography
                   variant="body1"
                   sx={{
@@ -334,12 +364,14 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
                   padding: 0, 
                   margin: 0,
                   marginBottom: 3,
+                  textAlign: { xs: 'center', md: 'left' }
                 }}>
                   <Box component="li" sx={{
                     color: 'black',
                     marginBottom: 1,
                     display: 'flex',
                     alignItems: 'flex-start',
+                    justifyContent: { xs: 'center', md: 'flex-start' },
                     '&::before': {
                       content: '"•"',
                       color: 'black',
@@ -359,6 +391,7 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
                       marginBottom: 1,
                       display: 'flex',
                       alignItems: 'flex-start',
+                      justifyContent: { xs: 'center', md: 'flex-start' },
                       '&::before': {
                         content: '"•"',
                         color: 'black',
@@ -389,7 +422,22 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
                >
                  Favorite Artists
                </Typography>
-               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+               <Box sx={{ 
+                 display: 'flex', 
+                 gap: { xs: 2, sm: 1 },
+                 overflowX: { xs: 'auto', sm: 'visible' },
+                 paddingBottom: { xs: 1, sm: 0 },
+                 '&::-webkit-scrollbar': {
+                   height: '4px',
+                 },
+                 '&::-webkit-scrollbar-track': {
+                   backgroundColor: 'rgba(0,0,0,0.1)',
+                 },
+                 '&::-webkit-scrollbar-thumb': {
+                   backgroundColor: 'rgba(0,0,0,0.3)',
+                   borderRadius: '2px',
+                 },
+               }}>
                  {person.favoriteArtists.map((artist, index) => (
                    <Box
                      key={index}
@@ -397,7 +445,8 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
                        display: 'flex',
                        flexDirection: 'column',
                        alignItems: 'center',
-                       flex: 1,
+                       flex: { xs: '0 0 auto', sm: 1 },
+                       minWidth: { xs: '80px', sm: 'auto' },
                      }}
                    >
                      <Box
@@ -405,8 +454,8 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
                        src={artist.image}
                        alt={artist.name}
                        sx={{
-                         width: 60,
-                         height: 60,
+                         width: { xs: 70, sm: 60 },
+                         height: { xs: 70, sm: 60 },
                          border: '1px solid black',
                          objectFit: 'cover',
                          marginBottom: 1,
@@ -417,8 +466,12 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
                        sx={{
                          color: 'black',
                          textAlign: 'center',
-                         fontSize: '0.7rem',
+                         fontSize: { xs: '0.75rem', sm: '0.7rem' },
                          lineHeight: 1.2,
+                         maxWidth: { xs: '80px', sm: 'none' },
+                         overflow: 'hidden',
+                         textOverflow: 'ellipsis',
+                         whiteSpace: 'nowrap',
                        }}
                      >
                        {artist.name}
@@ -440,7 +493,22 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
                >
                  Favorite Albums
                </Typography>
-               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+               <Box sx={{ 
+                 display: 'flex', 
+                 gap: { xs: 2, sm: 1 },
+                 overflowX: { xs: 'auto', sm: 'visible' },
+                 paddingBottom: { xs: 1, sm: 0 },
+                 '&::-webkit-scrollbar': {
+                   height: '4px',
+                 },
+                 '&::-webkit-scrollbar-track': {
+                   backgroundColor: 'rgba(0,0,0,0.1)',
+                 },
+                 '&::-webkit-scrollbar-thumb': {
+                   backgroundColor: 'rgba(0,0,0,0.3)',
+                   borderRadius: '2px',
+                 },
+               }}>
                  {person.favoriteAlbums.map((album, index) => (
                    <Box
                      key={index}
@@ -448,7 +516,8 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
                        display: 'flex',
                        flexDirection: 'column',
                        alignItems: 'center',
-                       flex: 1,
+                       flex: { xs: '0 0 auto', sm: 1 },
+                       minWidth: { xs: '80px', sm: 'auto' },
                      }}
                    >
                      <Box
@@ -456,8 +525,8 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
                        src={album.image}
                        alt={album.name}
                        sx={{
-                         width: 60,
-                         height: 60,
+                         width: { xs: 70, sm: 60 },
+                         height: { xs: 70, sm: 60 },
                          border: '1px solid black',
                          objectFit: 'cover',
                          marginBottom: 1,
@@ -468,8 +537,13 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
                        sx={{
                          color: 'black',
                          textAlign: 'center',
-                         fontSize: '0.7rem',
+                         fontSize: { xs: '0.75rem', sm: '0.7rem' },
                          lineHeight: 1.2,
+                         maxWidth: { xs: '80px', sm: 'none' },
+                         overflow: 'hidden',
+                         textOverflow: 'ellipsis',
+                         whiteSpace: 'nowrap',
+                         marginBottom: 0.5,
                        }}
                      >
                        {album.name}
@@ -479,9 +553,13 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
                        sx={{
                          color: 'black',
                          textAlign: 'center',
-                         fontSize: '0.6rem',
+                         fontSize: { xs: '0.65rem', sm: '0.6rem' },
                          opacity: 0.8,
                          lineHeight: 1.2,
+                         maxWidth: { xs: '80px', sm: 'none' },
+                         overflow: 'hidden',
+                         textOverflow: 'ellipsis',
+                         whiteSpace: 'nowrap',
                        }}
                      >
                        {album.artist}
