@@ -1,3 +1,5 @@
+<img width="1496" height="902" alt="image" src="https://github.com/user-attachments/assets/40fcaaa0-4e9f-42c3-ab2d-852e006eeacc" />
+
 # 808s-podcast
 
 A React TypeScript project created with Create React App and TypeScript Project Manager.
