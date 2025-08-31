@@ -41,7 +41,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnter }) => {
             sx={{
               width: 300,
               height: 300,
-              margin: '0 0 40px -17px',
+              margin: { xs: '0 0 40px -17px', md: '0 auto 40px' },
               display: 'block',
             }}
           />
