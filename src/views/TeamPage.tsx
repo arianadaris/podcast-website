@@ -71,6 +71,7 @@ const TeamPage: React.FC<TeamPageProps> = ({ onBack, onNavigateToPerson }) => {
                 color: 'black',
                 backgroundColor: 'primary.light',
                 borderColor: 'black',
+                borderRadius: 0,
                 fontSize: { xs: '0.875rem', sm: '1rem' },
                 padding: { xs: '6px 12px', sm: '8px 16px' },
                 '&:hover': {

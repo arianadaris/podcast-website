@@ -124,6 +124,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
                 color: 'black',
                 backgroundColor: 'primary.light',
                 borderColor: 'black',
+                borderRadius: 0,
                 fontSize: { xs: '0.875rem', sm: '1rem' },
                 padding: { xs: '6px 12px', sm: '8px 16px' },
                 '&:hover': {
@@ -187,6 +188,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
                     '& .MuiOutlinedInput-root': {
                       backgroundColor: 'rgba(255, 255, 255, 0.3)',
                       border: '2px solid black',
+                      borderRadius: 0,
                       '& fieldset': {
                         borderColor: 'transparent',
                       },
@@ -213,6 +215,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
                     '& .MuiOutlinedInput-root': {
                       backgroundColor: 'rgba(255, 255, 255, 0.3)',
                       border: '2px solid black',
+                      borderRadius: 0,
                       '& fieldset': {
                         borderColor: 'transparent',
                       },
@@ -240,6 +243,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
                     '& .MuiOutlinedInput-root': {
                       backgroundColor: 'rgba(255, 255, 255, 0.3)',
                       border: '2px solid black',
+                      borderRadius: 0,
                       '& fieldset': {
                         borderColor: 'transparent',
                       },
@@ -264,6 +268,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
                     backgroundColor: 'black',
                     color: 'white',
                     border: '2px solid black',
+                    borderRadius: 0,
                     fontWeight: 600,
                     padding: '12px 24px',
                     '&:hover': {
@@ -290,6 +295,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
                     '& .MuiOutlinedInput-root': {
                       backgroundColor: 'rgba(255, 255, 255, 0.3)',
                       border: '2px solid black',
+                      borderRadius: 0,
                       '& fieldset': {
                         borderColor: 'transparent',
                       },
@@ -316,6 +322,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
                     '& .MuiOutlinedInput-root': {
                       backgroundColor: 'rgba(255, 255, 255, 0.3)',
                       border: '2px solid black',
+                      borderRadius: 0,
                       '& fieldset': {
                         borderColor: 'transparent',
                       },
@@ -342,6 +349,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
                     '& .MuiOutlinedInput-root': {
                       backgroundColor: 'rgba(255, 255, 255, 0.3)',
                       border: '2px solid black',
+                      borderRadius: 0,
                       '& fieldset': {
                         borderColor: 'transparent',
                       },
@@ -368,6 +376,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
                     '& .MuiOutlinedInput-root': {
                       backgroundColor: 'rgba(255, 255, 255, 0.3)',
                       border: '2px solid black',
+                      borderRadius: 0,
                       '& fieldset': {
                         borderColor: 'transparent',
                       },
@@ -395,6 +404,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
                     '& .MuiOutlinedInput-root': {
                       backgroundColor: 'rgba(255, 255, 255, 0.3)',
                       border: '2px solid black',
+                      borderRadius: 0,
                       '& fieldset': {
                         borderColor: 'transparent',
                       },
@@ -421,6 +431,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
                     '& .MuiOutlinedInput-root': {
                       backgroundColor: 'rgba(255, 255, 255, 0.3)',
                       border: '2px solid black',
+                      borderRadius: 0,
                       '& fieldset': {
                         borderColor: 'transparent',
                       },
@@ -448,6 +459,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
                     '& .MuiOutlinedInput-root': {
                       backgroundColor: 'rgba(255, 255, 255, 0.3)',
                       border: '2px solid black',
+                      borderRadius: 0,
                       '& fieldset': {
                         borderColor: 'transparent',
                       },
@@ -472,6 +484,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
                     backgroundColor: 'black',
                     color: 'white',
                     border: '2px solid black',
+                    borderRadius: 0,
                     fontWeight: 600,
                     padding: '12px 24px',
                     '&:hover': {

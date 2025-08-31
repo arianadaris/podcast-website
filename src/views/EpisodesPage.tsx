@@ -139,6 +139,7 @@ const EpisodesPage: React.FC<EpisodesPageProps> = ({ onBack }) => {
                 color: 'black',
                 backgroundColor: 'primary.light',
                 borderColor: 'black',
+                borderRadius: 0,
                 fontSize: { xs: '0.875rem', sm: '1rem' },
                 padding: { xs: '6px 12px', sm: '8px 16px' },
                 '&:hover': {
@@ -179,6 +180,7 @@ const EpisodesPage: React.FC<EpisodesPageProps> = ({ onBack }) => {
               ),
               sx: {
                 border: '2px solid black',
+                borderRadius: 0,
                 backgroundColor: 'primary.light',
                 '& .MuiOutlinedInput-notchedOutline': {
                   borderColor: 'transparent',
@@ -226,36 +228,64 @@ const EpisodesPage: React.FC<EpisodesPageProps> = ({ onBack }) => {
                 },
               }}
             >
-                             <CardContent sx={{ padding: 3 }}>
-                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 2 }}>
-                                       {/* Episode Image */}
-                    <Box
-                      component="img"
-                      src={episode.imageUrl || '/logo.png'}
-                      alt={`${episode.title} thumbnail`}
-                      sx={{
-                        width: 120,
-                        height: 120,
-                        border: '2px solid black',
-                        borderRadius: 0,
-                        marginRight: 3,
-                        flexShrink: 0,
-                        objectFit: 'cover',
-                      }}
-                      onError={(e) => {
-                        // Fallback to logo if image fails to load
-                        const target = e.target as HTMLImageElement;
-                        target.src = '/logo.png';
-                      }}
-                    />
-                   <Box sx={{ flex: 1 }}>
+              <CardContent sx={{ padding: 3 }}>
+                {/* Mobile Layout */}
+                 <Box sx={{ 
+                   display: { xs: 'flex', md: 'none' }, 
+                   flexDirection: 'column', 
+                   alignItems: 'center',
+                   textAlign: 'center'
+                 }}>
+                   {/* Episode Image Container with Overlay Play Button */}
+                   <Box sx={{ position: 'relative', marginBottom: 2 }}>
+                     <Box
+                       component="img"
+                       src={episode.imageUrl || '/logo.png'}
+                       alt={`${episode.title} thumbnail`}
+                       sx={{
+                         width: { xs: 200, sm: 180 },
+                         height: { xs: 200, sm: 180 },
+                         border: '2px solid black',
+                         borderRadius: 0,
+                         objectFit: 'cover',
+                       }}
+                       onError={(e) => {
+                         // Fallback to logo if image fails to load
+                         const target = e.target as HTMLImageElement;
+                         target.src = '/logo.png';
+                       }}
+                     />
+                     {/* Play Button Overlay - Bottom Right Corner */}
+                     <IconButton
+                       onClick={() => handlePlayEpisode(episode)}
+                       sx={{
+                         position: 'absolute',
+                         bottom: 15,
+                         right: 8,
+                         border: '2px solid black',
+                         color: 'black',
+                         width: 48,
+                         height: 48,
+                         backgroundColor: 'rgba(255, 255, 255, 0.75)',
+                         '&:hover': {
+                           backgroundColor: 'rgba(255, 255, 255, 1)',
+                         },
+                         transition: 'all 0.2s ease',
+                       }}
+                     >
+                       <PlayArrow sx={{ fontSize: 24 }} />
+                     </IconButton>
+                   </Box>
+                   
+                   {/* Content Below Image on Mobile */}
+                   <Box sx={{ width: '100%' }}>
                      <Typography variant="h5" sx={{ marginBottom: 1, fontWeight: 600 }}>
                        {episode.title}
                      </Typography>
                      <Typography variant="body1" sx={{ marginBottom: 2 }}>
                        {episode.description}
                      </Typography>
-                     <Stack direction="row" spacing={2} alignItems="center">
+                     <Stack direction="row" spacing={2} alignItems="center" justifyContent="center">
                        <Chip
                          label={formatDate(episode.date)}
                          size="small"
@@ -269,6 +299,56 @@ const EpisodesPage: React.FC<EpisodesPageProps> = ({ onBack }) => {
                        />
                      </Stack>
                    </Box>
+                 </Box>
+
+                {/* Desktop Layout */}
+                <Box sx={{ 
+                  display: { xs: 'none', md: 'flex' }, 
+                  justifyContent: 'space-between', 
+                  alignItems: 'flex-start', 
+                  marginBottom: 2 
+                }}>
+                  {/* Episode Image */}
+                  <Box
+                    component="img"
+                    src={episode.imageUrl || '/logo.png'}
+                    alt={`${episode.title} thumbnail`}
+                    sx={{
+                      width: 120,
+                      height: 120,
+                      border: '2px solid black',
+                      borderRadius: 0,
+                      marginRight: 3,
+                      flexShrink: 0,
+                      objectFit: 'cover',
+                    }}
+                    onError={(e) => {
+                      // Fallback to logo if image fails to load
+                      const target = e.target as HTMLImageElement;
+                      target.src = '/logo.png';
+                    }}
+                  />
+                  <Box sx={{ flex: 1 }}>
+                    <Typography variant="h5" sx={{ marginBottom: 1, fontWeight: 600 }}>
+                      {episode.title}
+                    </Typography>
+                    <Typography variant="body1" sx={{ marginBottom: 2 }}>
+                      {episode.description}
+                    </Typography>
+                    <Stack direction="row" spacing={2} alignItems="center">
+                      <Chip
+                        label={formatDate(episode.date)}
+                        size="small"
+                        sx={{ backgroundColor: 'transparent', border: '2px solid black', color: 'black' }}
+                      />
+                      <Chip
+                        label={episode.length}
+                        size="small"
+                        variant="outlined"
+                        sx={{ border: '2px solid black', color: 'black' }}
+                      />
+                    </Stack>
+                  </Box>
                   <IconButton
                     onClick={() => handlePlayEpisode(episode)}
                     sx={{

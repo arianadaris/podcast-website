@@ -112,6 +112,7 @@ const InterviewsPage: React.FC<InterviewsPageProps> = ({ onBack, onNavigateToPer
                   color: 'black',
                   backgroundColor: 'primary.light',
                   borderColor: 'black',
+                  borderRadius: 0,
                   fontSize: { xs: '0.875rem', sm: '1rem' },
                   padding: { xs: '6px 12px', sm: '8px 16px' },
                   '&:hover': {
@@ -149,6 +150,7 @@ const InterviewsPage: React.FC<InterviewsPageProps> = ({ onBack, onNavigateToPer
                   color: 'black',
                   backgroundColor: 'primary.light',
                   borderColor: 'black',
+                  borderRadius: 0,
                   '& fieldset': {
                     borderColor: 'black',
                   },
@@ -201,6 +203,7 @@ const InterviewsPage: React.FC<InterviewsPageProps> = ({ onBack, onNavigateToPer
                 sx={{
                   color: 'black',
                   backgroundColor: 'primary.light',
+                  borderRadius: 0,
                   borderColor: 'black',
                   '& .MuiOutlinedInput-notchedOutline': {
                     borderColor: 'black',

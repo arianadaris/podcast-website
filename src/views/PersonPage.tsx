@@ -186,6 +186,7 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
                 color: 'black',
                 backgroundColor: 'primary.light',
                 borderColor: 'black',
+                borderRadius: 0,
                 fontSize: { xs: '0.875rem', sm: '1rem' },
                 padding: { xs: '6px 12px', sm: '8px 16px' },
                 '&:hover': {
