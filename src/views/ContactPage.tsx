@@ -59,7 +59,6 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
     socialMediaLinks: '',
     musicLinks: '',
     aboutYourself: '',
-    preferredDates: '',
     message: '',
   });
 
@@ -423,33 +422,6 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
                 />
                 <TextField
                   fullWidth
-                  label="Preferred Interview Dates"
-                  value={interviewForm.preferredDates}
-                  onChange={handleInterviewFormChange('preferredDates')}
-                  placeholder="e.g., Weekdays after 6 PM, Weekends anytime"
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.3)',
-                      border: '2px solid black',
-                      borderRadius: 0,
-                      '& fieldset': {
-                        borderColor: 'transparent',
-                      },
-                      '&:hover fieldset': {
-                        borderColor: 'transparent',
-                      },
-                      '&.Mui-focused fieldset': {
-                        borderColor: 'transparent',
-                      },
-                    },
-                    '& .MuiInputLabel-root': {
-                      color: 'black',
-                      fontWeight: 600,
-                    },
-                  }}
-                />
-                <TextField
-                  fullWidth
                   label="Message"
                   multiline
                   rows={4}
@@ -492,7 +464,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
                     },
                   }}
                 >
-                  Book Interview
+                  Request Interview
                 </Button>
               </Stack>
             </Box>
