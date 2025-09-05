@@ -2,27 +2,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
-  Button,
-  Card,
-  CardContent,
   Typography,
   Container,
-  Avatar,
   Stack,
-  IconButton,
-  Divider,
 } from '@mui/material';
-import {
-  PlayArrow,
-  Headphones,
-  Description,
-  Email,
-  Instagram,
-  Twitter,
-  YouTube,
-  MusicNote,
-  Podcasts,
-} from '@mui/icons-material';
+import Socials from '../components/Socials';
 
 const MainPage: React.FC = () => {
   const navigate = useNavigate();
@@ -54,13 +38,6 @@ const MainPage: React.FC = () => {
     },
   ];
 
-  const socialLinks = [
-    { icon: <Instagram />, href: '#', label: 'Instagram' },
-    { icon: <Twitter />, href: '#', label: 'Twitter' },
-    { icon: <YouTube />, href: '#', label: 'YouTube' },
-    { icon: <MusicNote />, href: '#', label: 'Spotify' },
-    { icon: <Podcasts />, href: '#', label: 'Apple Podcasts' },
-  ];
 
   return (
     <Box
@@ -124,35 +101,7 @@ const MainPage: React.FC = () => {
         </Stack>
 
         {/* Social Links */}
-        <Card sx={{ marginBottom: 3, backgroundColor: 'transparent', boxShadow: 'none' }}>
-          <CardContent sx={{ padding: 0 }}>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                gap: 1,
-                flexWrap: 'wrap',
-              }}
-            >
-              {socialLinks.map((social, index) => (
-                <IconButton
-                  key={index}
-                  sx={{
-                    color: 'black',
-                    '&:hover': {
-                      color: 'rgba(0,0,0,0.75)',
-                    },
-                    transition: 'all 0.3s ease',
-                  }}
-                  onClick={() => window.open(social.href, '_blank')}
-                  aria-label={social.label}
-                >
-                  {social.icon}
-                </IconButton>
-              ))}
-            </Box>
-          </CardContent>
-        </Card>
+        <Socials sx={{ marginBottom: 3 }} />
       </Container>
     </Box>
   );

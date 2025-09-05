@@ -16,6 +16,7 @@ import {
   Send,
   CalendarToday,
 } from '@mui/icons-material';
+import Socials from '../components/Socials';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -584,6 +585,9 @@ const ContactPage: React.FC = () => {
             </Box>
           </TabPanel>
         </Paper>
+
+        {/* Social Links */}
+        <Socials sx={{ marginTop: 3 }} />
       </Container>
     </Box>
   );

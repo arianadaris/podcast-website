@@ -7,6 +7,7 @@ import {
   Container,
   Stack,
 } from '@mui/material';
+import Socials from '../components/Socials';
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
@@ -77,6 +78,9 @@ const LandingPage: React.FC = () => {
           >
             ENTER
           </Button>
+
+          {/* Social Links */}
+          <Socials sx={{ marginTop: 4 }} />
         </Box>
       </Container>
     </Box>

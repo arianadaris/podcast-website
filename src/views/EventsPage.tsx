@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import EventCard from '../components/EventCard';
+import Socials from '../components/Socials';
 import eventsData from '../assets/data/events.json';
 
 const EventsPage: React.FC = () => {
@@ -122,6 +123,9 @@ const EventsPage: React.FC = () => {
             </Box>
           )}
         </Box>
+
+        {/* Social Links */}
+        <Socials sx={{ marginTop: 4 }} />
       </Container>
     </Box>
   );

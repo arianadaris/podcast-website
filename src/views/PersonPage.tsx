@@ -10,6 +10,7 @@ import {
   IconButton,
 } from '@mui/material';
 import { ArrowBack, ArrowForward, Mic } from '@mui/icons-material';
+import Socials from '../components/Socials';
 import teamData from '../assets/data/team.json';
 
 const PersonPage: React.FC = () => {
@@ -473,6 +474,9 @@ const PersonPage: React.FC = () => {
                </Box>
              </Box>
           </Paper>
+
+          {/* Social Links */}
+          <Socials sx={{ marginTop: 4 }} />
       </Container>
     </Box>
   );

@@ -23,6 +23,7 @@ import {
   KeyboardArrowUp,
 } from '@mui/icons-material';
 import { fetchEpisodes, Episode } from '../services/rssService';
+import Socials from '../components/Socials';
 
 const EpisodesPage: React.FC = () => {
   const navigate = useNavigate();
@@ -438,6 +439,9 @@ const EpisodesPage: React.FC = () => {
             </Button>
           </Box>
         )}
+
+        {/* Social Links */}
+        <Socials sx={{ marginTop: 4 }} />
       </Container>
     </Box>
   );

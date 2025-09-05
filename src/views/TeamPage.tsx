@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import PersonCard from '../components/PersonCard';
+import Socials from '../components/Socials';
 import teamData from '../assets/data/team.json';
 
 const TeamPage: React.FC = () => {
@@ -95,6 +96,9 @@ const TeamPage: React.FC = () => {
             ))}
           </Box>
         </Box>
+
+        {/* Social Links */}
+        <Socials sx={{ marginTop: 4 }} />
       </Container>
     </Box>
   );

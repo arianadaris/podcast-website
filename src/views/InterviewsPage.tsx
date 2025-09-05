@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { ArrowBack, Search, Clear } from '@mui/icons-material';
 import PersonCard from '../components/PersonCard';
+import Socials from '../components/Socials';
 import interviewsData from '../assets/data/interviews.json';
 
 const InterviewsPage: React.FC = () => {
@@ -233,6 +234,9 @@ const InterviewsPage: React.FC = () => {
             ))}
           </Box>
         </Box>
+
+        {/* Social Links */}
+        <Socials sx={{ marginTop: 4 }} />
       </Container>
     </Box>
   );
