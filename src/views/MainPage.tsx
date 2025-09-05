@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -23,41 +24,33 @@ import {
   Podcasts,
 } from '@mui/icons-material';
 
-interface MainPageProps {
-  onBack: () => void;
-  onNavigateToEpisodes: () => void;
-  onNavigateToContact: () => void;
-  onNavigateToTeam: () => void;
-  onNavigateToInterviews: () => void;
-  onNavigateToEvents: () => void;
-}
-
-const MainPage: React.FC<MainPageProps> = ({ onBack, onNavigateToEpisodes, onNavigateToContact, onNavigateToTeam, onNavigateToInterviews, onNavigateToEvents }) => {
+const MainPage: React.FC = () => {
+  const navigate = useNavigate();
   const links = [
     {
       title: 'Team',
-      href: '#',
-      onClick: onNavigateToTeam,
+      href: '/team',
+      onClick: () => navigate('/team'),
     },
     {
       title: 'Episodes',
-      href: '#',
-      onClick: onNavigateToEpisodes,
+      href: '/episodes',
+      onClick: () => navigate('/episodes'),
     },
     {
       title: 'Interviews',
-      href: '#',
-      onClick: onNavigateToInterviews,
+      href: '/interviews',
+      onClick: () => navigate('/interviews'),
     },
     {
       title: 'Events',
-      href: '#',
-      onClick: onNavigateToEvents,
+      href: '/events',
+      onClick: () => navigate('/events'),
     },
     {
       title: 'Contact',
-      href: '#',
-      onClick: onNavigateToContact,
+      href: '/contact',
+      onClick: () => navigate('/contact'),
     },
   ];
 
@@ -90,11 +83,13 @@ const MainPage: React.FC<MainPageProps> = ({ onBack, onNavigateToEpisodes, onNav
             component="img"
             src="/logo.png"
             alt="808s & COLD TAKES Logo"
+            onClick={() => navigate('/main')}
             sx={{
               width: 200,
               height: 200,
               margin: '0 auto 16px',
               display: 'block',
+              cursor: 'pointer',
             }}
           />
         </Box>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -8,63 +9,13 @@ import {
 } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import EventCard from '../components/EventCard';
+import eventsData from '../assets/data/events.json';
 
-interface EventsPageProps {
-  onBack: () => void;
-}
-
-const EventsPage: React.FC<EventsPageProps> = ({ onBack }) => {
-  // Sample events data - in a real app, this would come from an API or database
-  const events = [
-    {
-      id: 'event1',
-      name: 'Podcast Live Recording',
-      location: 'The Blue Room, Downtown',
-      date: 'December 15, 2024',
-      time: '7:00 PM',
-      attendingMembers: ['Alex Johnson', 'Sarah Chen', 'Mike Rodriguez'],
-      description: 'Join us for a live recording of our latest episode where we discuss the future of hip-hop production.',
-    },
-    {
-      id: 'event2',
-      name: 'Music Production Workshop',
-      location: 'Studio 808, Music District',
-      date: 'December 20, 2024',
-      time: '2:00 PM',
-      attendingMembers: ['Alex Johnson', 'Emily Davis'],
-      description: 'Learn the basics of 808 drum programming and modern beat making techniques.',
-    },
-    {
-      id: 'event3',
-      name: 'Artist Interview Session',
-      location: 'The Podcast Studio',
-      date: 'December 28, 2024',
-      time: '6:30 PM',
-      attendingMembers: ['Sarah Chen', 'Mike Rodriguez', 'Emily Davis'],
-      description: 'Exclusive interview with upcoming hip-hop producer discussing their creative process.',
-    },
-    {
-      id: 'event4',
-      name: 'New Year\'s Eve Special',
-      location: 'Club Bassline',
-      date: 'December 31, 2024',
-      time: '9:00 PM',
-      attendingMembers: ['Alex Johnson', 'Sarah Chen', 'Mike Rodriguez', 'Emily Davis'],
-      description: 'Ring in the new year with our special live podcast recording featuring guest DJs and producers.',
-    },
-    {
-      id: 'event5',
-      name: 'Producer Meet & Greet',
-      location: 'Vinyl Records Store',
-      date: 'January 5, 2025',
-      time: '4:00 PM',
-      attendingMembers: ['Alex Johnson', 'Sarah Chen'],
-      description: 'Meet local producers and share your music. Networking event for the hip-hop community.',
-    },
-  ];
+const EventsPage: React.FC = () => {
+  const navigate = useNavigate();
 
   // Sort events by date (soonest first)
-  const sortedEvents = [...events].sort((a, b) => {
+  const sortedEvents = [...eventsData].sort((a, b) => {
     const dateA = new Date(a.date);
     const dateB = new Date(b.date);
     return dateA.getTime() - dateB.getTime();
@@ -88,17 +39,19 @@ const EventsPage: React.FC<EventsPageProps> = ({ onBack }) => {
             component="img"
             src="/logo.png"
             alt="808s & COLD TAKES Logo"
+            onClick={() => navigate('/main')}
             sx={{
               width: 150,
               height: 150,
               margin: '0 auto 16px',
               display: 'block',
+              cursor: 'pointer',
             }}
           />
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative' }}>
             <Button
               startIcon={<ArrowBack />}
-              onClick={onBack}
+              onClick={() => navigate('/main')}
               sx={{
                 color: 'black',
                 backgroundColor: 'primary.light',

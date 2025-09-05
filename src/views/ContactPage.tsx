@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -15,10 +16,6 @@ import {
   Send,
   CalendarToday,
 } from '@mui/icons-material';
-
-interface ContactPageProps {
-  onBack: () => void;
-}
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -46,7 +43,8 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
+const ContactPage: React.FC = () => {
+  const navigate = useNavigate();
   const [tabValue, setTabValue] = useState(0);
   const [generalForm, setGeneralForm] = useState({
     name: '',
@@ -54,13 +52,15 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
     message: '',
   });
   const [interviewForm, setInterviewForm] = useState({
-    name: '',
+    officialName: '',
     email: '',
-    socialMediaLinks: '',
-    musicLinks: '',
-    aboutYourself: '',
-    message: '',
+    musicWorkExample: '',
+    availability: '',
+    specificTopics: '',
+    previousInterviews: '',
+    additionalDetails: '',
   });
+  const [interviewSubmitted, setInterviewSubmitted] = useState(false);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -85,9 +85,10 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
     console.log('Sending general message:', generalForm);
   };
 
-  const handleBookInterview = () => {
-    // TODO: Implement book interview functionality
+  const handleRequestInterview = () => {
+    // TODO: Implement request interview functionality
     console.log('Booking interview:', interviewForm);
+    setInterviewSubmitted(true);
   };
 
   return (
@@ -108,17 +109,19 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
             component="img"
             src="/logo.png"
             alt="808s & COLD TAKES Logo"
+            onClick={() => navigate('/main')}
             sx={{
               width: 150,
               height: 150,
               margin: '0 auto 16px',
               display: 'block',
+              cursor: 'pointer',
             }}
           />
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative' }}>
             <Button
               startIcon={<ArrowBack />}
-              onClick={onBack}
+              onClick={() => navigate('/main')}
               sx={{
                 color: 'black',
                 backgroundColor: 'primary.light',
@@ -171,7 +174,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
             }}
           >
             <Tab label="General Contact" />
-            <Tab label="Book Interview" />
+            <Tab label="Request Interview" />
           </Tabs>
 
           {/* General Contact Tab */}
@@ -281,192 +284,303 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
             </Box>
           </TabPanel>
 
-          {/* Book Interview Tab */}
+          {/* Request Interview Tab */}
           <TabPanel value={tabValue} index={1}>
-            <Box sx={{ padding: 3 }}>
-              <Stack spacing={3}>
-                <TextField
-                  fullWidth
-                  label="Name"
-                  value={interviewForm.name}
-                  onChange={handleInterviewFormChange('name')}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.3)',
+            <Box sx={{ paddingX: 3, paddingY: 1.5 }}>
+              {interviewSubmitted ? (
+                <Box sx={{ textAlign: 'center', padding: 4 }}>
+                  <Typography 
+                    variant="h5" 
+                    sx={{ 
+                      color: 'black', 
+                      fontWeight: 600, 
+                      marginBottom: 2 
+                    }}
+                  >
+                    Thank you for filling out our interview form!
+                  </Typography>
+                  <Typography 
+                    variant="body1" 
+                    sx={{ color: 'black' }}
+                  >
+                    We will be in touch when it is close to your turn for an interview.
+                  </Typography>
+                </Box>
+              ) : (
+                <Stack spacing={3}>
+                  <Box>
+                    <Typography 
+                      variant="body1" 
+                      sx={{ 
+                        color: 'black', 
+                        fontWeight: 600, 
+                        marginBottom: 1 
+                      }}
+                    >
+                      What is your official name or stage name?
+                    </Typography>
+                    <TextField
+                      fullWidth
+                      value={interviewForm.officialName}
+                      placeholder="Enter your official name or stage name"
+                      onChange={handleInterviewFormChange('officialName')}
+                      sx={{
+                        '& .MuiOutlinedInput-root': {
+                          backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                          border: '2px solid black',
+                          borderRadius: 0,
+                          '& fieldset': {
+                            borderColor: 'transparent',
+                          },
+                          '&:hover fieldset': {
+                            borderColor: 'transparent',
+                          },
+                          '&.Mui-focused fieldset': {
+                            borderColor: 'transparent',
+                          },
+                        },
+                      }}
+                    />
+                  </Box>
+                  
+                  <Box>
+                    <Typography 
+                      variant="body1" 
+                      sx={{ 
+                        color: 'black', 
+                        fontWeight: 600, 
+                        marginBottom: 1 
+                      }}
+                    >
+                      What is your email address?
+                    </Typography>
+                    <TextField
+                      fullWidth
+                      type="email"
+                      value={interviewForm.email}
+                      placeholder="Enter your email address"
+                      onChange={handleInterviewFormChange('email')}
+                      sx={{
+                        '& .MuiOutlinedInput-root': {
+                          backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                          border: '2px solid black',
+                          borderRadius: 0,
+                          '& fieldset': {
+                            borderColor: 'transparent',
+                          },
+                          '&:hover fieldset': {
+                            borderColor: 'transparent',
+                          },
+                          '&.Mui-focused fieldset': {
+                            borderColor: 'transparent',
+                          },
+                        },
+                      }}
+                    />
+                  </Box>
+                  
+                  <Box>
+                    <Typography 
+                      variant="body1" 
+                      sx={{ 
+                        color: 'black', 
+                        fontWeight: 600, 
+                        marginBottom: 1 
+                      }}
+                    >
+                      Please provide examples of your music or work (URL links)
+                    </Typography>
+                    <TextField
+                      fullWidth
+                      value={interviewForm.musicWorkExample}
+                      onChange={handleInterviewFormChange('musicWorkExample')}
+                      placeholder="Spotify, SoundCloud, YouTube, portfolio links, etc."
+                      sx={{
+                        '& .MuiOutlinedInput-root': {
+                          backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                          border: '2px solid black',
+                          borderRadius: 0,
+                          '& fieldset': {
+                            borderColor: 'transparent',
+                          },
+                          '&:hover fieldset': {
+                            borderColor: 'transparent',
+                          },
+                          '&.Mui-focused fieldset': {
+                            borderColor: 'transparent',
+                          },
+                        },
+                      }}
+                    />
+                  </Box>
+                  
+                  <Box>
+                    <Typography 
+                      variant="body1" 
+                      sx={{ 
+                        color: 'black', 
+                        fontWeight: 600, 
+                        marginBottom: 1 
+                      }}
+                    >
+                      What is your availability for scheduling an interview?
+                    </Typography>
+                    <TextField
+                      fullWidth
+                      multiline
+                      rows={2}
+                      value={interviewForm.availability}
+                      onChange={handleInterviewFormChange('availability')}
+                      placeholder="Please specify preferred days of the week and times of day"
+                      sx={{
+                        '& .MuiOutlinedInput-root': {
+                          backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                          border: '2px solid black',
+                          borderRadius: 0,
+                          '& fieldset': {
+                            borderColor: 'transparent',
+                          },
+                          '&:hover fieldset': {
+                            borderColor: 'transparent',
+                          },
+                          '&.Mui-focused fieldset': {
+                            borderColor: 'transparent',
+                          },
+                        },
+                      }}
+                    />
+                  </Box>
+                  
+                  <Box>
+                    <Typography 
+                      variant="body1" 
+                      sx={{ 
+                        color: 'black', 
+                        fontWeight: 600, 
+                        marginBottom: 1 
+                      }}
+                    >
+                      Are there any specific topics you would like us to discuss or promote during the interview?
+                    </Typography>
+                    <TextField
+                      fullWidth
+                      multiline
+                      rows={3}
+                      value={interviewForm.specificTopics}
+                      onChange={handleInterviewFormChange('specificTopics')}
+                      placeholder="Upcoming projects, releases, achievements, or other topics you'd like to highlight"
+                      sx={{
+                        '& .MuiOutlinedInput-root': {
+                          backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                          border: '2px solid black',
+                          borderRadius: 0,
+                          '& fieldset': {
+                            borderColor: 'transparent',
+                          },
+                          '&:hover fieldset': {
+                            borderColor: 'transparent',
+                          },
+                          '&.Mui-focused fieldset': {
+                            borderColor: 'transparent',
+                          },
+                        },
+                      }}
+                    />
+                  </Box>
+                  
+                  <Box>
+                    <Typography 
+                      variant="body1" 
+                      sx={{ 
+                        color: 'black', 
+                        fontWeight: 600, 
+                        marginBottom: 1 
+                      }}
+                    >
+                      Have you been featured in previous interviews or publications?
+                    </Typography>
+                    <TextField
+                      fullWidth
+                      multiline
+                      rows={3}
+                      value={interviewForm.previousInterviews}
+                      onChange={handleInterviewFormChange('previousInterviews')}
+                      placeholder="Please share links to help us create fresh and unique content for your interview"
+                      sx={{
+                        '& .MuiOutlinedInput-root': {
+                          backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                          border: '2px solid black',
+                          borderRadius: 0,
+                          '& fieldset': {
+                            borderColor: 'transparent',
+                          },
+                          '&:hover fieldset': {
+                            borderColor: 'transparent',
+                          },
+                          '&.Mui-focused fieldset': {
+                            borderColor: 'transparent',
+                          },
+                        },
+                      }}
+                    />
+                  </Box>
+                  
+                  <Box>
+                    <Typography 
+                      variant="body1" 
+                      sx={{ 
+                        color: 'black', 
+                        fontWeight: 600, 
+                        marginBottom: 1 
+                      }}
+                    >
+                      Is there anything else you would like us to know or cover in the interview?
+                    </Typography>
+                    <TextField
+                      fullWidth
+                      multiline
+                      rows={4}
+                      value={interviewForm.additionalDetails}
+                      onChange={handleInterviewFormChange('additionalDetails')}
+                      placeholder="Additional background information, achievements, or topics you'd like to discuss"
+                      sx={{
+                        '& .MuiOutlinedInput-root': {
+                          backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                          border: '2px solid black',
+                          borderRadius: 0,
+                          '& fieldset': {
+                            borderColor: 'transparent',
+                          },
+                          '&:hover fieldset': {
+                            borderColor: 'transparent',
+                          },
+                          '&.Mui-focused fieldset': {
+                            borderColor: 'transparent',
+                          },
+                        },
+                      }}
+                    />
+                  </Box>
+                  <Button
+                    variant="contained"
+                    startIcon={<CalendarToday />}
+                    onClick={handleRequestInterview}
+                    sx={{
+                      backgroundColor: 'black',
+                      color: 'white',
                       border: '2px solid black',
                       borderRadius: 0,
-                      '& fieldset': {
-                        borderColor: 'transparent',
-                      },
-                      '&:hover fieldset': {
-                        borderColor: 'transparent',
-                      },
-                      '&.Mui-focused fieldset': {
-                        borderColor: 'transparent',
-                      },
-                    },
-                    '& .MuiInputLabel-root': {
-                      color: 'black',
                       fontWeight: 600,
-                    },
-                  }}
-                />
-                <TextField
-                  fullWidth
-                  label="Email"
-                  type="email"
-                  value={interviewForm.email}
-                  onChange={handleInterviewFormChange('email')}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.3)',
-                      border: '2px solid black',
-                      borderRadius: 0,
-                      '& fieldset': {
-                        borderColor: 'transparent',
+                      padding: '12px 24px',
+                      '&:hover': {
+                        backgroundColor: 'rgba(0,0,0,0.8)',
                       },
-                      '&:hover fieldset': {
-                        borderColor: 'transparent',
-                      },
-                      '&.Mui-focused fieldset': {
-                        borderColor: 'transparent',
-                      },
-                    },
-                    '& .MuiInputLabel-root': {
-                      color: 'black',
-                      fontWeight: 600,
-                    },
-                  }}
-                />
-                <TextField
-                  fullWidth
-                  label="Social Media Links"
-                  value={interviewForm.socialMediaLinks}
-                  onChange={handleInterviewFormChange('socialMediaLinks')}
-                  placeholder="Instagram, Twitter, TikTok, etc."
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.3)',
-                      border: '2px solid black',
-                      borderRadius: 0,
-                      '& fieldset': {
-                        borderColor: 'transparent',
-                      },
-                      '&:hover fieldset': {
-                        borderColor: 'transparent',
-                      },
-                      '&.Mui-focused fieldset': {
-                        borderColor: 'transparent',
-                      },
-                    },
-                    '& .MuiInputLabel-root': {
-                      color: 'black',
-                      fontWeight: 600,
-                    },
-                  }}
-                />
-                <TextField
-                  fullWidth
-                  label="Music Links"
-                  value={interviewForm.musicLinks}
-                  onChange={handleInterviewFormChange('musicLinks')}
-                  placeholder="Spotify, SoundCloud, YouTube, etc."
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.3)',
-                      border: '2px solid black',
-                      borderRadius: 0,
-                      '& fieldset': {
-                        borderColor: 'transparent',
-                      },
-                      '&:hover fieldset': {
-                        borderColor: 'transparent',
-                      },
-                      '&.Mui-focused fieldset': {
-                        borderColor: 'transparent',
-                      },
-                    },
-                    '& .MuiInputLabel-root': {
-                      color: 'black',
-                      fontWeight: 600,
-                    },
-                  }}
-                />
-                <TextField
-                  fullWidth
-                  label="Tell us about yourself"
-                  multiline
-                  rows={3}
-                  value={interviewForm.aboutYourself}
-                  onChange={handleInterviewFormChange('aboutYourself')}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.3)',
-                      border: '2px solid black',
-                      borderRadius: 0,
-                      '& fieldset': {
-                        borderColor: 'transparent',
-                      },
-                      '&:hover fieldset': {
-                        borderColor: 'transparent',
-                      },
-                      '&.Mui-focused fieldset': {
-                        borderColor: 'transparent',
-                      },
-                    },
-                    '& .MuiInputLabel-root': {
-                      color: 'black',
-                      fontWeight: 600,
-                    },
-                  }}
-                />
-                <TextField
-                  fullWidth
-                  label="Message"
-                  multiline
-                  rows={4}
-                  value={interviewForm.message}
-                  onChange={handleInterviewFormChange('message')}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.3)',
-                      border: '2px solid black',
-                      borderRadius: 0,
-                      '& fieldset': {
-                        borderColor: 'transparent',
-                      },
-                      '&:hover fieldset': {
-                        borderColor: 'transparent',
-                      },
-                      '&.Mui-focused fieldset': {
-                        borderColor: 'transparent',
-                      },
-                    },
-                    '& .MuiInputLabel-root': {
-                      color: 'black',
-                      fontWeight: 600,
-                    },
-                  }}
-                />
-                <Button
-                  variant="contained"
-                  startIcon={<CalendarToday />}
-                  onClick={handleBookInterview}
-                  sx={{
-                    backgroundColor: 'black',
-                    color: 'white',
-                    border: '2px solid black',
-                    borderRadius: 0,
-                    fontWeight: 600,
-                    padding: '12px 24px',
-                    '&:hover': {
-                      backgroundColor: 'rgba(0,0,0,0.8)',
-                    },
-                  }}
-                >
-                  Request Interview
-                </Button>
-              </Stack>
+                    }}
+                  >
+                    Request Interview
+                  </Button>
+                </Stack>
+              )}
             </Box>
           </TabPanel>
         </Paper>

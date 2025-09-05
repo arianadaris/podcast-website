@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -23,13 +24,8 @@ import {
 } from '@mui/icons-material';
 import { fetchEpisodes, Episode } from '../services/rssService';
 
-interface EpisodesPageProps {
-  onBack: () => void;
-}
-
-
-
-const EpisodesPage: React.FC<EpisodesPageProps> = ({ onBack }) => {
+const EpisodesPage: React.FC = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [episodes, setEpisodes] = useState<Episode[]>([]);
@@ -124,17 +120,19 @@ const EpisodesPage: React.FC<EpisodesPageProps> = ({ onBack }) => {
             component="img"
             src="/logo.png"
             alt="808s & COLD TAKES Logo"
+            onClick={() => navigate('/main')}
             sx={{
               width: 150,
               height: 150,
               margin: '0 auto 16px',
               display: 'block',
+              cursor: 'pointer',
             }}
           />
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative' }}>
             <Button
               startIcon={<ArrowBack />}
-              onClick={onBack}
+              onClick={() => navigate('/main')}
               sx={{
                 color: 'black',
                 backgroundColor: 'primary.light',

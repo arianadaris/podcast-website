@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -7,11 +8,8 @@ import {
   Stack,
 } from '@mui/material';
 
-interface LandingPageProps {
-  onEnter: () => void;
-}
-
-const LandingPage: React.FC<LandingPageProps> = ({ onEnter }) => {
+const LandingPage: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -38,11 +36,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnter }) => {
             component="img"
             src="/logo.png"
             alt="808s & COLD TAKES Logo"
+            onClick={() => navigate('/main')}
             sx={{
               width: 300,
               height: 300,
               margin: { xs: '0 0 40px -17px', md: '0 auto 40px' },
               display: 'block',
+              cursor: 'pointer',
             }}
           />
 
@@ -50,7 +50,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnter }) => {
           <Button
             variant="outlined"
             size="large"
-            onClick={onEnter}
+            onClick={() => navigate('/main')}
             sx={{
               padding: '18px 36px',
               borderColor: '#000000',

@@ -1,0 +1,242 @@
+[
+  {
+    "id": "person1",
+    "name": "Los",
+    "image": "/images/team/los.jpg",
+    "role": "Cohost",
+    "socialHandle": "@theguynamedlos",
+    "funFacts": [
+        "Professional Commie, henny sipper, oldhead",
+        "Does karaoke for the audience sporadically"
+    ],
+    "favoriteArtists": [
+        {
+            "name": "Snoh Aalegra",
+            "image": "https://pbs.twimg.com/media/GVFXGFOWwAABHjb.jpg"
+        },
+        {
+            "name": "Madlib",
+            "image": "https://cdn-images.dzcdn.net/images/artist/5a08565cdc5b31fddc28ba15d8cbdfca/1900x1900-000000-81-0-0.jpg"
+        },
+        {
+            "name": "Nivel",
+            "image": "https://i.scdn.co/image/ab6761610000e5ebf7ae9df2ffe89296f85ca829"
+        },
+        {
+            "name": "Westside Gunn",
+            "image": "https://www.rollingstone.com/wp-content/uploads/2023/10/WESTSIDE-GUNN-INTERVIEW.jpg?w=1581&h=1054&crop=1"
+        },
+        {
+            "name": "Kali Uchis",
+            "image": "https://snworksceo.imgix.net/bdh/211cb44c-2057-4fc6-ad38-0267d837487a.sized-1000x1000.jpeg?w=1000"
+        }
+    ],
+    "favoriteAlbums": [
+        {
+            "name": "Madvillany",
+            "artist": "Madvillain",
+            "image": "https://i.scdn.co/image/ab67616d0000b2733e3bb917af94bd82074c5d47"
+        },
+        {
+            "name": "Demon Days",
+            "artist": "Gorillaz",
+            "image": "https://m.media-amazon.com/images/I/71lix6+VfWL._UF1000,1000_QL80_.jpg"
+        },
+        {
+            "name": "In Utero",
+            "artist": "Nirvana",
+            "image": "https://m.media-amazon.com/images/I/710XKXHIeNL._UF1000,1000_QL80_.jpg"
+        },
+        {
+            "name": "Exitos 15",
+            "artist": "Chalino Sanchez",
+            "image": "https://i.scdn.co/image/ab67616d0000b273c449ea3ee029b6fefe3c0cac"
+        },
+        {
+            "name": "Temporary Highs in the Violet Skies",
+            "artist": "Snoh Aalegra",
+            "image": "https://i.scdn.co/image/ab67616d0000b2732802d4dbc9dfd83ba79290ca"
+        }
+    ]
+  },
+  {
+    "id": "person2",
+    "name": "Brayden",
+    "image": "/images/team/brayden.jpg",
+    "role": "Editor in Chief",
+    "socialHandle": "@braydencastelhano",
+    "funFacts": [
+        "Occasional war historian",
+        "Rage Cage Enthusiast"
+    ],
+    "favoriteArtists": [
+        {
+            "name": "The Killers",
+            "image": "https://i.scdn.co/image/ab6761610000e5eb207b21f3ed0ee96adce3166a"
+        },
+        {
+            "name": "Danny Brown",
+            "image": "https://d1rgjmn2wmqeif.cloudfront.net/a/b/36820-4.jpg"
+        },
+        {
+            "name": "A$AP Rocky",
+            "image": "https://www.billboard.com/wp-content/uploads/2024/08/cover-aap-rocky-billboard-2024-bb12-ruven-afanador-2-1240.jpg?w=800"
+        },
+        {
+            "name": "Charlie XCX",
+            "image": "https://cdn-images.dzcdn.net/images/artist/89d204250a4e968f9be7171ba8efde00/1900x1900-000000-81-0-0.jpg"
+        },
+        {
+            "name": "Purity Ring",
+            "image": "https://www.rollingstone.com/wp-content/uploads/2018/06/rs-6265-rectangle.jpg"
+        }
+    ],
+    "favoriteAlbums": [
+        {
+            "name": "Sam's Town",
+            "artist": "The Killers",
+            "image": "https://i.scdn.co/image/ab67616d0000b2734f87f14089217e3f70a5f39e"
+        },
+        {
+            "name": "Section 80",
+            "artist": "Kendrick Lamar",
+            "image": "https://upload.wikimedia.org/wikipedia/en/4/48/Section.80-Cover.jpg"
+        },
+        {
+            "name": "I Feel Alive",
+            "artist": "TOPS",
+            "image": "https://upload.wikimedia.org/wikipedia/en/0/06/I_Feel_Alive_%28album%29.jpg"
+        },
+        {
+            "name": "shrines",
+            "artist": "Purity Ring",
+            "image": "https://upload.wikimedia.org/wikipedia/en/7/75/Purity_Ring_-_Shrines.png"
+        },
+        {
+            "name": "Old",
+            "artist": "Danny Brown",
+            "image": "https://upload.wikimedia.org/wikipedia/en/1/17/Danny_Brown_Old_Cover_Art.jpg"
+        }
+    ]
+  },
+  {
+    "id": "person3",
+    "name": "Maxx",
+    "image": "/images/team/maxx.jpg",
+    "role": "Show Runner",
+    "socialHandle": "@maxxlopez",
+    "funFacts": [
+        "Likes musicals (Derogatory)",
+        "Fucks with milk"
+    ],
+    "favoriteArtists": [
+        {
+            "name": "Frank Sinatra",
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFp_hJWZfx3vWxlSaICtgGMaMOl0-2Vo7tYw&s"
+        },
+        {
+            "name": "Ray Charles",
+            "image": "https://i.scdn.co/image/ab6761610000e5eb6fc460f10177fa38af69b8bf"
+        },
+        {
+            "name": "Pharrell",
+            "image": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Pharrell_Williams_2024_%2854133384149%29.jpg"
+        },
+        {
+            "name": "Justin Timberlake",
+            "image": "https://cdn-p.smehost.net/sites/005297e5d91d4996984e966fac4389ea/wp-content/uploads/2019/10/Justin-Timberlake-800x800.png"
+        },
+        {
+            "name": "Sam Cooke",
+            "image": "https://i.scdn.co/image/ab6761610000e5eb41aaa3a05d2ddba59454273e"
+        }
+    ],
+    "favoriteAlbums": [
+        {
+            "name": "All Eyez On Me",
+            "artist": "2pac",
+            "image": "https://i.scdn.co/image/ab67616d0000b273073aebff28f79959d2543596"
+        },
+        {
+            "name": "Justified",
+            "artist": "Justin Timberlake",
+            "image": "https://upload.wikimedia.org/wikipedia/en/e/ed/Justified_-_Justin_Timberlake.png"
+        },
+        {
+            "name": "Cozy Tapes 2",
+            "artist": "A$AP Mob",
+            "image": "https://images.genius.com/2a2e0c38aa4036a9f7d89bac6fe6a47d.800x800x1.jpg"
+        },
+        {
+            "name": "Back to Black",
+            "artist": "Amy Winehouse",
+            "image": "https://i.scdn.co/image/ab67616d0000b2738f52f321140e4a76ea720c52"
+        },
+        {
+            "name": "Chet Baker Sings",
+            "artist": "Chet Baker",
+            "image": "https://i.scdn.co/image/ab67616d0000b273bcaf6f097b310e20504f2de0"
+        }
+    ]
+  },
+  {
+    "id": "person4",
+    "name": "Johan",
+    "image": "/images/team/johan.jpg",
+    "role": "Cohost",
+    "socialHandle": "@johan915",
+    "funFacts": [
+        "Suavecito",
+        "Pokemon card purveyor"
+    ],
+    "favoriteArtists": [
+        {
+            "name": "JID",
+            "image": "https://i.scdn.co/image/ab6761610000e5eb02e4e47e711e07e363ecc6e0"
+        },
+        {
+            "name": "Young Thug",
+            "image": "https://iscale.iheart.com/catalog/artist/369494"
+        },
+        {
+            "name": "Kendrick Lamar",
+            "image": "https://i8.amplience.net/i/naras/MI0004224402-MN0002709646"
+        },
+        {
+            "name": "Ski Mask the Slump God",
+            "image": "https://i.scdn.co/image/ab67616100005174d9531e79636e5bfa61817e43"
+        },
+        {
+            "name": "Young Nudy",
+            "image": "https://www.rollingstone.com/wp-content/uploads/2023/03/young-nudy.jpg"
+        }
+    ],
+    "favoriteAlbums": [
+        {
+            "name": "Bandana",
+            "artist": "Freddie Gibbs and Madlib",
+            "image": "https://i.scdn.co/image/ab67616d0000b2733bf3b1061f9f703b0f6bf532"
+        },
+        {
+            "name": "Amen",
+            "artist": "Rich Brian",
+            "image": "https://i.scdn.co/image/ab67616d0000b2739143032571ada4b5dd581f5c"
+        },
+        {
+            "name": "Beauty Behind The Madness",
+            "artist": "The Weeknd",
+            "image": "https://i.scdn.co/image/ab67616d0000b2737fcead687e99583072cc217b"
+        },
+        {
+            "name": "Not All Heroes Wear Capes",
+            "artist": "Metro Boomin",
+            "image": "https://upload.wikimedia.org/wikipedia/en/2/28/Metro_Boomin_%E2%80%93_Not_All_Heroes_Wear_Capes.png"
+        },
+        {
+            "name": "i am > i was",
+            "artist": "21 Savage",
+            "image": "https://upload.wikimedia.org/wikipedia/en/3/36/21_Savage_%E2%80%93_I_Am_Greater_Than_I_Was.png"
+        }
+    ]
+  }
+]

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import { theme } from './theme/theme';
-import { usePageTitle } from './hooks/usePageTitle';
 import LandingPage from './views/LandingPage';
 import MainPage from './views/MainPage';
 import EpisodesPage from './views/EpisodesPage';
@@ -13,87 +13,33 @@ import EventsPage from './views/EventsPage';
 import PersonPage from './views/PersonPage';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<'landing' | 'main' | 'episodes' | 'contact' | 'team' | 'interviews' | 'events' | 'person'>('landing');
-  const [selectedPersonId, setSelectedPersonId] = useState<string>('');
-
-  // Update page title based on current page
-  usePageTitle(currentPage, selectedPersonId);
-
-  // Set initial title when app loads
-  useEffect(() => {
-    document.title = '808s & COLD TAKES - Welcome';
-  }, []);
-
-  const handleEnter = () => {
-    setCurrentPage('main');
-  };
-
-  const handleBack = () => {
-    setCurrentPage('landing');
-  };
-
-  const handleNavigateToEpisodes = () => {
-    setCurrentPage('episodes');
-  };
-
-  const handleNavigateToContact = () => {
-    setCurrentPage('contact');
-  };
-
-  const handleBackToMain = () => {
-    setCurrentPage('main');
-  };
-
-  const handleNavigateToTeam = () => {
-    setCurrentPage('team');
-  };
-
-  const handleNavigateToInterviews = () => {
-    setCurrentPage('interviews');
-  };
-
-  const handleNavigateToEvents = () => {
-    setCurrentPage('events');
-  };
-
-  const handleNavigateToPerson = (personId: string) => {
-    setSelectedPersonId(personId);
-    setCurrentPage('person');
-  };
-
-  const handleBackToTeam = () => {
-    setCurrentPage('team');
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="App">
-        {currentPage === 'landing' ? (
-          <LandingPage onEnter={handleEnter} />
-        ) : currentPage === 'main' ? (
-          <MainPage 
-            onBack={handleBack} 
-            onNavigateToEpisodes={handleNavigateToEpisodes}
-            onNavigateToContact={handleNavigateToContact}
-            onNavigateToTeam={handleNavigateToTeam}
-            onNavigateToInterviews={handleNavigateToInterviews}
-            onNavigateToEvents={handleNavigateToEvents}
-          />
-        ) : currentPage === 'episodes' ? (
-          <EpisodesPage onBack={handleBackToMain} />
-        ) : currentPage === 'contact' ? (
-          <ContactPage onBack={handleBackToMain} />
-        ) : currentPage === 'team' ? (
-          <TeamPage onBack={handleBackToMain} onNavigateToPerson={handleNavigateToPerson} />
-        ) : currentPage === 'interviews' ? (
-          <InterviewsPage onBack={handleBackToMain} onNavigateToPerson={handleNavigateToPerson} />
-        ) : currentPage === 'events' ? (
-          <EventsPage onBack={handleBackToMain} />
-        ) : currentPage === 'person' ? (
-          <PersonPage personId={selectedPersonId} onBack={handleBackToTeam} onNavigateToPerson={handleNavigateToPerson} />
-        ) : null}
-      </div>
+      <Router>
+        <div className="App">
+          <Routes>
+            {/* Landing page */}
+            <Route path="/" element={<LandingPage />} />
+            
+            {/* Main dashboard */}
+            <Route path="/main" element={<MainPage />} />
+            
+            {/* Individual pages */}
+            <Route path="/episodes" element={<EpisodesPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/team" element={<TeamPage />} />
+            <Route path="/interviews" element={<InterviewsPage />} />
+            <Route path="/events" element={<EventsPage />} />
+            
+            {/* Person detail page */}
+            <Route path="/person/:personName" element={<PersonPage />} />
+            
+            {/* Redirect any unknown routes to landing */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </div>
+      </Router>
     </ThemeProvider>
   );
 }

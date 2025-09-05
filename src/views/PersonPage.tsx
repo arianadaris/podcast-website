@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -9,130 +10,30 @@ import {
   IconButton,
 } from '@mui/material';
 import { ArrowBack, ArrowForward, Mic } from '@mui/icons-material';
+import teamData from '../assets/data/team.json';
 
-interface PersonPageProps {
-  personId: string;
-  onBack: () => void;
-  onNavigateToPerson: (personId: string) => void;
-}
-
-const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToPerson }) => {
+const PersonPage: React.FC = () => {
+  const { personName } = useParams<{ personName: string }>();
+  const navigate = useNavigate();
   const [imageError, setImageError] = React.useState(false);
 
   const handleImageError = () => {
     setImageError(true);
   };
-  // This would typically come from a database or API
-  const personData = {
-    person1: {
-      name: 'Alex Johnson',
-      image: '/images/person1.jpg',
-      role: 'Host & Producer',
-      socialHandle: '@alexjohnson',
-      bio: 'Alex is the creative force behind 808s & COLD TAKES. With over 10 years of experience in music production and podcasting, Alex brings a unique perspective to every episode. When not behind the mic, you can find Alex exploring new music genres and mentoring up-and-coming artists.',
-      funFacts: [
-        'Can play 7 different instruments',
-        'Once interviewed a Grammy winner in a coffee shop'
-      ],
-      favoriteArtists: [
-        { name: 'Kendrick Lamar', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
-        { name: 'Daft Punk', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
-        { name: 'Radiohead', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
-        { name: 'Flying Lotus', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
-        { name: 'J Dilla', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' }
-      ],
-      favoriteAlbums: [
-        { name: 'To Pimp A Butterfly', artist: 'Kendrick Lamar', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
-        { name: 'Random Access Memories', artist: 'Daft Punk', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
-        { name: 'OK Computer', artist: 'Radiohead', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
-        { name: 'Cosmogramma', artist: 'Flying Lotus', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
-        { name: 'Donuts', artist: 'J Dilla', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' }
-      ],
-    },
-    person2: {
-      name: 'Sarah Chen',
-      image: '/images/person2.jpg',
-      role: 'Co-Host & Music Director',
-      socialHandle: '@sarahchen_music',
-      bio: 'Sarah brings her expertise in music theory and industry knowledge to every discussion. With a background in music journalism and A&R, Sarah has an uncanny ability to spot emerging talent and trends before they hit the mainstream.',
-      funFacts: [
-        'Has perfect pitch',
-        'Discovered 3 artists who went on to win awards'
-      ],
-      favoriteArtists: [
-        { name: 'Kendrick Lamar', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
-        { name: 'Daft Punk', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
-        { name: 'Radiohead', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
-        { name: 'Flying Lotus', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
-        { name: 'J Dilla', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' }
-      ],
-      favoriteAlbums: [
-        { name: 'To Pimp A Butterfly', artist: 'Kendrick Lamar', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
-        { name: 'Random Access Memories', artist: 'Daft Punk', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
-        { name: 'OK Computer', artist: 'Radiohead', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
-        { name: 'Cosmogramma', artist: 'Flying Lotus', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
-        { name: 'Donuts', artist: 'J Dilla', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' }
-      ],
-    },
-    person3: {
-      name: 'Mike Rodriguez',
-      image: '/images/person3.jpg',
-      role: 'Technical Producer',
-      socialHandle: '@mikerodriguez_tech',
-      bio: 'Mike handles all the technical aspects of the podcast, from sound engineering to post-production. His attention to detail ensures that every episode sounds professional and polished. Mike also contributes to the creative direction with his deep knowledge of music technology.',
-      funFacts: [
-        'Built his first synthesizer at age 16',
-        'Can identify any song by its waveform'
-      ],
-      favoriteArtists: [
-        { name: 'Kendrick Lamar', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
-        { name: 'Daft Punk', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
-        { name: 'Radiohead', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
-        { name: 'Flying Lotus', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
-        { name: 'J Dilla', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' }
-      ],
-      favoriteAlbums: [
-        { name: 'To Pimp A Butterfly', artist: 'Kendrick Lamar', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
-        { name: 'Random Access Memories', artist: 'Daft Punk', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
-        { name: 'OK Computer', artist: 'Radiohead', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
-        { name: 'Cosmogramma', artist: 'Flying Lotus', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
-        { name: 'Donuts', artist: 'J Dilla', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' }
-      ],
-    },
-    person4: {
-      name: 'Emily Davis',
-      image: '/images/person4.jpg',
-      role: 'Content Strategist',
-      socialHandle: '@emilydavis_content',
-      bio: 'Emily oversees the content strategy and guest booking for the podcast. With her background in music marketing and public relations, Emily ensures that every episode delivers value to our listeners and maintains the high standards of 808s & COLD TAKES.',
-      funFacts: [
-        'Has attended over 500 live concerts',
-        'Once got backstage at a major festival using only a smile'
-      ],
-      favoriteArtists: [
-        { name: 'Kendrick Lamar', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
-        { name: 'Daft Punk', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
-        { name: 'Radiohead', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
-        { name: 'Flying Lotus', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' },
-        { name: 'J Dilla', image: 'https://yt3.googleusercontent.com/ok2wg2JCipAWv4vYKnjDDx2qwOjYwbsBhvaBX3lTH7GHcXZCRedTtE8xRyVt1LFdn5rqRB-R=s900-c-k-c0x00ffffff-no-rj' }
-      ],
-      favoriteAlbums: [
-        { name: 'To Pimp A Butterfly', artist: 'Kendrick Lamar', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
-        { name: 'Random Access Memories', artist: 'Daft Punk', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
-        { name: 'OK Computer', artist: 'Radiohead', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
-        { name: 'Cosmogramma', artist: 'Flying Lotus', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' },
-        { name: 'Donuts', artist: 'J Dilla', image: 'https://images.genius.com/ef46a8b00403a653ce236f664bb6fc42.700x700x1.jpg' }
-      ],
-    },
-  };
 
-  const person = personData[personId as keyof typeof personData];
+  // Find the person data from team.json by name
+  const person = personName ? teamData.find(member => member.name.toLowerCase() === personName.toLowerCase()) : null;
   
-  // Get all person IDs for navigation
-  const personIds = Object.keys(personData);
-  const currentIndex = personIds.indexOf(personId);
-  const prevPersonId = personIds[(currentIndex - 1 + personIds.length) % personIds.length];
-  const nextPersonId = personIds[(currentIndex + 1) % personIds.length];
+  // Reset imageError state when person changes
+  React.useEffect(() => {
+    setImageError(false);
+  }, [person]);
+  
+  // Get all person names for navigation
+  const personNames = teamData.map(member => member.name);
+  const currentIndex = person ? personNames.indexOf(person.name) : -1;
+  const prevPersonName = currentIndex >= 0 ? personNames[(currentIndex - 1 + personNames.length) % personNames.length] : '';
+  const nextPersonName = currentIndex >= 0 ? personNames[(currentIndex + 1) % personNames.length] : '';
 
   if (!person) {
     return (
@@ -171,17 +72,19 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
             component="img"
             src="/logo.png"
             alt="808s & COLD TAKES Logo"
+            onClick={() => navigate('/main')}
             sx={{
               width: 150,
               height: 150,
               margin: '0 auto 16px',
               display: 'block',
+              cursor: 'pointer',
             }}
           />
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Button
               startIcon={<ArrowBack />}
-              onClick={onBack}
+              onClick={() => navigate('/team')}
               sx={{
                 color: 'black',
                 backgroundColor: 'primary.light',
@@ -201,7 +104,7 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
             
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <IconButton
-                onClick={() => onNavigateToPerson(prevPersonId)}
+                onClick={() => navigate(`/person/${prevPersonName}`)}
                 sx={{
                   color: 'black',
                   backgroundColor: 'primary.light',
@@ -214,7 +117,7 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
                 <ArrowBack />
               </IconButton>
               <IconButton
-                onClick={() => onNavigateToPerson(nextPersonId)}
+                onClick={() => navigate(`/person/${nextPersonName}`)}
                 sx={{
                   color: 'black',
                   backgroundColor: 'primary.light',
@@ -239,8 +142,8 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
              padding: 4,
            }}
          >
-                       <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 4 }}>
-                             {/* Image with Microphone Overlay */}
+          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 4 }}>
+              {/* Image with Microphone Overlay */}
                <Box sx={{ 
                  flex: { xs: 'none', md: '0 0 200px' }, 
                  textAlign: 'center', 
@@ -268,10 +171,7 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
                          color: 'black',
                          backgroundColor: 'primary.light',
                          border: '1px solid black',
-                         display: { xs: 'none', md: 'flex' },
-                         '&:hover': {
-                           backgroundColor: 'rgba(0,0,0,0.1)',
-                         },
+                         display: { xs: 'none', md: 'flex' }
                        }}
                      >
                        <Mic />
@@ -301,11 +201,8 @@ const PersonPage: React.FC<PersonPageProps> = ({ personId, onBack, onNavigateToP
                          color: 'black',
                          backgroundColor: 'primary.light',
                          border: '1px solid black',
-                         display: { xs: 'none', md: 'flex' },
-                         '&:hover': {
-                           backgroundColor: 'rgba(0,0,0,0.1)',
-                         },
-                                               }}
+                         display: { xs: 'none', md: 'flex' }
+                        }}
                       >
                         <Mic />
                       </IconButton>

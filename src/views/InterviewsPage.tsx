@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -15,62 +16,28 @@ import {
 } from '@mui/material';
 import { ArrowBack, Search, Clear } from '@mui/icons-material';
 import PersonCard from '../components/PersonCard';
+import interviewsData from '../assets/data/interviews.json';
 
-interface InterviewsPageProps {
-  onBack: () => void;
-  onNavigateToPerson: (personId: string) => void;
-}
-
-const InterviewsPage: React.FC<InterviewsPageProps> = ({ onBack, onNavigateToPerson }) => {
+const InterviewsPage: React.FC = () => {
+  const navigate = useNavigate();
   const [selectedSeason, setSelectedSeason] = useState('1');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Mock data for interviewed people by season
-  const seasonData = {
-    '1': [
-      { id: 'interview1-1', name: 'John Smith', image: '/images/interview1-1.jpg' },
-      { id: 'interview1-2', name: 'Maria Garcia', image: '/images/interview1-2.jpg' },
-      { id: 'interview1-3', name: 'David Wilson', image: '/images/interview1-3.jpg' },
-      { id: 'interview1-4', name: 'Lisa Brown', image: '/images/interview1-4.jpg' },
-      { id: 'interview1-5', name: 'Robert Taylor', image: '/images/interview1-5.jpg' },
-      { id: 'interview1-6', name: 'Jennifer Lee', image: '/images/interview1-6.jpg' },
-      { id: 'interview1-7', name: 'Michael Anderson', image: '/images/interview1-7.jpg' },
-      { id: 'interview1-8', name: 'Amanda White', image: '/images/interview1-8.jpg' },
-      { id: 'interview1-9', name: 'Christopher Martinez', image: '/images/interview1-9.jpg' },
-      { id: 'interview1-10', name: 'Jessica Thompson', image: '/images/interview1-10.jpg' },
-    ],
-    '2': [
-      { id: 'interview2-1', name: 'Daniel Johnson', image: '/images/interview2-1.jpg' },
-      { id: 'interview2-2', name: 'Rachel Davis', image: '/images/interview2-2.jpg' },
-      { id: 'interview2-3', name: 'Kevin Miller', image: '/images/interview2-3.jpg' },
-      { id: 'interview2-4', name: 'Stephanie Moore', image: '/images/interview2-4.jpg' },
-      { id: 'interview2-5', name: 'Andrew Jackson', image: '/images/interview2-5.jpg' },
-      { id: 'interview2-6', name: 'Nicole Martin', image: '/images/interview2-6.jpg' },
-      { id: 'interview2-7', name: 'Ryan Lee', image: '/images/interview2-7.jpg' },
-      { id: 'interview2-8', name: 'Ashley Perez', image: '/images/interview2-8.jpg' },
-      { id: 'interview2-9', name: 'Brandon Thompson', image: '/images/interview2-9.jpg' },
-      { id: 'interview2-10', name: 'Megan Garcia', image: '/images/interview2-10.jpg' },
-    ],
-    '3': [
-      { id: 'interview3-1', name: 'Tyler Robinson', image: '/images/interview3-1.jpg' },
-      { id: 'interview3-2', name: 'Lauren Clark', image: '/images/interview3-2.jpg' },
-      { id: 'interview3-3', name: 'Jordan Lewis', image: '/images/interview3-3.jpg' },
-      { id: 'interview3-4', name: 'Hannah Walker', image: '/images/interview3-4.jpg' },
-      { id: 'interview3-5', name: 'Cody Hall', image: '/images/interview3-5.jpg' },
-      { id: 'interview3-6', name: 'Victoria Young', image: '/images/interview3-6.jpg' },
-      { id: 'interview3-7', name: 'Austin King', image: '/images/interview3-7.jpg' },
-      { id: 'interview3-8', name: 'Samantha Wright', image: '/images/interview3-8.jpg' },
-      { id: 'interview3-9', name: 'Nathan Lopez', image: '/images/interview3-9.jpg' },
-      { id: 'interview3-10', name: 'Olivia Hill', image: '/images/interview3-10.jpg' },
-    ],
-  };
+  // Get available seasons from the data
+  const availableSeasons = interviewsData.map(seasonData => seasonData.season.toString());
+  
+  // Create a lookup object for easier access
+  const seasonDataLookup = interviewsData.reduce((acc, seasonData) => {
+    acc[seasonData.season.toString()] = seasonData.interviews;
+    return acc;
+  }, {} as Record<string, typeof interviewsData[0]['interviews']>);
 
-  const currentSeasonInterviews = seasonData[selectedSeason as keyof typeof seasonData] || [];
+  const currentSeasonInterviews = seasonDataLookup[selectedSeason] || [];
 
   // Filter interviews based on search query
   const filteredInterviews = searchQuery
-    ? Object.values(seasonData).flat().filter(person =>
-        person.name.toLowerCase().includes(searchQuery.toLowerCase())
+    ? Object.values(seasonDataLookup).flat().filter(interview =>
+        interview.name.toLowerCase().includes(searchQuery.toLowerCase())
       )
     : currentSeasonInterviews;
 
@@ -96,18 +63,20 @@ const InterviewsPage: React.FC<InterviewsPageProps> = ({ onBack, onNavigateToPer
             component="img"
             src="/logo.png"
             alt="808s & COLD TAKES Logo"
+            onClick={() => navigate('/main')}
             sx={{
               width: 150,
               height: 150,
               margin: '0 auto 16px',
               display: 'block',
+              cursor: 'pointer',
             }}
           />
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', position: 'relative' }}>
               <Button
                 startIcon={<ArrowBack />}
-                onClick={onBack}
+                onClick={() => navigate('/main')}
                 sx={{
                   color: 'black',
                   backgroundColor: 'primary.light',
@@ -200,6 +169,17 @@ const InterviewsPage: React.FC<InterviewsPageProps> = ({ onBack, onNavigateToPer
                 value={selectedSeason}
                 label="Select Season"
                 onChange={(e) => setSelectedSeason(e.target.value)}
+                MenuProps={{
+                  PaperProps: {
+                    sx: {
+                      borderRadius: 0,
+                      border: '1px solid black',
+                      '& .MuiMenuItem-root': {
+                        borderRadius: 0,
+                      },
+                    },
+                  },
+                }}
                 sx={{
                   color: 'black',
                   backgroundColor: 'primary.light',
@@ -207,6 +187,7 @@ const InterviewsPage: React.FC<InterviewsPageProps> = ({ onBack, onNavigateToPer
                   borderColor: 'black',
                   '& .MuiOutlinedInput-notchedOutline': {
                     borderColor: 'black',
+                    borderRadius: 0,
                   },
                   '&:hover .MuiOutlinedInput-notchedOutline': {
                     borderColor: 'black',
@@ -216,9 +197,11 @@ const InterviewsPage: React.FC<InterviewsPageProps> = ({ onBack, onNavigateToPer
                   },
                 }}
               >
-                <MenuItem value="1">Season 1</MenuItem>
-                <MenuItem value="2">Season 2</MenuItem>
-                <MenuItem value="3">Season 3</MenuItem>
+                {availableSeasons.map((season) => (
+                  <MenuItem key={season} value={season}>
+                    Season {season}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Box>
@@ -239,12 +222,13 @@ const InterviewsPage: React.FC<InterviewsPageProps> = ({ onBack, onNavigateToPer
               justifyContent: 'center',
             }}
           >
-            {filteredInterviews.map((person) => (
+            {filteredInterviews.map((interview) => (
               <PersonCard
-                key={person.id}
-                name={person.name}
-                image={person.image}
-                onClick={() => {}} // Remove navigation - cards are now non-clickable
+                key={interview.id}
+                name={interview.name}
+                image={interview.image}
+                onClick={() => window.open(interview.link, '_blank')} // Open interview link in new tab
+                hoverText="View Interview"
               />
             ))}
           </Box>

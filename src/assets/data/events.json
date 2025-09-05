@@ -1,0 +1,47 @@
+[
+    {
+        "id": 1,
+        "name": "Podcast Live Recording",
+        "location": "The Blue Room, Downtown",
+        "date": "2024-01-01",
+        "time": "7:00 PM",
+        "attendingMembers": ["Alex Johnson", "Sarah Chen", "Mike Rodriguez"],
+        "description": "Join us for a live recording of our latest episode where we discuss the future of hip-hop production."
+    },
+    {
+        "id": 2,
+        "name": "Music Production Workshop",
+        "location": "Studio 808, Music District",
+        "date": "2024-01-02",
+        "time": "2:00 PM",
+        "attendingMembers": ["Alex Johnson", "Sarah Chen"],
+        "description": "Learn the basics of 808 drum programming and modern beat making techniques."
+    },
+    {
+        "id": 3,
+        "name": "Artist Interview Session",
+        "location": "The Podcast Studio",
+        "date": "2024-01-03",
+        "time": "6:30 PM",
+        "attendingMembers": ["Sarah Chen", "Mike Rodriguez"],
+        "description": "Exclusive interview with upcoming hip-hop producer discussing their creative process."
+    },
+    {
+        "id": 4,
+        "name": "New Year's Eve Special",
+        "location": "Club Bassline",
+        "date": "2024-01-04",
+        "time": "9:00 PM",
+        "attendingMembers": ["Alex Johnson", "Sarah Chen", "Mike Rodriguez"],
+        "description": "Ring in the new year with our special live podcast recording featuring guest DJs and producers."
+    },
+    {
+        "id": 5,
+        "name": "Producer Meet & Greet",
+        "location": "Vinyl Records Store",
+        "date": "2024-01-05",
+        "time": "4:00 PM",
+        "attendingMembers": ["Alex Johnson", "Sarah Chen"],
+        "description": "Meet local producers and share your music. Networking event for the hip-hop community."
+    }
+]

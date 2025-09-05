@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -9,32 +10,28 @@ import {
 import { ArrowBack } from '@mui/icons-material';
 import PersonCard from '../components/PersonCard';
 
-interface TeamPageProps {
-  onBack: () => void;
-  onNavigateToPerson: (personId: string) => void;
-}
-
-const TeamPage: React.FC<TeamPageProps> = ({ onBack, onNavigateToPerson }) => {
+const TeamPage: React.FC = () => {
+  const navigate = useNavigate();
   const teamMembers = [
     {
       id: 'person1',
-      name: 'Alex Johnson',
-      image: '/images/person1.jpg', // You'll need to add these images to public/images/
+      name: 'Los',
+      image: '/images/team/los.jpg', // You'll need to add these images to public/images/
     },
     {
       id: 'person2',
-      name: 'Sarah Chen',
-      image: '/images/person2.jpg',
+      name: 'Brayden',
+      image: '/images/team/brayden.jpg',
     },
     {
       id: 'person3',
-      name: 'Mike Rodriguez',
-      image: '/images/person3.jpg',
+      name: 'Maxx',
+      image: '/images/team/maxx.jpg',
     },
     {
       id: 'person4',
-      name: 'Emily Davis',
-      image: '/images/person4.jpg',
+      name: 'Johan',
+      image: '/images/team/johan.jpg',
     },
   ];
 
@@ -56,17 +53,19 @@ const TeamPage: React.FC<TeamPageProps> = ({ onBack, onNavigateToPerson }) => {
             component="img"
             src="/logo.png"
             alt="808s & COLD TAKES Logo"
+            onClick={() => navigate('/main')}
             sx={{
               width: 150,
               height: 150,
               margin: '0 auto 16px',
               display: 'block',
+              cursor: 'pointer',
             }}
           />
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative' }}>
             <Button
               startIcon={<ArrowBack />}
-              onClick={onBack}
+              onClick={() => navigate('/main')}
               sx={{
                 color: 'black',
                 backgroundColor: 'primary.light',
@@ -112,7 +111,7 @@ const TeamPage: React.FC<TeamPageProps> = ({ onBack, onNavigateToPerson }) => {
                 key={member.id}
                 name={member.name}
                 image={member.image}
-                onClick={() => onNavigateToPerson(member.id)}
+                onClick={() => navigate(`/person/${member.name}`)}
               />
             ))}
           </Box>
