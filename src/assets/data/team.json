@@ -2,7 +2,8 @@
   {
     "id": "person1",
     "name": "Los",
-    "image": "/images/team/los.jpg",
+    "image": "/images/team/Los.jpg",
+    "audio": "",
     "role": "Cohost",
     "socialHandle": "@theguynamedlos",
     "funFacts": [
@@ -62,7 +63,8 @@
   {
     "id": "person2",
     "name": "Brayden",
-    "image": "/images/team/brayden.jpg",
+    "image": "/images/team/Brayden.jpg",
+    "audio": "",
     "role": "Editor in Chief",
     "socialHandle": "@braydencastelhano",
     "funFacts": [
@@ -122,7 +124,8 @@
   {
     "id": "person3",
     "name": "Maxx",
-    "image": "/images/team/maxx.jpg",
+    "image": "/images/team/Maxx.jpg",
+    "audio": "",
     "role": "Show Runner",
     "socialHandle": "@maxxlopez",
     "funFacts": [
@@ -182,7 +185,8 @@
   {
     "id": "person4",
     "name": "Johan",
-    "image": "/images/team/johan.jpg",
+    "image": "/images/team/Johan.jpg",
+    "audio": "",
     "role": "Cohost",
     "socialHandle": "@johan915",
     "funFacts": [

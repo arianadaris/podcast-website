@@ -9,31 +9,10 @@ import {
 } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import PersonCard from '../components/PersonCard';
+import teamData from '../assets/data/team.json';
 
 const TeamPage: React.FC = () => {
   const navigate = useNavigate();
-  const teamMembers = [
-    {
-      id: 'person1',
-      name: 'Los',
-      image: '/images/team/los.jpg', // You'll need to add these images to public/images/
-    },
-    {
-      id: 'person2',
-      name: 'Brayden',
-      image: '/images/team/brayden.jpg',
-    },
-    {
-      id: 'person3',
-      name: 'Maxx',
-      image: '/images/team/maxx.jpg',
-    },
-    {
-      id: 'person4',
-      name: 'Johan',
-      image: '/images/team/johan.jpg',
-    },
-  ];
 
   return (
     <Box
@@ -106,7 +85,7 @@ const TeamPage: React.FC = () => {
               justifyContent: 'center',
             }}
           >
-            {teamMembers.map((member) => (
+            {teamData.map((member) => (
               <PersonCard
                 key={member.id}
                 name={member.name}

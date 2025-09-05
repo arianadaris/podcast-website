@@ -163,19 +163,21 @@ const PersonPage: React.FC = () => {
                          objectFit: 'cover',
                        }}
                      />
-                     <IconButton
-                       sx={{
-                         position: 'absolute',
-                         top: 8,
-                         right: 8,
-                         color: 'black',
-                         backgroundColor: 'primary.light',
-                         border: '1px solid black',
-                         display: { xs: 'none', md: 'flex' }
-                       }}
-                     >
-                       <Mic />
-                     </IconButton>
+                     {person.audio && (
+                       <IconButton
+                         sx={{
+                           position: 'absolute',
+                           top: 8,
+                           right: 8,
+                           color: 'black',
+                           backgroundColor: 'primary.light',
+                           border: '1px solid black',
+                           display: { xs: 'none', md: 'flex' }
+                         }}
+                       >
+                         <Mic />
+                       </IconButton>
+                     )}
                    </Box>
                  ) : (
                    <Box sx={{ position: 'relative' }}>
@@ -193,19 +195,21 @@ const PersonPage: React.FC = () => {
                      >
                        {person.name.split(' ').map(n => n[0]).join('')}
                      </Avatar>
-                     <IconButton
-                       sx={{
-                         position: 'absolute',
-                         top: 8,
-                         right: 8,
-                         color: 'black',
-                         backgroundColor: 'primary.light',
-                         border: '1px solid black',
-                         display: { xs: 'none', md: 'flex' }
-                        }}
-                      >
-                        <Mic />
-                      </IconButton>
+                     {person.audio && (
+                       <IconButton
+                         sx={{
+                           position: 'absolute',
+                           top: 8,
+                           right: 8,
+                           color: 'black',
+                           backgroundColor: 'primary.light',
+                           border: '1px solid black',
+                           display: { xs: 'none', md: 'flex' }
+                          }}
+                        >
+                          <Mic />
+                        </IconButton>
+                     )}
                     </Box>
                   )}
                 </Box>
@@ -231,19 +235,21 @@ const PersonPage: React.FC = () => {
                    >
                      {person.name}
                    </Typography>
-                   <IconButton
-                     sx={{
-                       color: 'black',
-                       backgroundColor: 'primary.light',
-                       border: '1px solid black',
-                       display: { xs: 'flex', md: 'none' },
-                       '&:hover': {
-                         backgroundColor: 'rgba(0,0,0,0.1)',
-                       },
-                     }}
-                   >
-                     <Mic />
-                   </IconButton>
+                   {person.audio && (
+                     <IconButton
+                       sx={{
+                         color: 'black',
+                         backgroundColor: 'primary.light',
+                         border: '1px solid black',
+                         display: { xs: 'flex', md: 'none' },
+                         '&:hover': {
+                           backgroundColor: 'rgba(0,0,0,0.1)',
+                         },
+                       }}
+                     >
+                       <Mic />
+                     </IconButton>
+                   )}
                  </Box>
                 <Typography
                   variant="body1"
