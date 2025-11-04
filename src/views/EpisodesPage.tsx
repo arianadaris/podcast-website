@@ -317,54 +317,6 @@ const EpisodesPage: React.FC = () => {
                          handleImageLoad(episode.id);
                        }}
                      />
-                     {/* Streaming Platform Buttons - Bottom Right Corner */}
-                     <Stack
-                       direction="row"
-                       spacing={1}
-                       sx={{
-                         position: 'absolute',
-                         bottom: 15,
-                         right: 8,
-                         zIndex: 2,
-                       }}
-                     >
-                       <IconButton
-                         onClick={() => window.open(getSpotifyLink(episode), '_blank', 'noopener,noreferrer')}
-                         sx={{
-                           border: '2px solid black',
-                           backgroundColor: 'transparent',
-                           color: 'black',
-                           width: 48,
-                           height: 48,
-                           borderRadius: '50%',
-                           '&:hover': {
-                             backgroundColor: 'rgba(0,0,0,0.1)',
-                           },
-                           transition: 'all 0.2s ease',
-                         }}
-                         aria-label="Listen on Spotify"
-                       >
-                         <Icon icon="mdi:spotify" style={{ fontSize: 24, color: 'black' }} />
-                       </IconButton>
-                       <IconButton
-                         onClick={() => window.open(getApplePodcastsLink(episode), '_blank', 'noopener,noreferrer')}
-                         sx={{
-                           border: '2px solid black',
-                           backgroundColor: 'transparent',
-                           color: 'black',
-                           width: 48,
-                           height: 48,
-                           borderRadius: '50%',
-                           '&:hover': {
-                             backgroundColor: 'rgba(0,0,0,0.1)',
-                           },
-                           transition: 'all 0.2s ease',
-                         }}
-                         aria-label="Listen on Apple Podcasts"
-                       >
-                         <Icon icon="mdi:apple" style={{ fontSize: 24, color: 'black' }} />
-                       </IconButton>
-                     </Stack>
                    </Box>
                    
                    {/* Content Below Image on Mobile */}
@@ -407,18 +359,58 @@ const EpisodesPage: React.FC = () => {
                          </Button>
                        )}
                      </Box>
-                     <Stack direction="row" spacing={2} alignItems="center" justifyContent="center">
-                       <Chip
-                         label={formatDate(episode.date)}
-                         size="small"
-                         sx={{ backgroundColor: 'transparent', border: '2px solid black', color: 'black' }}
-                       />
-                       <Chip
-                         label={episode.length}
-                         size="small"
-                         variant="outlined"
-                         sx={{ border: '2px solid black', color: 'black' }}
-                       />
+                     <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
+                       <Stack direction="row" spacing={2}>
+                         <Chip
+                           label={formatDate(episode.date)}
+                           size="small"
+                           sx={{ backgroundColor: 'transparent', border: '2px solid black', color: 'black' }}
+                         />
+                         <Chip
+                           label={episode.length}
+                           size="small"
+                           variant="outlined"
+                           sx={{ border: '2px solid black', color: 'black' }}
+                         />
+                       </Stack>
+                       <Stack direction="row" spacing={1}>
+                         <IconButton
+                           onClick={() => window.open(getSpotifyLink(episode), '_blank', 'noopener,noreferrer')}
+                           sx={{
+                             border: '2px solid black',
+                             backgroundColor: 'transparent',
+                             color: 'black',
+                             width: 48,
+                             height: 48,
+                             borderRadius: '50%',
+                             '&:hover': {
+                               backgroundColor: 'rgba(0,0,0,0.1)',
+                             },
+                             transition: 'all 0.2s ease',
+                           }}
+                           aria-label="Listen on Spotify"
+                         >
+                           <Icon icon="mdi:spotify" style={{ fontSize: 24, color: 'black' }} />
+                         </IconButton>
+                         <IconButton
+                           onClick={() => window.open(getApplePodcastsLink(episode), '_blank', 'noopener,noreferrer')}
+                           sx={{
+                             border: '2px solid black',
+                             backgroundColor: 'transparent',
+                             color: 'black',
+                             width: 48,
+                             height: 48,
+                             borderRadius: '50%',
+                             '&:hover': {
+                               backgroundColor: 'rgba(0,0,0,0.1)',
+                             },
+                             transition: 'all 0.2s ease',
+                           }}
+                           aria-label="Listen on Apple Podcasts"
+                         >
+                           <Icon icon="mdi:apple" style={{ fontSize: 24, color: 'black' }} />
+                         </IconButton>
+                       </Stack>
                      </Stack>
                    </Box>
                  </Box>
