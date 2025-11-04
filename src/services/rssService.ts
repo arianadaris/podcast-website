@@ -37,8 +37,10 @@ interface EpisodeCache {
 }
 
 // Cache configuration
-const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes in milliseconds
+const CACHE_DURATION = 6 * 60 * 60 * 1000; // 6 hours in milliseconds (RSS feeds don't update frequently)
 const CACHE_KEY = 'rss_episodes_cache';
+const REQUEST_TIMEOUT = 15000; // 15 seconds timeout
+const MAX_RETRIES = 3;
 
 // In-memory cache
 let memoryCache: EpisodeCache | null = null;
@@ -49,7 +51,6 @@ const getCachedEpisodes = (): Episode[] | null => {
   
   // Check in-memory cache first
   if (memoryCache && now < memoryCache.expiresAt) {
-    console.log('Using in-memory cache for episodes');
     return memoryCache.episodes;
   }
   
@@ -59,7 +60,6 @@ const getCachedEpisodes = (): Episode[] | null => {
     if (cached) {
       const cacheData: EpisodeCache = JSON.parse(cached);
       if (now < cacheData.expiresAt) {
-        console.log('Using localStorage cache for episodes');
         // Update memory cache
         memoryCache = cacheData;
         return cacheData.episodes;
@@ -90,7 +90,6 @@ const setCachedEpisodes = (episodes: Episode[]): void => {
   // Update localStorage cache
   try {
     localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
-    console.log('Episodes cached successfully');
   } catch (error) {
     console.warn('Error writing to cache:', error);
   }
@@ -100,7 +99,6 @@ const clearCache = (): void => {
   memoryCache = null;
   try {
     localStorage.removeItem(CACHE_KEY);
-    console.log('Cache cleared successfully');
   } catch (error) {
     console.warn('Error clearing cache:', error);
   }
@@ -115,6 +113,101 @@ const formatDuration = (seconds: string): string => {
   const minutes = Math.floor(totalSeconds / 60);
   const remainingSeconds = totalSeconds % 60;
   return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+};
+
+// Helper function to fetch with timeout
+const fetchWithTimeout = (url: string, timeout: number = REQUEST_TIMEOUT): Promise<Response> => {
+  return Promise.race([
+    fetch(url, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache',
+    }),
+    new Promise<Response>((_, reject) =>
+      setTimeout(() => reject(new Error(`Request timeout after ${timeout}ms`)), timeout)
+    )
+  ]);
+};
+
+// Helper function to fetch with retry logic
+const fetchWithRetry = async (
+  url: string,
+  maxRetries: number = MAX_RETRIES,
+  delay: number = 1000
+): Promise<Response> => {
+  let lastError: Error | null = null;
+  
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      const response = await fetchWithTimeout(url, REQUEST_TIMEOUT);
+      if (response.ok) {
+        return response;
+      }
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error));
+      if (attempt < maxRetries - 1) {
+        // Exponential backoff: 1s, 2s, 4s
+        const waitTime = delay * Math.pow(2, attempt);
+        await new Promise(resolve => setTimeout(resolve, waitTime));
+      }
+    }
+  }
+  
+  throw lastError || new Error('Max retries exceeded');
+};
+
+// Function to fetch fresh episodes from RSS feed
+const fetchFreshEpisodes = async (): Promise<Episode[]> => {
+  const rssUrl = 'https://feeds.buzzsprout.com/1737669.rss';
+  const corsProxy = 'https://api.allorigins.win/raw?url=';
+  
+  let response: Response;
+  
+  // Try direct access first (some RSS feeds allow direct CORS access)
+  try {
+    response = await fetchWithRetry(rssUrl);
+  } catch (directError) {
+    // Fallback to CORS proxy
+    try {
+      response = await fetchWithRetry(corsProxy + encodeURIComponent(rssUrl));
+    } catch (proxyError) {
+      console.error('Both direct and proxy fetch failed:', proxyError);
+      throw new Error(`Failed to fetch RSS feed: ${proxyError instanceof Error ? proxyError.message : 'Unknown error'}`);
+    }
+  }
+  
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  
+  const xmlText = await response.text();
+  
+  const episodes = parseRSSXML(xmlText);
+  
+  // Cache the episodes
+  setCachedEpisodes(episodes);
+  
+  return episodes;
+};
+
+// Function to refresh episodes in background (for stale-while-revalidate)
+let backgroundRefreshPromise: Promise<Episode[]> | null = null;
+
+const refreshEpisodesInBackground = async (): Promise<void> => {
+  // Prevent multiple simultaneous background refreshes
+  if (backgroundRefreshPromise) {
+    return;
+  }
+  
+  backgroundRefreshPromise = fetchFreshEpisodes().catch(error => {
+    console.warn('Background refresh failed:', error);
+    return [];
+  }).finally(() => {
+    backgroundRefreshPromise = null;
+  });
+  
+  await backgroundRefreshPromise;
 };
 
 // Function to parse RSS XML and extract episode data
@@ -190,57 +283,33 @@ const parseRSSXML = (xmlText: string): Episode[] => {
   return episodes;
 };
 
-// Function to fetch RSS feed with caching
+// Function to fetch RSS feed with caching and stale-while-revalidate pattern
 export const fetchEpisodes = async (forceRefresh: boolean = false): Promise<Episode[]> => {
-  // Check cache first (unless force refresh is requested)
-  if (!forceRefresh) {
-    const cachedEpisodes = getCachedEpisodes();
-    if (cachedEpisodes) {
-      return cachedEpisodes;
-    }
+  const cachedEpisodes = getCachedEpisodes();
+  
+  // If we have cache and not forcing refresh, use stale-while-revalidate pattern
+  if (cachedEpisodes && !forceRefresh) {
+    // Return cached data immediately
+    // Refresh in background (don't await - fire and forget)
+    refreshEpisodesInBackground().catch(err => 
+      console.warn('Background refresh failed:', err)
+    );
+    
+    return cachedEpisodes;
   }
   
+  // No cache or force refresh - fetch normally
   try {
-    console.log('Fetching fresh episodes from RSS feed...');
-    
-    // Use a CORS proxy to avoid CORS issues
-    const corsProxy = 'https://api.allorigins.win/raw?url=';
-    const rssUrl = 'https://feeds.buzzsprout.com/1737669.rss';
-    const response = await fetch(corsProxy + encodeURIComponent(rssUrl));
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const xmlText = await response.text();
-    console.log('RSS XML received:', xmlText.substring(0, 500) + '...'); // Debug log
-    
-    const episodes = parseRSSXML(xmlText);
-    console.log('Parsed episodes:', episodes.length, episodes.slice(0, 2)); // Debug log
-    
-    // Log image URLs for debugging
-    episodes.forEach((episode, index) => {
-      if (episode.imageUrl) {
-        console.log(`Episode ${index + 1} image:`, episode.imageUrl);
-      }
-    });
-    
-    // Cache the episodes
-    setCachedEpisodes(episodes);
-    
-    return episodes;
+    return await fetchFreshEpisodes();
   } catch (error) {
     console.error('Error fetching RSS feed:', error);
     
-    // Try to return cached data as fallback
-    const cachedEpisodes = getCachedEpisodes();
+    // Try to return cached data as fallback (even if expired)
     if (cachedEpisodes) {
-      console.log('Using cached episodes as fallback');
       return cachedEpisodes;
     }
     
     // Return mock data as final fallback
-    console.log('Using mock episodes as fallback');
     return getMockEpisodes();
   }
 };

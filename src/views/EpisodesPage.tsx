@@ -15,13 +15,14 @@ import {
   Chip,
   CircularProgress,
   Alert,
+  Skeleton,
 } from '@mui/material';
 import {
   Search,
-  PlayArrow,
   ArrowBack,
   KeyboardArrowUp,
 } from '@mui/icons-material';
+import { Icon } from '@iconify/react';
 import { fetchEpisodes, Episode } from '../services/rssService';
 import Socials from '../components/Socials';
 
@@ -33,6 +34,8 @@ const EpisodesPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [imageLoadingStates, setImageLoadingStates] = useState<Record<string, boolean>>({});
+  const [expandedDescriptions, setExpandedDescriptions] = useState<Record<string, boolean>>({});
   const episodesPerPage = 10;
 
   // Fetch episodes on component mount
@@ -44,6 +47,16 @@ const EpisodesPage: React.FC = () => {
         
         const fetchedEpisodes = await fetchEpisodes();
         setEpisodes(fetchedEpisodes);
+        
+        // Initialize all images with imageUrl as loading
+        const initialLoadingStates: Record<string, boolean> = {};
+        fetchedEpisodes.forEach(episode => {
+          // Only show loading for images that have a URL (not fallback)
+          if (episode.imageUrl && episode.imageUrl !== '/logo.png') {
+            initialLoadingStates[episode.id] = true;
+          }
+        });
+        setImageLoadingStates(initialLoadingStates);
       } catch (err) {
         setError('Failed to load episodes. Please try again later.');
         console.error('Error loading episodes:', err);
@@ -82,9 +95,17 @@ const EpisodesPage: React.FC = () => {
     setCurrentPage(value);
   };
 
-  const handlePlayEpisode = (episode: Episode) => {
-    // TODO: Implement audio playback functionality
-    console.log('Playing episode:', episode.title);
+  // Generate streaming platform links
+  const getSpotifyLink = (episode: Episode): string => {
+    // Spotify podcast search URL - users can search for the episode
+    const searchQuery = encodeURIComponent(`808s & Cold Takes ${episode.title}`);
+    return `https://open.spotify.com/search/${searchQuery}`;
+  };
+
+  const getApplePodcastsLink = (episode: Episode): string => {
+    // Apple Podcasts search URL
+    const searchQuery = encodeURIComponent(`808s & Cold Takes ${episode.title}`);
+    return `https://podcasts.apple.com/search?term=${searchQuery}`;
   };
 
   const handleBackToTop = () => {
@@ -101,6 +122,22 @@ const EpisodesPage: React.FC = () => {
       month: 'long',
       day: 'numeric',
     });
+  };
+
+  const handleImageLoad = (episodeId: string) => {
+    setImageLoadingStates(prev => ({ ...prev, [episodeId]: false }));
+  };
+
+  const toggleDescription = (episodeId: string) => {
+    setExpandedDescriptions(prev => ({
+      ...prev,
+      [episodeId]: !prev[episodeId],
+    }));
+  };
+
+  const shouldTruncate = (description: string): boolean => {
+    // Approximate 3 lines of text (roughly 180 characters)
+    return description.length > 180;
   };
 
   return (
@@ -237,43 +274,97 @@ const EpisodesPage: React.FC = () => {
                  }}>
                    {/* Episode Image Container with Overlay Play Button */}
                    <Box sx={{ position: 'relative', marginBottom: 2 }}>
+                     {/* Loading State */}
+                     {imageLoadingStates[episode.id] && (
+                       <Box
+                         sx={{
+                           position: 'absolute',
+                           top: 0,
+                           left: 0,
+                           width: { xs: 200, sm: 180 },
+                           height: { xs: 200, sm: 180 },
+                           border: '2px solid black',
+                           borderRadius: 0,
+                           backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                           backdropFilter: 'blur(4px)',
+                           display: 'flex',
+                           alignItems: 'center',
+                           justifyContent: 'center',
+                           zIndex: 1,
+                         }}
+                       >
+                         <CircularProgress size={40} sx={{ color: 'black' }} />
+                       </Box>
+                     )}
                      <Box
                        component="img"
                        src={episode.imageUrl || '/logo.png'}
                        alt={`${episode.title} thumbnail`}
+                       onLoad={() => handleImageLoad(episode.id)}
                        sx={{
                          width: { xs: 200, sm: 180 },
                          height: { xs: 200, sm: 180 },
                          border: '2px solid black',
                          borderRadius: 0,
                          objectFit: 'cover',
+                         opacity: imageLoadingStates[episode.id] ? 0.3 : 1,
+                         transition: 'opacity 0.3s ease',
                        }}
                        onError={(e) => {
                          // Fallback to logo if image fails to load
                          const target = e.target as HTMLImageElement;
                          target.src = '/logo.png';
+                         handleImageLoad(episode.id);
                        }}
                      />
-                     {/* Play Button Overlay - Bottom Right Corner */}
-                     <IconButton
-                       onClick={() => handlePlayEpisode(episode)}
+                     {/* Streaming Platform Buttons - Bottom Right Corner */}
+                     <Stack
+                       direction="row"
+                       spacing={1}
                        sx={{
                          position: 'absolute',
                          bottom: 15,
                          right: 8,
-                         border: '2px solid black',
-                         color: 'black',
-                         width: 48,
-                         height: 48,
-                         backgroundColor: 'rgba(255, 255, 255, 0.75)',
-                         '&:hover': {
-                           backgroundColor: 'rgba(255, 255, 255, 1)',
-                         },
-                         transition: 'all 0.2s ease',
+                         zIndex: 2,
                        }}
                      >
-                       <PlayArrow sx={{ fontSize: 24 }} />
-                     </IconButton>
+                       <IconButton
+                         onClick={() => window.open(getSpotifyLink(episode), '_blank', 'noopener,noreferrer')}
+                         sx={{
+                           border: '2px solid black',
+                           backgroundColor: 'transparent',
+                           color: 'black',
+                           width: 48,
+                           height: 48,
+                           borderRadius: '50%',
+                           '&:hover': {
+                             backgroundColor: 'rgba(0,0,0,0.1)',
+                           },
+                           transition: 'all 0.2s ease',
+                         }}
+                         aria-label="Listen on Spotify"
+                       >
+                         <Icon icon="mdi:spotify" style={{ fontSize: 24, color: 'black' }} />
+                       </IconButton>
+                       <IconButton
+                         onClick={() => window.open(getApplePodcastsLink(episode), '_blank', 'noopener,noreferrer')}
+                         sx={{
+                           border: '2px solid black',
+                           backgroundColor: 'transparent',
+                           color: 'black',
+                           width: 48,
+                           height: 48,
+                           borderRadius: '50%',
+                           '&:hover': {
+                             backgroundColor: 'rgba(0,0,0,0.1)',
+                           },
+                           transition: 'all 0.2s ease',
+                         }}
+                         aria-label="Listen on Apple Podcasts"
+                       >
+                         <Icon icon="mdi:apple" style={{ fontSize: 24, color: 'black' }} />
+                       </IconButton>
+                     </Stack>
                    </Box>
                    
                    {/* Content Below Image on Mobile */}
@@ -281,9 +372,41 @@ const EpisodesPage: React.FC = () => {
                      <Typography variant="h5" sx={{ marginBottom: 1, fontWeight: 600 }}>
                        {episode.title}
                      </Typography>
-                     <Typography variant="body1" sx={{ marginBottom: 2 }}>
-                       {episode.description}
-                     </Typography>
+                     <Box sx={{ marginBottom: 2, textAlign: 'left' }}>
+                       <Typography 
+                         variant="body1" 
+                         sx={{ 
+                           display: '-webkit-box',
+                           WebkitLineClamp: expandedDescriptions[episode.id] ? 'unset' : 3,
+                           WebkitBoxOrient: 'vertical',
+                           overflow: expandedDescriptions[episode.id] ? 'visible' : 'hidden',
+                           textOverflow: 'ellipsis',
+                           marginBottom: shouldTruncate(episode.description) ? 1 : 0,
+                         }}
+                       >
+                         {episode.description}
+                       </Typography>
+                       {shouldTruncate(episode.description) && (
+                         <Button
+                           onClick={() => toggleDescription(episode.id)}
+                           sx={{
+                             color: 'black',
+                             textTransform: 'none',
+                             padding: 0,
+                             minWidth: 'auto',
+                             fontSize: '0.875rem',
+                             fontWeight: 600,
+                             textDecoration: 'underline',
+                             '&:hover': {
+                               backgroundColor: 'transparent',
+                               textDecoration: 'underline',
+                             },
+                           }}
+                         >
+                           {expandedDescriptions[episode.id] ? 'Read Less' : 'Read More'}
+                         </Button>
+                       )}
+                     </Box>
                      <Stack direction="row" spacing={2} alignItems="center" justifyContent="center">
                        <Chip
                          label={formatDate(episode.date)}
@@ -308,32 +431,92 @@ const EpisodesPage: React.FC = () => {
                   marginBottom: 2 
                 }}>
                   {/* Episode Image */}
-                  <Box
-                    component="img"
-                    src={episode.imageUrl || '/logo.png'}
-                    alt={`${episode.title} thumbnail`}
-                    sx={{
-                      width: 120,
-                      height: 120,
-                      border: '2px solid black',
-                      borderRadius: 0,
-                      marginRight: 3,
-                      flexShrink: 0,
-                      objectFit: 'cover',
-                    }}
-                    onError={(e) => {
-                      // Fallback to logo if image fails to load
-                      const target = e.target as HTMLImageElement;
-                      target.src = '/logo.png';
-                    }}
-                  />
-                  <Box sx={{ flex: 1 }}>
-                    <Typography variant="h5" sx={{ marginBottom: 1, fontWeight: 600 }}>
+                  <Box sx={{ position: 'relative', flexShrink: 0, marginRight: 3 }}>
+                    {/* Loading State */}
+                    {imageLoadingStates[episode.id] && (
+                      <Box
+                        sx={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          width: 120,
+                          height: 120,
+                          border: '2px solid black',
+                          borderRadius: 0,
+                          backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                          backdropFilter: 'blur(4px)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          zIndex: 1,
+                        }}
+                      >
+                        <CircularProgress size={32} sx={{ color: 'black' }} />
+                      </Box>
+                    )}
+                    <Box
+                      component="img"
+                      src={episode.imageUrl || '/logo.png'}
+                      alt={`${episode.title} thumbnail`}
+                      onLoad={() => handleImageLoad(episode.id)}
+                      sx={{
+                        width: 120,
+                        height: 120,
+                        border: '2px solid black',
+                        borderRadius: 0,
+                        objectFit: 'cover',
+                        opacity: imageLoadingStates[episode.id] ? 0.3 : 1,
+                        transition: 'opacity 0.3s ease',
+                      }}
+                      onError={(e) => {
+                        // Fallback to logo if image fails to load
+                        const target = e.target as HTMLImageElement;
+                        target.src = '/logo.png';
+                        handleImageLoad(episode.id);
+                      }}
+                    />
+                  </Box>
+                  <Box sx={{ flex: 1, minWidth: 0, marginRight: 2 }}>
+                    <Typography variant="h5" sx={{ marginBottom: 1, fontWeight: 600, wordBreak: 'break-word' }}>
                       {episode.title}
                     </Typography>
-                    <Typography variant="body1" sx={{ marginBottom: 2 }}>
-                      {episode.description}
-                    </Typography>
+                    <Box sx={{ marginBottom: 2 }}>
+                      <Typography 
+                        variant="body1" 
+                        sx={{ 
+                          display: '-webkit-box',
+                          WebkitLineClamp: expandedDescriptions[episode.id] ? 'unset' : 3,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: expandedDescriptions[episode.id] ? 'visible' : 'hidden',
+                          textOverflow: 'ellipsis',
+                          wordBreak: 'break-word',
+                          overflowWrap: 'break-word',
+                          marginBottom: shouldTruncate(episode.description) ? 1 : 0,
+                        }}
+                      >
+                        {episode.description}
+                      </Typography>
+                      {shouldTruncate(episode.description) && (
+                        <Button
+                          onClick={() => toggleDescription(episode.id)}
+                          sx={{
+                            color: 'black',
+                            textTransform: 'none',
+                            padding: 0,
+                            minWidth: 'auto',
+                            fontSize: '0.875rem',
+                            fontWeight: 600,
+                            textDecoration: 'underline',
+                            '&:hover': {
+                              backgroundColor: 'transparent',
+                              textDecoration: 'underline',
+                            },
+                          }}
+                        >
+                          {expandedDescriptions[episode.id] ? 'Read Less' : 'Read More'}
+                        </Button>
+                      )}
+                    </Box>
                     <Stack direction="row" spacing={2} alignItems="center">
                       <Chip
                         label={formatDate(episode.date)}
@@ -348,22 +531,44 @@ const EpisodesPage: React.FC = () => {
                       />
                     </Stack>
                   </Box>
-                  <IconButton
-                    onClick={() => handlePlayEpisode(episode)}
-                    sx={{
-                      border: '2px solid black',
-                      color: 'black',
-                      width: 56,
-                      height: 56,
-                      marginLeft: 2,
-                      '&:hover': {
-                        backgroundColor: 'primary.dark',
-                      },
-                      transition: 'all 0.2s ease',
-                    }}
-                  >
-                    <PlayArrow sx={{ fontSize: 28 }} />
-                  </IconButton>
+                  <Stack direction="row" spacing={1} sx={{ flexShrink: 0 }}>
+                    <IconButton
+                      onClick={() => window.open(getSpotifyLink(episode), '_blank', 'noopener,noreferrer')}
+                      sx={{
+                        border: '2px solid black',
+                        backgroundColor: 'transparent',
+                        color: 'black',
+                        width: 56,
+                        height: 56,
+                        borderRadius: '50%',
+                        '&:hover': {
+                          backgroundColor: 'rgba(0,0,0,0.1)',
+                        },
+                        transition: 'all 0.2s ease',
+                      }}
+                      aria-label="Listen on Spotify"
+                    >
+                      <Icon icon="mdi:spotify" style={{ fontSize: 28, color: 'black' }} />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => window.open(getApplePodcastsLink(episode), '_blank', 'noopener,noreferrer')}
+                      sx={{
+                        border: '2px solid black',
+                        backgroundColor: 'transparent',
+                        color: 'black',
+                        width: 56,
+                        height: 56,
+                        borderRadius: '50%',
+                        '&:hover': {
+                          backgroundColor: 'rgba(0,0,0,0.1)',
+                        },
+                        transition: 'all 0.2s ease',
+                      }}
+                      aria-label="Listen on Apple Podcasts"
+                    >
+                      <Icon icon="mdi:apple" style={{ fontSize: 28, color: 'black' }} />
+                    </IconButton>
+                  </Stack>
                 </Box>
               </CardContent>
             </Card>

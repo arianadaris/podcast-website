@@ -83,12 +83,10 @@ const ContactPage: React.FC = () => {
 
   const handleSendMessage = () => {
     // TODO: Implement send message functionality
-    console.log('Sending general message:', generalForm);
   };
 
   const handleRequestInterview = () => {
     // TODO: Implement request interview functionality
-    console.log('Booking interview:', interviewForm);
     setInterviewSubmitted(true);
   };
 
