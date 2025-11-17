@@ -41,7 +41,7 @@ const LandingPage: React.FC = () => {
             sx={{
               width: 300,
               height: 300,
-              margin: { xs: '0 0 40px -17px', md: '0 auto 40px' },
+              margin: '0 auto 40px',
               display: 'block',
               cursor: 'pointer',
             }}

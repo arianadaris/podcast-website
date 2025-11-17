@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -13,34 +13,53 @@ import {
   TextField,
   InputAdornment,
   IconButton,
+  CircularProgress,
+  Alert,
 } from '@mui/material';
 import { ArrowBack, Search, Clear } from '@mui/icons-material';
 import PersonCard from '../components/PersonCard';
 import Socials from '../components/Socials';
-import interviewsData from '../assets/data/interviews.json';
+import { getAllInterviews, getSeasons } from '../services/interviewService';
+import { Interview } from '../config/supabase';
 
 const InterviewsPage: React.FC = () => {
   const navigate = useNavigate();
   const [selectedSeason, setSelectedSeason] = useState('1');
   const [searchQuery, setSearchQuery] = useState('');
+  const [interviews, setInterviews] = useState<Interview[]>([]);
+  const [availableSeasons, setAvailableSeasons] = useState<number[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Get available seasons from the data
-  const availableSeasons = interviewsData.map(seasonData => seasonData.season.toString());
-  
-  // Create a lookup object for easier access
-  const seasonDataLookup = interviewsData.reduce((acc, seasonData) => {
-    acc[seasonData.season.toString()] = seasonData.interviews;
-    return acc;
-  }, {} as Record<string, typeof interviewsData[0]['interviews']>);
+  useEffect(() => {
+    loadData();
+  }, []);
 
-  const currentSeasonInterviews = seasonDataLookup[selectedSeason] || [];
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      const [interviewsData, seasonsData] = await Promise.all([
+        getAllInterviews(),
+        getSeasons(),
+      ]);
+      setInterviews(interviewsData);
+      setAvailableSeasons(seasonsData.length > 0 ? seasonsData : [1]);
+      if (seasonsData.length > 0) {
+        setSelectedSeason(seasonsData[0].toString());
+      }
+    } catch (err) {
+      setError('Failed to load interviews');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  // Filter interviews based on search query
-  const filteredInterviews = searchQuery
-    ? Object.values(seasonDataLookup).flat().filter(interview =>
-        interview.name.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : currentSeasonInterviews;
+  // Filter interviews based on season and search query
+  const filteredInterviews = interviews.filter((interview) => {
+    const matchesSeason = searchQuery || interview.season === parseInt(selectedSeason);
+    const matchesSearch = !searchQuery || interview.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesSeason && matchesSearch;
+  });
 
   const handleClearSearch = () => {
     setSearchQuery('');
@@ -199,7 +218,7 @@ const InterviewsPage: React.FC = () => {
                 }}
               >
                 {availableSeasons.map((season) => (
-                  <MenuItem key={season} value={season}>
+                  <MenuItem key={season} value={season.toString()}>
                     Season {season}
                   </MenuItem>
                 ))}
@@ -210,29 +229,46 @@ const InterviewsPage: React.FC = () => {
 
         {/* Interviewed People */}
         <Box sx={{ marginTop: 4 }}>
-          <Box
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: {
-                xs: 'repeat(2, 1fr)',
-                sm: 'repeat(3, 1fr)',
-                md: 'repeat(4, 1fr)',
-                lg: 'repeat(5, 1fr)'
-              },
-              gap: { xs: 2, sm: 3, md: 4 },
-              justifyContent: 'center',
-            }}
-          >
-            {filteredInterviews.map((interview) => (
-              <PersonCard
-                key={interview.id}
-                name={interview.name}
-                image={interview.image}
-                onClick={() => window.open(interview.link, '_blank')} // Open interview link in new tab
-                hoverText="View Interview"
-              />
-            ))}
-          </Box>
+          {loading ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', padding: 8 }}>
+              <CircularProgress sx={{ color: 'black' }} size={60} />
+            </Box>
+          ) : error ? (
+            <Alert
+              severity="error"
+              sx={{
+                backgroundColor: 'rgba(211, 47, 47, 0.1)',
+                border: '2px solid #d32f2f',
+                borderRadius: 0,
+              }}
+            >
+              {error}
+            </Alert>
+          ) : (
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: {
+                  xs: 'repeat(2, 1fr)',
+                  sm: 'repeat(3, 1fr)',
+                  md: 'repeat(4, 1fr)',
+                  lg: 'repeat(5, 1fr)'
+                },
+                gap: { xs: 2, sm: 3, md: 4 },
+                justifyContent: 'center',
+              }}
+            >
+              {filteredInterviews.map((interview) => (
+                <PersonCard
+                  key={interview.id}
+                  name={interview.name}
+                  image={interview.image_url}
+                  onClick={() => window.open(interview.link, '_blank')} // Open interview link in new tab
+                  hoverText="View Interview"
+                />
+              ))}
+            </Box>
+          )}
         </Box>
 
         {/* Social Links */}

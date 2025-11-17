@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -8,22 +8,53 @@ import {
   Paper,
   Avatar,
   IconButton,
+  CircularProgress,
+  Alert,
 } from '@mui/material';
 import { ArrowBack, ArrowForward, Mic } from '@mui/icons-material';
 import Socials from '../components/Socials';
-import teamData from '../assets/data/team.json';
+import { getAllTeamMembers, getTeamMemberByName } from '../services/teamService';
+import { TeamMember } from '../config/supabase';
 
 const PersonPage: React.FC = () => {
   const { personName } = useParams<{ personName: string }>();
   const navigate = useNavigate();
   const [imageError, setImageError] = React.useState(false);
+  const [person, setPerson] = useState<TeamMember | null>(null);
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const handleImageError = () => {
     setImageError(true);
   };
 
-  // Find the person data from team.json by name
-  const person = personName ? teamData.find(member => member.name.toLowerCase() === personName.toLowerCase()) : null;
+  useEffect(() => {
+    loadData();
+  }, [personName]);
+
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const [personData, allMembers] = await Promise.all([
+        personName ? getTeamMemberByName(personName) : null,
+        getAllTeamMembers(),
+      ]);
+      
+      setPerson(personData);
+      setTeamMembers(allMembers);
+      
+      if (!personData && personName) {
+        setError('Team member not found');
+      }
+    } catch (err) {
+      setError('Failed to load team member data');
+    } finally {
+      setLoading(false);
+    }
+  };
   
   // Reset imageError state when person changes
   React.useEffect(() => {
@@ -31,12 +62,12 @@ const PersonPage: React.FC = () => {
   }, [person]);
   
   // Get all person names for navigation
-  const personNames = teamData.map(member => member.name);
+  const personNames = teamMembers.map(member => member.name);
   const currentIndex = person ? personNames.indexOf(person.name) : -1;
   const prevPersonName = currentIndex >= 0 ? personNames[(currentIndex - 1 + personNames.length) % personNames.length] : '';
   const nextPersonName = currentIndex >= 0 ? personNames[(currentIndex + 1) % personNames.length] : '';
 
-  if (!person) {
+  if (loading) {
     return (
       <Box
         sx={{
@@ -48,9 +79,48 @@ const PersonPage: React.FC = () => {
           justifyContent: 'center',
         }}
       >
-        <Typography variant="h4" sx={{ color: 'black' }}>
-          Person not found
-        </Typography>
+        <CircularProgress sx={{ color: 'black' }} size={60} />
+      </Box>
+    );
+  }
+
+  if (error || !person) {
+    return (
+      <Box
+        sx={{
+          minHeight: '100vh',
+          background: 'linear-gradient(135deg, #1976d2 0%, #42a5f5 100%)',
+          padding: 2,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Container maxWidth="sm">
+          <Alert
+            severity="error"
+            sx={{
+              backgroundColor: 'rgba(211, 47, 47, 0.1)',
+              border: '2px solid #d32f2f',
+              borderRadius: 0,
+            }}
+          >
+            {error || 'Person not found'}
+          </Alert>
+          <Button
+            onClick={() => navigate('/team')}
+            sx={{
+              marginTop: 2,
+              color: 'black',
+              backgroundColor: 'primary.light',
+              borderColor: 'black',
+              borderRadius: 0,
+              border: '2px solid black',
+            }}
+          >
+            Back to Team
+          </Button>
+        </Container>
       </Box>
     );
   }
@@ -154,7 +224,7 @@ const PersonPage: React.FC = () => {
                    <Box sx={{ position: 'relative' }}>
                      <Box
                        component="img"
-                       src={person.image}
+                       src={person.image_url}
                        alt={person.name}
                        onError={handleImageError}
                        sx={{
@@ -164,7 +234,7 @@ const PersonPage: React.FC = () => {
                          objectFit: 'cover',
                        }}
                      />
-                     {person.audio && (
+                     {person.audio_url && (
                        <IconButton
                          sx={{
                            position: 'absolute',
@@ -196,7 +266,7 @@ const PersonPage: React.FC = () => {
                      >
                        {person.name.split(' ').map(n => n[0]).join('')}
                      </Avatar>
-                     {person.audio && (
+                     {person.audio_url && (
                        <IconButton
                          sx={{
                            position: 'absolute',
@@ -236,7 +306,7 @@ const PersonPage: React.FC = () => {
                    >
                      {person.name}
                    </Typography>
-                   {person.audio && (
+                   {person.audio_url && (
                      <IconButton
                        sx={{
                          color: 'black',
@@ -260,7 +330,7 @@ const PersonPage: React.FC = () => {
                     marginBottom: 3,
                   }}
                 >
-                  {person.socialHandle}
+                  {person.social_handle}
                 </Typography>
                 
                 {/* Bullet Point List */}
@@ -290,7 +360,7 @@ const PersonPage: React.FC = () => {
                       {person.role}
                     </Typography>
                   </Box>
-                  {person.funFacts.map((fact, index) => (
+                  {person.fun_facts.map((fact, index) => (
                     <Box component="li" key={index} sx={{
                       color: 'black',
                       marginBottom: 1,
@@ -343,7 +413,7 @@ const PersonPage: React.FC = () => {
                    borderRadius: '2px',
                  },
                }}>
-                 {person.favoriteArtists.map((artist, index) => (
+                  {person.favorite_artists.map((artist, index) => (
                    <Box
                      key={index}
                      sx={{
@@ -414,7 +484,7 @@ const PersonPage: React.FC = () => {
                    borderRadius: '2px',
                  },
                }}>
-                 {person.favoriteAlbums.map((album, index) => (
+                  {person.favorite_albums.map((album, index) => (
                    <Box
                      key={index}
                      sx={{

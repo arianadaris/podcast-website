@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -6,14 +6,39 @@ import {
   Typography,
   Button,
   Stack,
+  CircularProgress,
+  Alert,
 } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import PersonCard from '../components/PersonCard';
 import Socials from '../components/Socials';
-import teamData from '../assets/data/team.json';
+import { getAllTeamMembers } from '../services/teamService';
+import { TeamMember } from '../config/supabase';
 
 const TeamPage: React.FC = () => {
   const navigate = useNavigate();
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    loadTeamMembers();
+  }, []);
+
+  const loadTeamMembers = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await getAllTeamMembers();
+      console.log('Team members loaded:', data);
+      setTeamMembers(data);
+    } catch (err) {
+      console.error('Error loading team members:', err);
+      setError(`Failed to load team members: ${err instanceof Error ? err.message : String(err)}`);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Box
@@ -78,23 +103,40 @@ const TeamPage: React.FC = () => {
 
         {/* Team Members */}
         <Box sx={{ marginTop: 4 }}>
-          <Box
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(4, 1fr)' },
-              gap: { xs: 2, sm: 4 },
-              justifyContent: 'center',
-            }}
-          >
-            {teamData.map((member) => (
-              <PersonCard
-                key={member.id}
-                name={member.name}
-                image={member.image}
-                onClick={() => navigate(`/person/${member.name}`)}
-              />
-            ))}
-          </Box>
+          {loading ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', padding: 8 }}>
+              <CircularProgress sx={{ color: 'black' }} size={60} />
+            </Box>
+          ) : error ? (
+            <Alert
+              severity="error"
+              sx={{
+                backgroundColor: 'rgba(211, 47, 47, 0.1)',
+                border: '2px solid #d32f2f',
+                borderRadius: 0,
+              }}
+            >
+              {error}
+            </Alert>
+          ) : (
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(4, 1fr)' },
+                gap: { xs: 2, sm: 4 },
+                justifyContent: 'center',
+              }}
+            >
+              {teamMembers.map((member) => (
+                <PersonCard
+                  key={member.id}
+                  name={member.name}
+                  image={member.image_url}
+                  onClick={() => navigate(`/person/${member.name}`)}
+                />
+              ))}
+            </Box>
+          )}
         </Box>
 
         {/* Social Links */}

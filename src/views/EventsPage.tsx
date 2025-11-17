@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -6,21 +6,36 @@ import {
   Typography,
   Button,
   Stack,
+  CircularProgress,
+  Alert,
 } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import EventCard from '../components/EventCard';
 import Socials from '../components/Socials';
-import eventsData from '../assets/data/events.json';
+import { getAllEvents } from '../services/eventService';
+import { Event } from '../config/supabase';
 
 const EventsPage: React.FC = () => {
   const navigate = useNavigate();
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Sort events by date (soonest first)
-  const sortedEvents = [...eventsData].sort((a, b) => {
-    const dateA = new Date(a.date);
-    const dateB = new Date(b.date);
-    return dateA.getTime() - dateB.getTime();
-  });
+  useEffect(() => {
+    loadEvents();
+  }, []);
+
+  const loadEvents = async () => {
+    try {
+      setLoading(true);
+      const data = await getAllEvents();
+      setEvents(data);
+    } catch (err) {
+      setError('Failed to load events');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Box
@@ -85,16 +100,31 @@ const EventsPage: React.FC = () => {
 
         {/* Events List */}
         <Box sx={{ marginTop: 4 }}>
-          {sortedEvents.length > 0 ? (
+          {loading ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', padding: 8 }}>
+              <CircularProgress sx={{ color: 'black' }} size={60} />
+            </Box>
+          ) : error ? (
+            <Alert
+              severity="error"
+              sx={{
+                backgroundColor: 'rgba(211, 47, 47, 0.1)',
+                border: '2px solid #d32f2f',
+                borderRadius: 0,
+              }}
+            >
+              {error}
+            </Alert>
+          ) : events.length > 0 ? (
             <Stack spacing={3}>
-              {sortedEvents.map((event) => (
+              {events.map((event) => (
                 <EventCard
                   key={event.id}
                   name={event.name}
                   location={event.location}
                   date={event.date}
                   time={event.time}
-                  attendingMembers={event.attendingMembers}
+                  attendingMembers={event.attending_members}
                   description={event.description}
                 />
               ))}

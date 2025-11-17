@@ -69,7 +69,6 @@ const getCachedEpisodes = (): Episode[] | null => {
       }
     }
   } catch (error) {
-    console.warn('Error reading from cache:', error);
     localStorage.removeItem(CACHE_KEY);
   }
   
@@ -91,7 +90,7 @@ const setCachedEpisodes = (episodes: Episode[]): void => {
   try {
     localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
   } catch (error) {
-    console.warn('Error writing to cache:', error);
+    // Silently fail
   }
 };
 
@@ -100,7 +99,7 @@ const clearCache = (): void => {
   try {
     localStorage.removeItem(CACHE_KEY);
   } catch (error) {
-    console.warn('Error clearing cache:', error);
+    // Silently fail
   }
 };
 
@@ -172,7 +171,6 @@ const fetchFreshEpisodes = async (): Promise<Episode[]> => {
     try {
       response = await fetchWithRetry(corsProxy + encodeURIComponent(rssUrl));
     } catch (proxyError) {
-      console.error('Both direct and proxy fetch failed:', proxyError);
       throw new Error(`Failed to fetch RSS feed: ${proxyError instanceof Error ? proxyError.message : 'Unknown error'}`);
     }
   }
@@ -201,7 +199,6 @@ const refreshEpisodesInBackground = async (): Promise<void> => {
   }
   
   backgroundRefreshPromise = fetchFreshEpisodes().catch(error => {
-    console.warn('Background refresh failed:', error);
     return [];
   }).finally(() => {
     backgroundRefreshPromise = null;
@@ -291,9 +288,9 @@ export const fetchEpisodes = async (forceRefresh: boolean = false): Promise<Epis
   if (cachedEpisodes && !forceRefresh) {
     // Return cached data immediately
     // Refresh in background (don't await - fire and forget)
-    refreshEpisodesInBackground().catch(err => 
-      console.warn('Background refresh failed:', err)
-    );
+    refreshEpisodesInBackground().catch(err => {
+      // Silently fail
+    });
     
     return cachedEpisodes;
   }
@@ -302,8 +299,6 @@ export const fetchEpisodes = async (forceRefresh: boolean = false): Promise<Epis
   try {
     return await fetchFreshEpisodes();
   } catch (error) {
-    console.error('Error fetching RSS feed:', error);
-    
     // Try to return cached data as fallback (even if expired)
     if (cachedEpisodes) {
       return cachedEpisodes;
@@ -401,7 +396,7 @@ export const getCacheInfo = (): { hasCache: boolean; expiresAt?: number; cacheAg
       }
     }
   } catch (error) {
-    console.warn('Error reading cache info:', error);
+    // Silently fail
   }
   
   return { hasCache: false };

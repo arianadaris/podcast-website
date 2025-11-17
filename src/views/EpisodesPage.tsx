@@ -59,7 +59,6 @@ const EpisodesPage: React.FC = () => {
         setImageLoadingStates(initialLoadingStates);
       } catch (err) {
         setError('Failed to load episodes. Please try again later.');
-        console.error('Error loading episodes:', err);
       } finally {
         setLoading(false);
       }
