@@ -21,20 +21,33 @@ const personData = {
   person4: { name: 'Emily Davis', role: 'Content Strategist' },
 };
 
-export const usePageTitle = (currentPage: PageType, personId?: string) => {
+// Overloaded function signatures
+export function usePageTitle(currentPage: PageType, personId?: string): void;
+export function usePageTitle(customTitle: string): void;
+
+export function usePageTitle(currentPageOrTitle: PageType | string, personId?: string) {
   useEffect(() => {
-    let title = pageTitles[currentPage];
+    let title: string;
     
-    // Handle dynamic title for person page
-    if (currentPage === 'person' && personId) {
-      const person = personData[personId as keyof typeof personData];
-      if (person) {
-        title = `808s & COLD TAKES - ${person.name} (${person.role})`;
+    // Check if it's a custom title (string that's not a PageType)
+    if (typeof currentPageOrTitle === 'string' && !(currentPageOrTitle in pageTitles)) {
+      title = currentPageOrTitle;
+    } else {
+      // It's a PageType
+      const currentPage = currentPageOrTitle as PageType;
+      title = pageTitles[currentPage];
+      
+      // Handle dynamic title for person page
+      if (currentPage === 'person' && personId) {
+        const person = personData[personId as keyof typeof personData];
+        if (person) {
+          title = `808s & COLD TAKES - ${person.name} (${person.role})`;
+        }
       }
     }
     
     if (title) {
       document.title = title;
     }
-  }, [currentPage, personId]);
-};
+  }, [currentPageOrTitle, personId]);
+}

@@ -11,6 +11,7 @@ import {
   People,
   Event,
   Mic,
+  EmojiEvents,
 } from '@mui/icons-material';
 import AdminLayout from '../../components/admin/AdminLayout';
 
@@ -95,6 +96,12 @@ const DashboardPage: React.FC = () => {
       description: 'Manage upcoming events and live recordings',
       icon: <Event sx={{ fontSize: 40 }} />,
       path: '/admin/events',
+    },
+    {
+      title: 'Nominations',
+      description: 'Manage award nominations and settings',
+      icon: <EmojiEvents sx={{ fontSize: 40 }} />,
+      path: '/admin/nominations',
     },
   ];
 

@@ -104,11 +104,6 @@ const DataTable: React.FC<DataTableProps> = ({
     return (
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         {rows.map((row, index) => {
-          // Find image and name columns
-          const imageColumn = columns.find((col) => col.id === 'image_url');
-          const nameColumn = columns.find((col) => col.id === 'name');
-          const seasonColumn = columns.find((col) => col.id === 'season');
-
           return (
             <Card
               key={row.id || index}
@@ -123,64 +118,72 @@ const DataTable: React.FC<DataTableProps> = ({
                 <Box
                   sx={{
                     display: 'flex',
-                    alignItems: 'center',
-                    gap: 2,
+                    flexDirection: 'column',
+                    gap: 1,
                   }}
                 >
-                  {imageColumn && (
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      {imageColumn.format
-                        ? imageColumn.format(row[imageColumn.id])
-                        : row[imageColumn.id]}
-                    </Box>
-                  )}
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: 0.5,
-                      flex: 1,
-                    }}
-                  >
-                    {nameColumn && (
-                      <Box
-                        sx={{
-                          color: 'black',
-                          fontWeight: 600,
-                        }}
-                      >
-                        {nameColumn.format
-                          ? nameColumn.format(row[nameColumn.id])
-                          : row[nameColumn.id]}
+                  {/* Render all columns */}
+                  {columns.map((column) => {
+                    const value = row[column.id];
+                    const displayValue = column.format ? column.format(value) : value;
+                    
+                    // Skip if no value
+                    if (displayValue === '-' || displayValue === null || displayValue === undefined || displayValue === '') {
+                      return null;
+                    }
+
+                    return (
+                      <Box key={column.id} sx={{ display: 'flex', flexDirection: 'column', gap: 0.25 }}>
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            color: 'rgba(0,0,0,0.6)',
+                            fontWeight: 600,
+                            textTransform: 'uppercase',
+                            fontSize: '0.7rem',
+                          }}
+                        >
+                          {column.label}
+                        </Typography>
+                        <Box
+                          sx={{
+                            color: 'black',
+                            fontWeight: 500,
+                            fontSize: '0.9rem',
+                          }}
+                        >
+                          {displayValue}
+                        </Box>
                       </Box>
-                    )}
-                    {seasonColumn && (
-                      <Box>
-                        {seasonColumn.format
-                          ? seasonColumn.format(row[seasonColumn.id])
-                          : row[seasonColumn.id]}
-                      </Box>
-                    )}
-                  </Box>
+                    );
+                  })}
+                  
+                  {/* Actions */}
                   {actions.length > 0 && (
                     <Box
                       sx={{
                         display: 'flex',
                         gap: 1,
+                        marginTop: 1,
+                        paddingTop: 1,
+                        borderTop: '1px solid rgba(0,0,0,0.2)',
                       }}
                     >
                       {actions.map((action, actionIndex) => {
                         const isDisabled = action.disabled ? action.disabled(row) : false;
                         return (
-                          <IconButton
+                          <Button
                             key={actionIndex}
                             onClick={() => action.onClick(row)}
                             disabled={isDisabled}
                             size="small"
+                            startIcon={getActionIcon(action.icon)}
                             sx={{
                               border: '2px solid black',
                               borderRadius: 0,
                               color: 'black',
+                              backgroundColor: 'transparent',
+                              textTransform: 'none',
                               '&:hover': {
                                 backgroundColor: 'rgba(0,0,0,0.1)',
                               },
@@ -190,8 +193,8 @@ const DataTable: React.FC<DataTableProps> = ({
                               },
                             }}
                           >
-                            {getActionIcon(action.icon)}
-                          </IconButton>
+                            {action.label}
+                          </Button>
                         );
                       })}
                     </Box>

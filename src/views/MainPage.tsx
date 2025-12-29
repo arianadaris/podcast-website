@@ -5,6 +5,7 @@ import {
   Typography,
   Container,
   Stack,
+  Button,
 } from '@mui/material';
 import Socials from '../components/Socials';
 
@@ -99,6 +100,49 @@ const MainPage: React.FC = () => {
             </Typography>
           ))}
         </Stack>
+
+        {/* Nomination Banner */}
+        <Box
+          sx={{
+            border: '2px solid rgba(0, 0, 0)',
+            padding: { xs: 2.5, sm: 3 },
+            marginBottom: 3,
+            textAlign: 'center',
+            width: '100%',
+            maxWidth: 420,
+            mx: 'auto',
+            backgroundColor: 'primary.light',
+          }}
+        >
+          <Typography
+            sx={{
+              marginBottom: 2,
+              fontWeight: 600,
+              color: '#1a1a1a',
+              fontSize: { xs: '0.95rem', sm: '1.05rem' },
+              lineHeight: 1.5,
+            }}
+          >
+            Nominate your favorite local Arizona artists for the 2026 808s Awards Show
+          </Typography>
+          <Button
+            variant="outlined"
+            size="large"
+            onClick={() => navigate('/nominations')}
+            sx={{
+              padding: '18px 36px',
+              borderColor: '#000000',
+              borderRadius: 0,
+              color: '#000000',
+              '&:hover': {
+                borderColor: '#000000',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              },
+            }}
+          >
+            Nominate
+          </Button>
+        </Box>
 
         {/* Social Links */}
         <Socials sx={{ marginBottom: 3 }} />

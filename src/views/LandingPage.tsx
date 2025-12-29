@@ -55,6 +55,7 @@ const LandingPage: React.FC = () => {
             sx={{
               padding: '18px 36px',
               borderColor: '#000000',
+              borderRadius: 0,
               color: '#000000',
               animation: 'pulse 2s ease-in-out infinite',
               '@keyframes pulse': {

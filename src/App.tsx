@@ -15,6 +15,7 @@ import TeamPage from './views/TeamPage';
 import InterviewsPage from './views/InterviewsPage';
 import EventsPage from './views/EventsPage';
 import PersonPage from './views/PersonPage';
+import NominationsPage from './views/NominationsPage';
 
 // Admin pages
 import LoginPage from './views/admin/LoginPage';
@@ -25,6 +26,8 @@ import InterviewListPage from './views/admin/InterviewListPage';
 import InterviewFormPage from './views/admin/InterviewFormPage';
 import EventListPage from './views/admin/EventListPage';
 import EventFormPage from './views/admin/EventFormPage';
+import NominationListPage from './views/admin/NominationListPage';
+import NominationSettingsPage from './views/admin/NominationSettingsPage';
 
 import { fetchEpisodes } from './services/rssService';
 
@@ -52,6 +55,7 @@ function App() {
               <Route path="/team" element={<TeamPage />} />
               <Route path="/interviews" element={<InterviewsPage />} />
               <Route path="/events" element={<EventsPage />} />
+              <Route path="/nominations" element={<NominationsPage />} />
               <Route path="/person/:personName" element={<PersonPage />} />
 
               {/* Admin Routes */}
@@ -140,6 +144,24 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <EventFormPage />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Nomination Management */}
+              <Route
+                path="/admin/nominations"
+                element={
+                  <ProtectedRoute>
+                    <NominationListPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/nomination-settings"
+                element={
+                  <ProtectedRoute>
+                    <NominationSettingsPage />
                   </ProtectedRoute>
                 }
               />

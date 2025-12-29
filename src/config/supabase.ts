@@ -84,4 +84,37 @@ export interface Event {
   updated_at?: string;
 }
 
+export type NominationCategory = 
+  | 'project_of_the_year'
+  | 'artist_of_the_year'
+  | 'group_of_the_year'
+  | 'song_of_the_year'
+  | 'producer_of_the_year'
+  | 'music_video_of_the_year';
+
+export interface Nomination {
+  id: string;
+  ip_hash: string;
+  category: NominationCategory;
+  artist_name: string;
+  project_name?: string;
+  song_name?: string;
+  video_url?: string;
+  created_at?: string;
+}
+
+export interface NominationSettings {
+  id: string;
+  is_active: boolean;
+  start_date?: string;
+  end_date?: string;
+  updated_at?: string;
+}
+
+export interface NominationSubmission {
+  id: string;
+  ip_hash: string;
+  submitted_at?: string;
+}
+
 

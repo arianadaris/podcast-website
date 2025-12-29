@@ -25,6 +25,7 @@ const Navigation: React.FC<NavigationProps> = ({ showBackButton = false, title }
     { label: 'Team', path: '/team' },
     { label: 'Interviews', path: '/interviews' },
     { label: 'Events', path: '/events' },
+    { label: 'Nominate', path: '/nominations' },
     { label: 'Contact', path: '/contact' },
   ];
 
