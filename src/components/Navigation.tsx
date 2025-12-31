@@ -9,25 +9,34 @@ import {
   Typography,
 } from '@mui/material';
 import { Home, ArrowBack } from '@mui/icons-material';
+import { featureFlags } from '../config/featureFlags';
 
 interface NavigationProps {
   showBackButton?: boolean;
   title?: string;
 }
 
+interface NavItem {
+  label: string;
+  path: string;
+  flag?: keyof typeof featureFlags;
+}
+
 const Navigation: React.FC<NavigationProps> = ({ showBackButton = false, title }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const navItems = [
+  const allNavItems: NavItem[] = [
     { label: 'Home', path: '/main' },
     { label: 'Episodes', path: '/episodes' },
     { label: 'Team', path: '/team' },
     { label: 'Interviews', path: '/interviews' },
     { label: 'Events', path: '/events' },
     { label: 'Nominate', path: '/nominations' },
-    { label: 'Contact', path: '/contact' },
+    { label: 'Contact', path: '/contact', flag: 'showContactPage' },
   ];
+
+  const navItems = allNavItems.filter(item => !item.flag || featureFlags[item.flag]);
 
   const handleBack = () => {
     window.history.back();

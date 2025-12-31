@@ -5,6 +5,7 @@ import { CssBaseline } from '@mui/material';
 import { theme } from './theme/theme';
 import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/admin/ProtectedRoute';
+import { featureFlags } from './config/featureFlags';
 
 // Public pages
 import LandingPage from './views/LandingPage';
@@ -51,7 +52,9 @@ function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/main" element={<MainPage />} />
               <Route path="/episodes" element={<EpisodesPage />} />
-              <Route path="/contact" element={<ContactPage />} />
+              {featureFlags.showContactPage && (
+                <Route path="/contact" element={<ContactPage />} />
+              )}
               <Route path="/team" element={<TeamPage />} />
               <Route path="/interviews" element={<InterviewsPage />} />
               <Route path="/events" element={<EventsPage />} />

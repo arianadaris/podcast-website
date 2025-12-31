@@ -96,3 +96,4 @@ export function getCategoryDescription(category: string): string {
   return descriptions[category] || '';
 }
 
+

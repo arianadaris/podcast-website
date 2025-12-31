@@ -8,10 +8,18 @@ import {
   Button,
 } from '@mui/material';
 import Socials from '../components/Socials';
+import { featureFlags } from '../config/featureFlags';
+
+interface MainLink {
+  title: string;
+  href: string;
+  onClick: () => void;
+  flag?: keyof typeof featureFlags;
+}
 
 const MainPage: React.FC = () => {
   const navigate = useNavigate();
-  const links = [
+  const allLinks: MainLink[] = [
     {
       title: 'Team',
       href: '/team',
@@ -36,8 +44,11 @@ const MainPage: React.FC = () => {
       title: 'Contact',
       href: '/contact',
       onClick: () => navigate('/contact'),
+      flag: 'showContactPage',
     },
   ];
+
+  const links = allLinks.filter(link => !link.flag || featureFlags[link.flag]);
 
 
   return (
@@ -123,7 +134,7 @@ const MainPage: React.FC = () => {
               lineHeight: 1.5,
             }}
           >
-            Nominate your favorite local Arizona artists for the 2026 808s Awards Show
+            Are you a local Arizona artist? Nominate yourself for the 2026 808s Awards Show
           </Typography>
           <Button
             variant="outlined"

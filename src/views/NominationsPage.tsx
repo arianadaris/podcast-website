@@ -14,8 +14,8 @@ import {
   Paper,
   Stack,
 } from '@mui/material';
-import { ExpandMore, ArrowBack, Send } from '@mui/icons-material';
-import { useForm, Controller } from 'react-hook-form';
+import { ExpandMore, ArrowBack, Send, CheckCircle } from '@mui/icons-material';
+import { useForm, Controller, useWatch } from 'react-hook-form';
 import Socials from '../components/Socials';
 import SuccessDialog from '../components/SuccessDialog';
 import { submitNominations, hasUserSubmitted, getNominationSettings } from '../services/nominationService';
@@ -74,6 +74,30 @@ const NominationsPage: React.FC = () => {
   
   const navigate = useNavigate();
   const { control, handleSubmit, formState: { errors } } = useForm<FormData>();
+  
+  // Watch all form values to show completion indicators
+  const watchedValues = useWatch({ control });
+  
+  // Check if a category has been fully filled out (all relevant fields entered)
+  const isCategoryFilled = (category: NominationCategory): boolean => {
+    const categoryData = watchedValues[category];
+    if (!categoryData?.artist_name?.trim()) return false;
+    
+    // Check category-specific required fields
+    if (category === 'project_of_the_year' || 
+        category === 'artist_of_the_year' || 
+        category === 'group_of_the_year') {
+      return !!(categoryData.project_name?.trim());
+    }
+    
+    if (category === 'song_of_the_year' || 
+        category === 'producer_of_the_year' || 
+        category === 'music_video_of_the_year') {
+      return !!(categoryData.song_name?.trim());
+    }
+    
+    return true;
+  };
   
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -510,7 +534,7 @@ const NominationsPage: React.FC = () => {
         <Paper sx={{ backgroundColor: 'primary.light', border: '2px solid black', borderRadius: 0 }}>
           <Box sx={{ padding: 3 }}>
             <Typography variant="body1" sx={{ mb: 3, textAlign: 'center', color: 'black' }}>
-              Nominate your favorite local Arizona musical artists across different categories.
+              Are you a local Arizona artist? Nominate yourself for the 2026 808s Awards Show.
               Fill out as many or as few categories as you like.
             </Typography>
 
@@ -552,13 +576,24 @@ const NominationsPage: React.FC = () => {
                         },
                       }}
                     >
-                      <Box>
-                        <Typography variant="h6" sx={{ fontWeight: 700, color: 'black' }}>
-                          {getCategoryDisplayName(category)}
-                        </Typography>
-                        <Typography variant="body2" sx={{ color: 'black', opacity: 0.7 }}>
-                          {getCategoryDescription(category)}
-                        </Typography>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, width: '100%' }}>
+                        {isCategoryFilled(category) && (
+                          <CheckCircle 
+                            sx={{ 
+                              color: '#2e7d32',
+                              fontSize: 28,
+                              flexShrink: 0,
+                            }} 
+                          />
+                        )}
+                        <Box>
+                          <Typography variant="h6" sx={{ fontWeight: 700, color: 'black' }}>
+                            {getCategoryDisplayName(category)}
+                          </Typography>
+                          <Typography variant="body2" sx={{ color: 'black', opacity: 0.7 }}>
+                            {getCategoryDescription(category)}
+                          </Typography>
+                        </Box>
                       </Box>
                     </AccordionSummary>
                     <AccordionDetails sx={{ borderTop: '1px solid rgba(0,0,0,0.1)', pt: 2 }}>
