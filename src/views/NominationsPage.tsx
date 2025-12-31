@@ -534,8 +534,9 @@ const NominationsPage: React.FC = () => {
         <Paper sx={{ backgroundColor: 'primary.light', border: '2px solid black', borderRadius: 0 }}>
           <Box sx={{ padding: 3 }}>
             <Typography variant="body1" sx={{ mb: 3, textAlign: 'center', color: 'black' }}>
-              Are you a local Arizona artist? Nominate yourself for the 2026 808s Awards Show.
-              Fill out as many or as few categories as you like.
+              Arizona artists! This is your chance to get recognized for all the hard work you've put in this year. 
+              Nominate yourself for the 2026 808s Awards Show and let your music be heard. 
+              Fill out as many or as few categories as you like. Please note: one song or project per artist—if you submit more than one, your first submission will be used.
             </Typography>
 
             {error && (
