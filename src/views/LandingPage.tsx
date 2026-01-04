@@ -39,10 +39,14 @@ const LandingPage: React.FC = () => {
             alt="808s & COLD TAKES Logo"
             onClick={() => navigate('/main')}
             sx={{
-              width: 300,
-              height: 300,
-              margin: '0 auto 40px',
+              width: { xs: '80vw', sm: 300 },
+              height: { xs: '80vw', sm: 300 },
+              maxWidth: 300,
+              maxHeight: 300,
+              marginBottom: '40px',
               display: 'block',
+              marginLeft: 'auto',
+              marginRight: 'auto',
               cursor: 'pointer',
             }}
           />

@@ -229,7 +229,7 @@ const NominationsPage: React.FC = () => {
             render={({ field }) => (
               <TextField
                 {...field}
-                label={category === 'project_of_the_year' ? 'Project Name' : 'Album/Project Name'}
+                label={category === 'project_of_the_year' ? 'Link the Project' : 'Link a Playlist or Album'}
                 fullWidth
                 variant="outlined"
                 sx={textFieldSx}

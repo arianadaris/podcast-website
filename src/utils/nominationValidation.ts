@@ -85,16 +85,19 @@ export function getCategoryDisplayName(category: string): string {
  */
 export function getCategoryDescription(category: string): string {
   const descriptions: Record<string, string> = {
-    project_of_the_year: 'Nominate an artist and their standout project (album, EP, mixtape, etc.)',
-    artist_of_the_year: 'Nominate an artist and their notable album/project from this year',
-    group_of_the_year: 'Nominate a group and their notable album/project from this year',
-    song_of_the_year: 'Nominate an artist and their best song',
-    producer_of_the_year: 'Nominate a producer and a notable song they produced',
-    music_video_of_the_year: 'Nominate an artist and their best music video',
+    project_of_the_year: 'Submit your standout project (album, EP, mixtape, etc.)',
+    artist_of_the_year: 'Put yourself forward with your best album or project from this year',
+    group_of_the_year: 'Enter your group and highlight your best album or project',
+    song_of_the_year: 'Submit your best track from this year',
+    producer_of_the_year: 'Showcase your production skills with a standout song you produced',
+    music_video_of_the_year: 'Submit your best music video from this year',
   };
   
   return descriptions[category] || '';
 }
+
+
+
 
 
 
