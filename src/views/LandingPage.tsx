@@ -3,9 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
-  Typography,
-  Container,
-  Stack,
 } from '@mui/material';
 import Socials from '../components/Socials';
 
@@ -17,39 +14,36 @@ const LandingPage: React.FC = () => {
         minHeight: '100vh',
         background: 'linear-gradient(135deg, #1976d2 0%, #42a5f5 100%)',
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         padding: 2,
+        boxSizing: 'border-box',
       }}
     >
-      <Container maxWidth={false} sx={{ 
-        maxWidth: { xs: '97vw', sm: '80vw', md: '70vw', lg: '50vw' }, 
-        paddingX: 2 
-      }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          textAlign: 'center',
+          width: '100%',
+          maxWidth: { xs: '100%', sm: '80vw', md: '70vw', lg: '50vw' },
+        }}
+      >
+        {/* Logo */}
         <Box
+          component="img"
+          src="/logo.png"
+          alt="808s & COLD TAKES Logo"
+          onClick={() => navigate('/main')}
           sx={{
-            textAlign: 'center',
-            padding: 4,
+            width: { xs: 250, sm: 300 },
+            height: { xs: 250, sm: 300 },
+            marginBottom: '40px',
+            cursor: 'pointer',
           }}
-        >
-          {/* Logo */}
-          <Box
-            component="img"
-            src="/logo.png"
-            alt="808s & COLD TAKES Logo"
-            onClick={() => navigate('/main')}
-            sx={{
-              width: { xs: '80vw', sm: 300 },
-              height: { xs: '80vw', sm: 300 },
-              maxWidth: 300,
-              maxHeight: 300,
-              marginBottom: '40px',
-              display: 'block',
-              marginLeft: 'auto',
-              marginRight: 'auto',
-              cursor: 'pointer',
-            }}
-          />
+        />
 
           {/* Enter Button */}
           <Button
@@ -84,10 +78,9 @@ const LandingPage: React.FC = () => {
             ENTER
           </Button>
 
-          {/* Social Links */}
-          <Socials sx={{ marginTop: 4 }} />
-        </Box>
-      </Container>
+        {/* Social Links */}
+        <Socials sx={{ marginTop: 4 }} />
+      </Box>
     </Box>
   );
 };
