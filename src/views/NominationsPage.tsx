@@ -199,9 +199,10 @@ const NominationsPage: React.FC = () => {
   };
 
   const renderCategoryFields = (category: NominationCategory) => {
-    const artistLabel = category === 'music_video_of_the_year' 
-      ? 'Name / Instagram Handle (Artist & Director)' 
-      : 'Name / Instagram Handle';
+    const artistLabel = 'Name / Instagram Handle';
+    const artistHelperText = category === 'music_video_of_the_year' 
+      ? 'Include both Artist & Director' 
+      : undefined;
 
     const getSecondFieldLabel = () => {
       switch (category) {
@@ -232,6 +233,7 @@ const NominationsPage: React.FC = () => {
             <TextField
               {...field}
               label={artistLabel}
+              helperText={artistHelperText}
               fullWidth
               variant="outlined"
               sx={textFieldSx}
