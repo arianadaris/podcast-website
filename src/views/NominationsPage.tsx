@@ -91,9 +91,12 @@ const NominationsPage: React.FC = () => {
     }
     
     if (category === 'song_of_the_year' || 
-        category === 'producer_of_the_year' || 
-        category === 'music_video_of_the_year') {
+        category === 'producer_of_the_year') {
       return !!(categoryData.song_name?.trim());
+    }
+    
+    if (category === 'music_video_of_the_year') {
+      return !!(categoryData.video_url?.trim());
     }
     
     return true;
@@ -166,9 +169,6 @@ const NominationsPage: React.FC = () => {
               nomination.song_name = categoryData.song_name.trim();
             }
           } else if (category === 'music_video_of_the_year') {
-            if (categoryData.song_name?.trim()) {
-              nomination.song_name = categoryData.song_name.trim();
-            }
             if (categoryData.video_url?.trim()) {
               nomination.video_url = categoryData.video_url.trim();
             }
@@ -199,8 +199,28 @@ const NominationsPage: React.FC = () => {
   };
 
   const renderCategoryFields = (category: NominationCategory) => {
-    const artistLabel = category === 'group_of_the_year' ? 'Group Name' : 
-                       category === 'producer_of_the_year' ? 'Producer Name' : 'Artist Name';
+    const artistLabel = category === 'music_video_of_the_year' 
+      ? 'Name / Instagram Handle (Artist & Director)' 
+      : 'Name / Instagram Handle';
+
+    const getSecondFieldLabel = () => {
+      switch (category) {
+        case 'project_of_the_year':
+          return 'Link to Project (Album, EP, Mixtape, Etc)';
+        case 'artist_of_the_year':
+          return 'Link to your music';
+        case 'group_of_the_year':
+          return 'Link to your music';
+        case 'song_of_the_year':
+          return 'Link to Song';
+        case 'producer_of_the_year':
+          return 'Link to playlist of your work';
+        case 'music_video_of_the_year':
+          return 'Link to Video';
+        default:
+          return '';
+      }
+    };
 
     return (
       <Stack spacing={2}>
@@ -229,7 +249,7 @@ const NominationsPage: React.FC = () => {
             render={({ field }) => (
               <TextField
                 {...field}
-                label={category === 'project_of_the_year' ? 'Link the Project' : 'Link a Playlist or Album'}
+                label={getSecondFieldLabel()}
                 fullWidth
                 variant="outlined"
                 sx={textFieldSx}
@@ -239,8 +259,7 @@ const NominationsPage: React.FC = () => {
         )}
 
         {(category === 'song_of_the_year' || 
-          category === 'producer_of_the_year' || 
-          category === 'music_video_of_the_year') && (
+          category === 'producer_of_the_year') && (
           <Controller
             name={`${category}.song_name`}
             control={control}
@@ -248,7 +267,7 @@ const NominationsPage: React.FC = () => {
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Song Name"
+                label={getSecondFieldLabel()}
                 fullWidth
                 variant="outlined"
                 sx={textFieldSx}
@@ -271,7 +290,7 @@ const NominationsPage: React.FC = () => {
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Video URL (Optional)"
+                label={getSecondFieldLabel()}
                 fullWidth
                 variant="outlined"
                 error={!!errors[category]?.video_url}
@@ -534,10 +553,13 @@ const NominationsPage: React.FC = () => {
         <Paper sx={{ backgroundColor: 'primary.light', border: '2px solid black', borderRadius: 0 }}>
           <Box sx={{ padding: 3 }}>
             <Typography variant="body1" sx={{ mb: 3, textAlign: 'center', color: 'black' }}>
-              Arizona artists! This is your chance to get recognized for all the hard work you've put in this year. 
-              Nominate yourself for the 2026 808s Awards Show and let your music be heard. 
-              Fill out as many or as few categories as you like. Please note: one song or project per artist—if you submit more than one, your first submission will be used.
+              Arizona artists! It's award season. Nominate yourself for 808s and Cold Takes' first annual 808s Awards Show. Fill out as many or as few categories as you like, but please note:
             </Typography>
+            <ul style={{ listStyleType: 'number' }}>
+              <li>One song or project per artist - if you submit more than one, your first submission will be used.</li>
+              <li>Music must be released between January 1, 2025 and December 31, 2025.</li>
+              <li>Must be local to or born in the state of Arizona.</li>
+            </ul>
 
             {error && (
               <Alert 

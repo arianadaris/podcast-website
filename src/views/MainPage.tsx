@@ -134,7 +134,7 @@ const MainPage: React.FC = () => {
               lineHeight: 1.5,
             }}
           >
-            Arizona artists—this is your moment! Nominate yourself for the 2026 808s Awards Show and showcase your work.
+            Submit yourself to be nominated for our 1st Annual 808s Awards Show!
           </Typography>
           <Button
             variant="outlined"
