@@ -19,7 +19,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   disabled = false,
 }) => {
   const [preview, setPreview] = useState<string | null>(currentImageUrl || null);
-  const [uploading, setUploading] = useState(false);
+  const [uploading] = useState(false);
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {

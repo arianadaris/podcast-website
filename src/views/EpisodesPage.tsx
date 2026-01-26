@@ -15,7 +15,6 @@ import {
   Chip,
   CircularProgress,
   Alert,
-  Skeleton,
 } from '@mui/material';
 import {
   Search,

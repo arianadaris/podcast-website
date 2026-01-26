@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import {
@@ -16,7 +16,6 @@ import {
 import { Save } from '@mui/icons-material';
 import AdminLayout from '../../components/admin/AdminLayout';
 import ImageUpload from '../../components/admin/ImageUpload';
-import { useAuth } from '../../hooks/useAuth';
 import {
   createInterview,
   updateInterview,
@@ -59,28 +58,16 @@ const InterviewFormPage: React.FC = () => {
     },
   });
 
-  useEffect(() => {
-    loadSeasons();
-    if (isEditMode && id) {
-      loadInterview(id);
-    }
-  }, [id, isEditMode]);
-
-  // Track form changes
-  useEffect(() => {
-    setHasChanges(isDirty || imageFile !== null);
-  }, [isDirty, imageFile]);
-
-  const loadSeasons = async () => {
+  const loadSeasons = useCallback(async () => {
     try {
       const data = await getSeasons();
       setSeasons(data.length > 0 ? data : [1, 2]);
     } catch (error) {
       setSeasons([1, 2]);
     }
-  };
+  }, []);
 
-  const loadInterview = async (interviewId: string) => {
+  const loadInterview = useCallback(async (interviewId: string) => {
     try {
       setLoading(true);
       const interview = await getInterviewById(interviewId);
@@ -99,7 +86,19 @@ const InterviewFormPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [reset]);
+
+  useEffect(() => {
+    loadSeasons();
+    if (isEditMode && id) {
+      loadInterview(id);
+    }
+  }, [id, isEditMode, loadSeasons, loadInterview]);
+
+  // Track form changes
+  useEffect(() => {
+    setHasChanges(isDirty || imageFile !== null);
+  }, [isDirty, imageFile]);
 
   const onSubmit = async (data: InterviewFormData) => {
 

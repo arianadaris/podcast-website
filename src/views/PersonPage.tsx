@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -29,11 +29,7 @@ const PersonPage: React.FC = () => {
     setImageError(true);
   };
 
-  useEffect(() => {
-    loadData();
-  }, [personName]);
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -54,7 +50,11 @@ const PersonPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [personName]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
   
   // Reset imageError state when person changes
   React.useEffect(() => {

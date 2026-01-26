@@ -12,7 +12,6 @@ import { Add, Search } from '@mui/icons-material';
 import AdminLayout from '../../components/admin/AdminLayout';
 import DataTable, { Column, Action } from '../../components/admin/DataTable';
 import ConfirmDialog from '../../components/admin/ConfirmDialog';
-import { useAuth } from '../../hooks/useAuth';
 import { getAllTeamMembers, deleteTeamMember } from '../../services/teamService';
 import { TeamMember } from '../../config/supabase';
 

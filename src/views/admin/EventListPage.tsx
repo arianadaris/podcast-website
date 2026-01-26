@@ -14,7 +14,6 @@ import { Add, Search } from '@mui/icons-material';
 import AdminLayout from '../../components/admin/AdminLayout';
 import DataTable, { Column, Action } from '../../components/admin/DataTable';
 import ConfirmDialog from '../../components/admin/ConfirmDialog';
-import { useAuth } from '../../hooks/useAuth';
 import { getAllEvents, deleteEvent } from '../../services/eventService';
 import { Event } from '../../config/supabase';
 

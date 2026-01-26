@@ -6,17 +6,13 @@ import {
   Box,
   Chip,
   Stack,
-  Button,
 } from '@mui/material';
 import {
   LocationOn,
   AccessTime,
   Event,
   Group,
-  OpenInNew,
 } from '@mui/icons-material';
-import VideoEmbed from './VideoEmbed';
-import { detectVideoPlatform } from '../utils/videoPlatform';
 
 interface EventCardProps {
   name: string;

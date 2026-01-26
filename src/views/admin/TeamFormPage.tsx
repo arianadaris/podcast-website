@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, Controller, useFieldArray } from 'react-hook-form';
 import {
@@ -17,14 +17,12 @@ import {
 import { Add, Delete, Save } from '@mui/icons-material';
 import AdminLayout from '../../components/admin/AdminLayout';
 import ImageUpload from '../../components/admin/ImageUpload';
-import { useAuth } from '../../hooks/useAuth';
 import {
   createTeamMember,
   updateTeamMember,
   getTeamMemberById,
   uploadTeamImage,
 } from '../../services/teamService';
-import { TeamMember } from '../../config/supabase';
 
 interface TeamMemberFormData {
   name: string;
@@ -92,18 +90,7 @@ const TeamFormPage: React.FC = () => {
     name: 'favorite_albums',
   });
 
-  useEffect(() => {
-    if (isEditMode && id) {
-      loadTeamMember(id);
-    }
-  }, [id, isEditMode]);
-
-  // Track form changes
-  useEffect(() => {
-    setHasChanges(isDirty || imageFile !== null);
-  }, [isDirty, imageFile]);
-
-  const loadTeamMember = async (memberId: string) => {
+  const loadTeamMember = useCallback(async (memberId: string) => {
     try {
       setLoading(true);
       const member = await getTeamMemberById(memberId);
@@ -125,7 +112,18 @@ const TeamFormPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [reset]);
+
+  useEffect(() => {
+    if (isEditMode && id) {
+      loadTeamMember(id);
+    }
+  }, [id, isEditMode, loadTeamMember]);
+
+  // Track form changes
+  useEffect(() => {
+    setHasChanges(isDirty || imageFile !== null);
+  }, [isDirty, imageFile]);
 
   const onSubmit = async (data: TeamMemberFormData) => {
 

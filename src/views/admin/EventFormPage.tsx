@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import {
@@ -16,7 +16,6 @@ import {
 } from '@mui/material';
 import { Save } from '@mui/icons-material';
 import AdminLayout from '../../components/admin/AdminLayout';
-import { useAuth } from '../../hooks/useAuth';
 import {
   createEvent,
   updateEvent,
@@ -62,28 +61,16 @@ const EventFormPage: React.FC = () => {
     },
   });
 
-  useEffect(() => {
-    loadTeamMembers();
-    if (isEditMode && id) {
-      loadEvent(id);
-    }
-  }, [id, isEditMode]);
-
-  // Track form changes
-  useEffect(() => {
-    setHasChanges(isDirty);
-  }, [isDirty]);
-
-  const loadTeamMembers = async () => {
+  const loadTeamMembers = useCallback(async () => {
     try {
       const members = await getAllTeamMembers();
       setTeamMembers(members.map(m => m.name));
     } catch (error) {
       // Silently fail
     }
-  };
+  }, []);
 
-  const loadEvent = async (eventId: string) => {
+  const loadEvent = useCallback(async (eventId: string) => {
     try {
       setLoading(true);
       const event = await getEventById(eventId);
@@ -104,7 +91,19 @@ const EventFormPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [reset]);
+
+  useEffect(() => {
+    loadTeamMembers();
+    if (isEditMode && id) {
+      loadEvent(id);
+    }
+  }, [id, isEditMode, loadTeamMembers, loadEvent]);
+
+  // Track form changes
+  useEffect(() => {
+    setHasChanges(isDirty);
+  }, [isDirty]);
 
   const onSubmit = async (data: EventFormData) => {
 
