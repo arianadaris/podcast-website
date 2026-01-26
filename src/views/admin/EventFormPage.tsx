@@ -31,6 +31,7 @@ interface EventFormData {
   time: string;
   description: string;
   attending_members: string[];
+  video_url?: string;
 }
 
 const EventFormPage: React.FC = () => {
@@ -57,6 +58,7 @@ const EventFormPage: React.FC = () => {
       time: '',
       description: '',
       attending_members: [],
+      video_url: '',
     },
   });
 
@@ -94,6 +96,7 @@ const EventFormPage: React.FC = () => {
           time: event.time,
           description: event.description,
           attending_members: event.attending_members || [],
+          video_url: event.video_url || '',
         });
       }
     } catch (error) {
@@ -116,6 +119,7 @@ const EventFormPage: React.FC = () => {
         time: data.time,
         description: data.description,
         attending_members: data.attending_members,
+        video_url: data.video_url || undefined,
       };
 
       if (isEditMode && id) {
@@ -338,6 +342,26 @@ const EventFormPage: React.FC = () => {
                         '& .MuiAutocomplete-tag': {
                           backgroundColor: 'black',
                           color: 'white',
+                        },
+                      }}
+                    />
+                  )}
+                />
+
+                <Controller
+                  name="video_url"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      label="Video URL (Optional)"
+                      placeholder="YouTube, TikTok, or Instagram link"
+                      helperText="Supported platforms: YouTube, TikTok, Instagram"
+                      sx={{
+                        '& .MuiOutlinedInput-root': {
+                          backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                          borderRadius: 0,
+                          '& fieldset': { borderColor: 'black', borderWidth: 2 },
                         },
                       }}
                     />

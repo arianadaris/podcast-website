@@ -44,6 +44,14 @@ export const getEventById = async (id: string): Promise<Event | null> => {
 
 // Get upcoming events (from today onwards)
 export const getUpcomingEvents = async (): Promise<Event[]> => {
+  if (!isSupabaseConfigured) {
+    const allEvents = localService.localGetAllEvents();
+    const today = new Date().toISOString().split('T')[0];
+    return allEvents
+      .filter(event => event.date >= today)
+      .sort((a, b) => a.date.localeCompare(b.date));
+  }
+
   try {
     const today = new Date().toISOString().split('T')[0];
     
@@ -63,6 +71,14 @@ export const getUpcomingEvents = async (): Promise<Event[]> => {
 
 // Get past events
 export const getPastEvents = async (): Promise<Event[]> => {
+  if (!isSupabaseConfigured) {
+    const allEvents = localService.localGetAllEvents();
+    const today = new Date().toISOString().split('T')[0];
+    return allEvents
+      .filter(event => event.date < today)
+      .sort((a, b) => b.date.localeCompare(a.date));
+  }
+
   try {
     const today = new Date().toISOString().split('T')[0];
     

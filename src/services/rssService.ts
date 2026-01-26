@@ -103,6 +103,38 @@ const clearCache = (): void => {
   }
 };
 
+// Function to decode HTML entities
+const decodeHtmlEntities = (text: string): string => {
+  // Common HTML entities mapping
+  const entityMap: Record<string, string> = {
+    '&apos;': "'",
+    '&quot;': '"',
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&nbsp;': ' ',
+    '&#39;': "'",
+    '&#x27;': "'",
+    '&#x2F;': '/',
+  };
+  
+  // First decode numeric entities (&#39;, &#x27;, etc.)
+  let decoded = text.replace(/&#(\d+);/g, (match, dec) => {
+    return String.fromCharCode(parseInt(dec, 10));
+  });
+  
+  decoded = decoded.replace(/&#x([0-9A-Fa-f]+);/g, (match, hex) => {
+    return String.fromCharCode(parseInt(hex, 16));
+  });
+  
+  // Then decode named entities
+  for (const [entity, char] of Object.entries(entityMap)) {
+    decoded = decoded.replace(new RegExp(entity, 'g'), char);
+  }
+  
+  return decoded;
+};
+
 // Function to parse duration from seconds to MM:SS format
 const formatDuration = (seconds: string): string => {
   const totalSeconds = parseInt(seconds, 10);
@@ -264,10 +296,18 @@ const parseRSSXML = (xmlText: string): Episode[] => {
     // Get audio URL from enclosure
     const audioUrl = enclosure?.getAttribute('url') || '#';
 
+    // Clean and decode the description
+    let cleanedDescription = description.replace(/<[^>]*>/g, ''); // Remove HTML tags
+    cleanedDescription = decodeHtmlEntities(cleanedDescription); // Decode HTML entities
+    
+    // Clean and decode the title
+    let cleanedTitle = title.replace(/^\d+\.\s*/, ''); // Remove episode numbers from title
+    cleanedTitle = decodeHtmlEntities(cleanedTitle); // Decode HTML entities
+
     episodes.push({
       id: guid,
-      title: title.replace(/^\d+\.\s*/, ''), // Remove episode numbers from title
-      description: description.replace(/<[^>]*>/g, ''), // Remove HTML tags
+      title: cleanedTitle,
+      description: cleanedDescription,
       date: formattedDate,
       length: formattedDuration,
       audioUrl,

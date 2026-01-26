@@ -11,13 +11,15 @@ import {
 } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import EventCard from '../components/EventCard';
+import ArchivedEventCard from '../components/ArchivedEventCard';
 import Socials from '../components/Socials';
-import { getAllEvents } from '../services/eventService';
+import { getUpcomingEvents, getPastEvents } from '../services/eventService';
 import { Event } from '../config/supabase';
 
 const EventsPage: React.FC = () => {
   const navigate = useNavigate();
-  const [events, setEvents] = useState<Event[]>([]);
+  const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([]);
+  const [archivedEvents, setArchivedEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -28,8 +30,12 @@ const EventsPage: React.FC = () => {
   const loadEvents = async () => {
     try {
       setLoading(true);
-      const data = await getAllEvents();
-      setEvents(data);
+      const [upcoming, archived] = await Promise.all([
+        getUpcomingEvents(),
+        getPastEvents(),
+      ]);
+      setUpcomingEvents(upcoming);
+      setArchivedEvents(archived);
     } catch (err) {
       setError('Failed to load events');
     } finally {
@@ -98,61 +104,118 @@ const EventsPage: React.FC = () => {
           </Box>
         </Box>
 
-        {/* Events List */}
-        <Box sx={{ marginTop: 4 }}>
-          {loading ? (
-            <Box sx={{ display: 'flex', justifyContent: 'center', padding: 8 }}>
-              <CircularProgress sx={{ color: 'black' }} size={60} />
-            </Box>
-          ) : error ? (
-            <Alert
-              severity="error"
-              sx={{
-                backgroundColor: 'rgba(211, 47, 47, 0.1)',
-                border: '2px solid #d32f2f',
-                borderRadius: 0,
-              }}
-            >
-              {error}
-            </Alert>
-          ) : events.length > 0 ? (
-            <Stack spacing={3}>
-              {events.map((event) => (
-                <EventCard
-                  key={event.id}
-                  name={event.name}
-                  location={event.location}
-                  date={event.date}
-                  time={event.time}
-                  attendingMembers={event.attending_members}
-                  description={event.description}
-                />
-              ))}
-            </Stack>
-          ) : (
-            <Box sx={{ textAlign: 'center', marginTop: 4 }}>
-              <Typography
-                variant="h6"
-                sx={{
-                  color: 'black',
-                  opacity: 0.8,
-                }}
-              >
-                No upcoming events at the moment.
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: 'black',
-                  opacity: 0.6,
-                  marginTop: 1,
-                }}
-              >
-                Check back soon for new events!
-              </Typography>
-            </Box>
-          )}
-        </Box>
+        {/* Loading State */}
+        {loading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', padding: 8 }}>
+            <CircularProgress sx={{ color: 'black' }} size={60} />
+          </Box>
+        ) : error ? (
+          <Alert
+            severity="error"
+            sx={{
+              backgroundColor: 'rgba(211, 47, 47, 0.1)',
+              border: '2px solid #d32f2f',
+              borderRadius: 0,
+              marginTop: 4,
+            }}
+          >
+            {error}
+          </Alert>
+        ) : (
+          <Box sx={{ marginTop: 4 }}>
+            {/* Empty State - No Events at All */}
+            {upcomingEvents.length === 0 && archivedEvents.length === 0 ? (
+              <Box sx={{ textAlign: 'center', marginTop: 4 }}>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: 'black',
+                    opacity: 0.8,
+                  }}
+                >
+                  No events at the moment.
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: 'black',
+                    opacity: 0.6,
+                    marginTop: 1,
+                  }}
+                >
+                  Check back soon for new events!
+                </Typography>
+              </Box>
+            ) : (
+              <>
+                {/* Upcoming Events Section */}
+                {upcomingEvents.length > 0 && (
+                  <Box sx={{ marginBottom: 6 }}>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        color: 'black',
+                        fontWeight: 700,
+                        marginBottom: 3,
+                        textAlign: 'center',
+                      }}
+                    >
+                      Upcoming Events
+                    </Typography>
+                    <Stack spacing={3}>
+                      {upcomingEvents.map((event) => (
+                        <EventCard
+                          key={event.id}
+                          name={event.name}
+                          location={event.location}
+                          date={event.date}
+                          time={event.time}
+                          attendingMembers={event.attending_members}
+                          description={event.description}
+                          video_url={event.video_url}
+                        />
+                      ))}
+                    </Stack>
+                  </Box>
+                )}
+
+                {/* Archived Events Section */}
+                <Box>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      color: 'black',
+                      fontWeight: 700,
+                      marginBottom: 3,
+                      textAlign: 'center',
+                    }}
+                  >
+                    Archived Events
+                  </Typography>
+                  {archivedEvents.length > 0 ? (
+                    <Stack spacing={3}>
+                      {archivedEvents.map((event) => (
+                        <ArchivedEventCard key={event.id} event={event} />
+                      ))}
+                    </Stack>
+                  ) : (
+                    <Box sx={{ textAlign: 'center', marginTop: 4 }}>
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          color: 'black',
+                          opacity: 0.8,
+                        }}
+                      >
+                        No archived events yet.
+                      </Typography>
+                    </Box>
+                  )}
+                </Box>
+              </>
+            )}
+          </Box>
+        )}
 
         {/* Social Links */}
         <Socials sx={{ marginTop: 4 }} />

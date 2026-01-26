@@ -266,6 +266,7 @@ export const initializeLocalStorage = () => {
         time: event.time,
         attending_members: event.attendingMembers || [],
         description: event.description,
+        video_url: event.video_url || event.videoUrl || undefined,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       }));

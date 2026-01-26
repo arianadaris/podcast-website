@@ -8,6 +8,7 @@ import {
   Alert,
   Snackbar,
   Chip,
+  Typography
 } from '@mui/material';
 import { Add, Search } from '@mui/icons-material';
 import AdminLayout from '../../components/admin/AdminLayout';
@@ -157,6 +158,29 @@ const EventListPage: React.FC = () => {
       label: 'Attendees',
       minWidth: 100,
       format: (value: string[]) => `${value?.length || 0} members`,
+    },
+    {
+      id: 'video_url',
+      label: 'Video',
+      minWidth: 80,
+      format: (value: string) => (
+        value ? (
+          <Chip
+            label="Has Video"
+            size="small"
+            sx={{
+              backgroundColor: '#1976d2',
+              color: 'white',
+              fontWeight: 600,
+              fontSize: '0.7rem',
+            }}
+          />
+        ) : (
+          <Typography variant="body2" sx={{ color: 'rgba(0,0,0,0.5)' }}>
+            -
+          </Typography>
+        )
+      ),
     },
   ];
 

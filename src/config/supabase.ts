@@ -80,6 +80,7 @@ export interface Event {
   time: string;
   attending_members: string[];
   description: string;
+  video_url?: string;
   created_at?: string;
   updated_at?: string;
 }
