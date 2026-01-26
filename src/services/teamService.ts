@@ -43,7 +43,7 @@ export const deleteTeamImage = async (imageUrl: string): Promise<void> => {
 
     const filePath = urlParts[1];
 
-    const { error } = await supabase.storage
+    await supabase.storage
       .from('team-images')
       .remove([filePath]);
   } catch (error) {
