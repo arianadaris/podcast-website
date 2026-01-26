@@ -188,33 +188,6 @@ const ArchivedEventCard: React.FC<ArchivedEventCardProps> = ({ event }) => {
           </Box>
         </Box>
 
-        {event.video_url && videoPlatform !== 'youtube' && videoPlatform !== null && (
-            <Box sx={{ width: '100%', marginBottom: 2, textAlign: 'center' }}>
-              <Button
-                variant="outlined"
-                href={event.video_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                endIcon={<OpenInNew />}
-                sx={{
-                  border: '2px solid black',
-                  color: 'black',
-                  backgroundColor: 'primary.light',
-                  borderRadius: 0,
-                  textTransform: 'none',
-                  fontWeight: 600,
-                  padding: '10px 20px',
-                  '&:hover': {
-                    border: '2px solid black',
-                    backgroundColor: 'rgba(0,0,0,0.1)',
-                  },
-                }}
-              >
-                {getViewButtonText(videoPlatform)}
-              </Button>
-            </Box>
-          )}
-
         {/* Desktop Layout */}
         <Box
           sx={{
