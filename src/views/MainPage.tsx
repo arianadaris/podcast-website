@@ -113,7 +113,7 @@ const MainPage: React.FC = () => {
         </Stack>
 
         {/* Nomination Banner */}
-        <Box
+        {/* <Box
           sx={{
             border: '2px solid rgba(0, 0, 0)',
             padding: { xs: 2.5, sm: 3 },
@@ -153,7 +153,7 @@ const MainPage: React.FC = () => {
           >
             Nominate
           </Button>
-        </Box>
+        </Box> */}
 
         {/* Social Links */}
         <Socials sx={{ marginBottom: 3 }} />
