@@ -4,8 +4,7 @@ import {
   Box,
   Typography,
   Container,
-  Stack,
-  Button,
+  Stack
 } from '@mui/material';
 import Socials from '../components/Socials';
 import { featureFlags } from '../config/featureFlags';
