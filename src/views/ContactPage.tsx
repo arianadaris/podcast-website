@@ -10,6 +10,7 @@ import {
   Tab,
   Paper,
   Stack,
+  Alert,
 } from '@mui/material';
 import {
   ArrowBack,
@@ -17,6 +18,7 @@ import {
   CalendarToday,
 } from '@mui/icons-material';
 import Socials from '../components/Socials';
+import { sendGeneralContactMessage, sendInterviewRequest } from '../services/contactService';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -62,8 +64,13 @@ const ContactPage: React.FC = () => {
     additionalDetails: '',
   });
   const [interviewSubmitted, setInterviewSubmitted] = useState(false);
+  const [isSendingGeneral, setIsSendingGeneral] = useState(false);
+  const [generalError, setGeneralError] = useState<string | null>(null);
+  const [generalSuccess, setGeneralSuccess] = useState<string | null>(null);
+  const [isSendingInterview, setIsSendingInterview] = useState(false);
+  const [interviewError, setInterviewError] = useState<string | null>(null);
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 
@@ -81,13 +88,55 @@ const ContactPage: React.FC = () => {
     });
   };
 
-  const handleSendMessage = () => {
-    // TODO: Implement send message functionality
+  const handleSendMessage = async () => {
+    if (isSendingGeneral) return;
+
+    setGeneralError(null);
+    setGeneralSuccess(null);
+
+    const { name, email, message } = generalForm;
+
+    setIsSendingGeneral(true);
+    try {
+      const result = await sendGeneralContactMessage({ name, email, message });
+
+      if (!result.success) {
+        setGeneralError(result.error || 'Failed to send message. Please try again later.');
+        return;
+      }
+
+      setGeneralSuccess('Your message has been sent. Thank you for reaching out!');
+      setGeneralForm({
+        name: '',
+        email: '',
+        message: '',
+      });
+    } catch (error) {
+      console.error('Error in handleSendMessage:', error);
+      setGeneralError('An unexpected error occurred. Please try again later.');
+    } finally {
+      setIsSendingGeneral(false);
+    }
   };
 
-  const handleRequestInterview = () => {
-    // TODO: Implement request interview functionality
-    setInterviewSubmitted(true);
+  const handleRequestInterview = async () => {
+    if (isSendingInterview) return;
+
+    setInterviewError(null);
+    setIsSendingInterview(true);
+    try {
+      const result = await sendInterviewRequest(interviewForm);
+      if (!result.success) {
+        setInterviewError(result.error || 'Failed to submit request. Please try again later.');
+        return;
+      }
+      setInterviewSubmitted(true);
+    } catch (error) {
+      console.error('Error in handleRequestInterview:', error);
+      setInterviewError('An unexpected error occurred. Please try again later.');
+    } finally {
+      setIsSendingInterview(false);
+    }
   };
 
   return (
@@ -265,6 +314,7 @@ const ContactPage: React.FC = () => {
                   variant="contained"
                   startIcon={<Send />}
                   onClick={handleSendMessage}
+                  disabled={isSendingGeneral}
                   sx={{
                     backgroundColor: 'black',
                     color: 'white',
@@ -273,12 +323,28 @@ const ContactPage: React.FC = () => {
                     fontWeight: 600,
                     padding: '12px 24px',
                     '&:hover': {
-                      backgroundColor: 'rgba(0,0,0,0.8)',
+                      backgroundColor: isSendingGeneral ? 'black' : 'rgba(0,0,0,0.8)',
                     },
                   }}
                 >
-                  Send Message
+                  {isSendingGeneral ? 'Sending...' : 'Send Message'}
                 </Button>
+                {generalError && (
+                  <Alert
+                    severity="error"
+                    sx={{ borderRadius: 0, border: '2px solid black' }}
+                  >
+                    {generalError}
+                  </Alert>
+                )}
+                {generalSuccess && (
+                  <Alert
+                    severity="success"
+                    sx={{ borderRadius: 0, border: '2px solid black' }}
+                  >
+                    {generalSuccess}
+                  </Alert>
+                )}
               </Stack>
             </Box>
           </TabPanel>
@@ -307,13 +373,21 @@ const ContactPage: React.FC = () => {
                 </Box>
               ) : (
                 <Stack spacing={3}>
+                  {interviewError && (
+                    <Alert
+                      severity="error"
+                      sx={{ borderRadius: 0, border: '2px solid black' }}
+                    >
+                      {interviewError}
+                    </Alert>
+                  )}
                   <Box>
-                    <Typography 
-                      variant="body1" 
-                      sx={{ 
-                        color: 'black', 
-                        fontWeight: 600, 
-                        marginBottom: 1 
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        color: 'black',
+                        fontWeight: 600,
+                        marginBottom: 1
                       }}
                     >
                       What is your official name or stage name?
@@ -564,6 +638,7 @@ const ContactPage: React.FC = () => {
                     variant="contained"
                     startIcon={<CalendarToday />}
                     onClick={handleRequestInterview}
+                    disabled={isSendingInterview}
                     sx={{
                       backgroundColor: 'black',
                       color: 'white',
@@ -572,11 +647,11 @@ const ContactPage: React.FC = () => {
                       fontWeight: 600,
                       padding: '12px 24px',
                       '&:hover': {
-                        backgroundColor: 'rgba(0,0,0,0.8)',
+                        backgroundColor: isSendingInterview ? 'black' : 'rgba(0,0,0,0.8)',
                       },
                     }}
                   >
-                    Request Interview
+                    {isSendingInterview ? 'Submitting...' : 'Request Interview'}
                   </Button>
                 </Stack>
               )}

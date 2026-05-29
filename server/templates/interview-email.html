@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interview Request – 808s &amp; COLD TAKES</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f0f4f8; font-family: Roboto, Helvetica, Arial, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f0f4f8; padding: 32px 16px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="max-width: 600px; width: 100%; background-color: #ffffff; border: 2px solid #000000;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%); padding: 32px 24px; text-align: center; border-bottom: 2px solid #000000;">
+              <p style="margin: 0 0 8px 0; font-size: 28px; font-weight: 900; color: #000000; letter-spacing: 0.05em;">808s &amp; COLD TAKES</p>
+              <p style="margin: 0; font-size: 14px; font-weight: 600; color: #000000; text-transform: uppercase; letter-spacing: 0.15em;">New Interview Request</p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding: 24px;">
+              <p style="margin: 0 0 20px 0; font-size: 15px; color: #424242;">
+                A new interview request has been submitted through the 808s &amp; COLD TAKES website.
+              </p>
+              <table width="100%" cellpadding="0" cellspacing="0" style="border: 1px solid #bbdefb;">
+
+                <!-- Required fields -->
+                <tr>
+                  <td style="padding: 10px 16px; font-weight: 700; color: #1565c0; width: 200px; vertical-align: top; border-bottom: 1px solid #e3f2fd;">Name / Stage Name</td>
+                  <td style="padding: 10px 16px; color: #212121; vertical-align: top; border-bottom: 1px solid #e3f2fd;">{{OFFICIAL_NAME}}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px 16px; font-weight: 700; color: #1565c0; width: 200px; vertical-align: top; border-bottom: 1px solid #e3f2fd;">Email</td>
+                  <td style="padding: 10px 16px; color: #212121; vertical-align: top; border-bottom: 1px solid #e3f2fd;">
+                    <a href="mailto:{{EMAIL}}" style="color: #1976d2;">{{EMAIL}}</a>
+                  </td>
+                </tr>
+
+                <!-- Optional fields – rendered by the server when present -->
+                {{MUSIC_WORK_ROW}}
+                {{AVAILABILITY_ROW}}
+                {{TOPICS_ROW}}
+                {{PREVIOUS_INTERVIEWS_ROW}}
+                {{ADDITIONAL_DETAILS_ROW}}
+
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #1976d2; padding: 16px 24px; border-top: 2px solid #000000; text-align: center;">
+              <p style="margin: 0; font-size: 12px; color: #e3f2fd;">
+                Received at {{TIMESTAMP}}
+              </p>
+              <p style="margin: 6px 0 0 0; font-size: 12px; color: #e3f2fd;">
+                Reply directly to this email to respond to the requester.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
