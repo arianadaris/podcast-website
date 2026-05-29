@@ -19,11 +19,19 @@ export function getEmailConfig(): EmailConfig | null {
   return { apiKey, to, from };
 }
 
+let cachedClient: Resend | null = null;
+
+/** Lazily creates and reuses a single Resend client across warm invocations. */
+function getResendClient(apiKey: string): Resend {
+  if (!cachedClient) cachedClient = new Resend(apiKey);
+  return cachedClient;
+}
+
 export async function sendEmail(
   config: EmailConfig,
   opts: { subject: string; html: string; replyTo: string }
 ): Promise<{ error: unknown }> {
-  const resend = new Resend(config.apiKey);
+  const resend = getResendClient(config.apiKey);
   const { error } = await resend.emails.send({
     from: config.from,
     to: [config.to],

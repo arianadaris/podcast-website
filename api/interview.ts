@@ -11,6 +11,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const body = (req.body && typeof req.body === 'object') ? req.body : {};
 
+  // Silently accept bot-shaped submissions (filled honeypot / too fast) without
+  // sending, so bots get no signal that they were caught.
   const spam = checkAntiSpam({ honeypot: body.honeypot, elapsedMs: body.elapsedMs });
   if (!spam.ok) {
     return res.status(200).json({ success: true });
