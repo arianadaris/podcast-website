@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -69,6 +69,10 @@ const ContactPage: React.FC = () => {
   const [generalSuccess, setGeneralSuccess] = useState<string | null>(null);
   const [isSendingInterview, setIsSendingInterview] = useState(false);
   const [interviewError, setInterviewError] = useState<string | null>(null);
+  const [generalHoneypot, setGeneralHoneypot] = useState('');
+  const [interviewHoneypot, setInterviewHoneypot] = useState('');
+  const generalStartRef = useRef<number>(Date.now());
+  const interviewStartRef = useRef<number>(Date.now());
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -98,7 +102,13 @@ const ContactPage: React.FC = () => {
 
     setIsSendingGeneral(true);
     try {
-      const result = await sendGeneralContactMessage({ name, email, message });
+      const result = await sendGeneralContactMessage({
+        name,
+        email,
+        message,
+        honeypot: generalHoneypot,
+        elapsedMs: Date.now() - generalStartRef.current,
+      });
 
       if (!result.success) {
         setGeneralError(result.error || 'Failed to send message. Please try again later.');
@@ -125,7 +135,11 @@ const ContactPage: React.FC = () => {
     setInterviewError(null);
     setIsSendingInterview(true);
     try {
-      const result = await sendInterviewRequest(interviewForm);
+      const result = await sendInterviewRequest({
+        ...interviewForm,
+        honeypot: interviewHoneypot,
+        elapsedMs: Date.now() - interviewStartRef.current,
+      });
       if (!result.success) {
         setInterviewError(result.error || 'Failed to submit request. Please try again later.');
         return;
@@ -229,6 +243,17 @@ const ContactPage: React.FC = () => {
           <TabPanel value={tabValue} index={0}>
             <Box sx={{ padding: 3 }}>
               <Stack spacing={3}>
+                <Box
+                  component="input"
+                  type="text"
+                  name="company"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  value={generalHoneypot}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setGeneralHoneypot(e.target.value)}
+                  sx={{ position: 'absolute', left: '-5000px', width: '1px', height: '1px', opacity: 0 }}
+                />
                 <TextField
                   fullWidth
                   label="Name"
@@ -373,6 +398,17 @@ const ContactPage: React.FC = () => {
                 </Box>
               ) : (
                 <Stack spacing={3}>
+                  <Box
+                    component="input"
+                    type="text"
+                    name="company"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    value={interviewHoneypot}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInterviewHoneypot(e.target.value)}
+                    sx={{ position: 'absolute', left: '-5000px', width: '1px', height: '1px', opacity: 0 }}
+                  />
                   {interviewError && (
                     <Alert
                       severity="error"

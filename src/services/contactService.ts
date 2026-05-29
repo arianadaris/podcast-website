@@ -4,6 +4,8 @@ export interface GeneralContactPayload {
   name: string;
   email: string;
   message: string;
+  honeypot?: string;
+  elapsedMs?: number;
 }
 
 export interface InterviewRequestPayload {
@@ -14,6 +16,8 @@ export interface InterviewRequestPayload {
   specificTopics?: string;
   previousInterviews?: string;
   additionalDetails?: string;
+  honeypot?: string;
+  elapsedMs?: number;
 }
 
 export interface ContactResponse {
