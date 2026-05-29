@@ -34,6 +34,12 @@ describe('checkAntiSpam', () => {
   it('passes a real, slow, empty-honeypot submission', () => {
     expect(checkAntiSpam({ honeypot: '', elapsedMs: 9000 }).ok).toBe(true);
   });
+  it('flags a non-string truthy honeypot (e.g. a number)', () => {
+    expect(checkAntiSpam({ honeypot: 1, elapsedMs: 9000 }).ok).toBe(false);
+  });
+  it('flags NaN elapsed time', () => {
+    expect(checkAntiSpam({ honeypot: '', elapsedMs: NaN }).ok).toBe(false);
+  });
 });
 
 describe('validateContactPayload', () => {
@@ -47,6 +53,9 @@ describe('validateContactPayload', () => {
   });
   it('rejects an email with a newline (header injection)', () => {
     expect(validateContactPayload({ name: 'A', email: 'a@b.com\nBcc: x', message: 'x' }).valid).toBe(false);
+  });
+  it('rejects a null body', () => {
+    expect(validateContactPayload(null).valid).toBe(false);
   });
 });
 

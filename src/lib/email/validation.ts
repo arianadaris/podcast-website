@@ -52,7 +52,7 @@ export function sanitizeHeaderValue(value: string): string {
  * avoid client/server clock-skew false-positives.
  */
 export function checkAntiSpam({ honeypot, elapsedMs }: AntiSpamInput): AntiSpamResult {
-  if (typeof honeypot === 'string' && honeypot.trim() !== '') {
+  if (honeypot != null && String(honeypot).trim() !== '') {
     return { ok: false, reason: 'honeypot' };
   }
   if (typeof elapsedMs !== 'number' || !Number.isFinite(elapsedMs) || elapsedMs < MIN_FILL_MS) {
@@ -61,10 +61,11 @@ export function checkAntiSpam({ honeypot, elapsedMs }: AntiSpamInput): AntiSpamR
   return { ok: true };
 }
 
-export function validateContactPayload(body: any): ValidationResult<ContactData> {
-  const name = str(body?.name);
-  const email = str(body?.email);
-  const message = str(body?.message);
+export function validateContactPayload(body: unknown): ValidationResult<ContactData> {
+  const b = (body ?? {}) as Record<string, unknown>;
+  const name = str(b.name);
+  const email = str(b.email);
+  const message = str(b.message);
   if (!name || !email || !message) {
     return { valid: false, error: 'Name, email, and message are required.' };
   }
@@ -74,9 +75,10 @@ export function validateContactPayload(body: any): ValidationResult<ContactData>
   return { valid: true, data: { name, email, message } };
 }
 
-export function validateInterviewPayload(body: any): ValidationResult<InterviewData> {
-  const officialName = str(body?.officialName);
-  const email = str(body?.email);
+export function validateInterviewPayload(body: unknown): ValidationResult<InterviewData> {
+  const b = (body ?? {}) as Record<string, unknown>;
+  const officialName = str(b.officialName);
+  const email = str(b.email);
   if (!officialName) {
     return { valid: false, error: 'Official name or stage name is required.' };
   }
@@ -91,11 +93,11 @@ export function validateInterviewPayload(body: any): ValidationResult<InterviewD
     data: {
       officialName,
       email,
-      musicWorkExample: str(body?.musicWorkExample),
-      availability: str(body?.availability),
-      specificTopics: str(body?.specificTopics),
-      previousInterviews: str(body?.previousInterviews),
-      additionalDetails: str(body?.additionalDetails),
+      musicWorkExample: str(b.musicWorkExample),
+      availability: str(b.availability),
+      specificTopics: str(b.specificTopics),
+      previousInterviews: str(b.previousInterviews),
+      additionalDetails: str(b.additionalDetails),
     },
   };
 }
